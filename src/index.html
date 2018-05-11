@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Chankya App - Best Angular 4 Admin Theme</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+    <meta name="author" content="">
+    <style>
+        /* Animations  */
+        
+        .fade-in-up,
+        .chk-block,
+        .card,
+        .chk-full-block {
+            animation-duration: 2s;
+            animation-name: fadeUp;
+        }
+        
+        @-webkit-keyframes fadeLeft {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateX(50px);
+                transform: translateX(50px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateX(0px);
+                transform: translateX(0px);
+            }
+        }
+        
+        @keyframes fadeLeft {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateX(50px);
+                transform: translateX(50px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateX(0px);
+                transform: translateX(0px);
+            }
+        }
+        
+        @-webkit-keyframes fadeUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(50px);
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0px);
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                -webkit-transform: translateY(30px);
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                -webkit-transform: translateY(0px);
+                transform: translateY(0px);
+            }
+        }
+        
+        @-webkit-keyframes jumpUp {
+            0% {
+                -webkit-transform: scale(0.5) translate(70px, 70px);
+                transform: scale(0.5) translate(70px, 70px);
+            }
+            80% {
+                -webkit-transform: scale(1.1) translate(-10px, -10px);
+                transform: scale(1.1) translate(-10px, -10px);
+            }
+            100% {
+                -webkit-transform: scale(1) translate(0px);
+                transform: scale(1) translate(0px);
+            }
+        }
+        
+        @keyframes jumpUp {
+            0% {
+                -webkit-transform: scale(0.5) translate(70px, 70px);
+                transform: scale(0.5) translate(70px, 70px);
+            }
+            80% {
+                -webkit-transform: scale(1.1) translate(-10px, -10px);
+                transform: scale(1.1) translate(-10px, -10px);
+            }
+            100% {
+                -webkit-transform: scale(1) translate(0px);
+                transform: scale(1) translate(0px);
+            }
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=Intl.~locale.en"></script>
+</head>
+
+<body>
+    <chankya-app>
+        <!-- Page Loader -->
+        <div class="block">
+            <div class="loading">
+                <span class="ball1"></span>
+                <span class="ball2"></span>
+            </div>
+        </div>
+        <!-- Page loader Closed -->
+    </chankya-app>
+    <script type="text/javascript">
+    (function (window) {
+      // Polyfills DOM4 MouseEvent only on IE11
+      // Fixes ngx-charts line-chart hover
+      // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/MouseEvent#Polyfill
+      if (!!window.MSInputMethodContext && !!document.documentMode || document.documentMode === 10) {
+        function MouseEvent(eventType, params) {
+          params = params || { bubbles: false, cancelable: false };
+          var mouseEvent = document.createEvent('MouseEvent');
+          mouseEvent.initMouseEvent(eventType, params.bubbles, params.cancelable, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+          return mouseEvent;
+        }
+        MouseEvent.prototype = Event.prototype;
+        window.MouseEvent = MouseEvent;
+      }
+    })(window);
+  </script>
+</body>
+</html>

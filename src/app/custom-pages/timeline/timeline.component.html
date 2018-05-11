@@ -1,0 +1,27 @@
+<div class="timeline-wrapper">
+    <div class="chk-block">
+        <div class="chk-block-title">
+            <h3 class="text-capitalize">Timeline</h3>
+        </div>
+        <div class="chk-block-content">
+            <div class="timeline-flow clearfix">
+                <div class="timeline-block" *ngFor = "let post of posts">
+                    <div class="timeline-badge badge-success">
+                        <span class="icon"><i class="fa fa-file-image-o fa-2x fa-inverse" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="timeline-card">
+                        <div class="card-body">
+                            <div class="timeline-img mb-3">
+                                <img src="{{post.image}}" class="img-fluid" alt="timeline image" width="940" height="300" />
+                            </div>
+                            <h2>{{post.title}}</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto, optio, dolorum provident rerum aut hic quasi placeat iure tempora laudantium ipsa ad debitis unde? Iste voluptatibus minus veritatis qui ut.</p>
+                            <a class="btn btn-primary btn-lg btn-square" href="javascript:void(0)">Read more</a>
+                            <span class="timeline-date">Jan 14</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- chk Block Closed -->
+</div><!-- Timeline Wrapper Closed -->

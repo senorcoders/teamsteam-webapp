@@ -1,0 +1,27 @@
+<div class="grid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4" *ngFor= "let image of images">
+            <div class="media-card">
+                <figure>
+                    <img src="{{image.image}}" class="img-fluid rounded mb-3 w-100" alt="home" width="500" height="302" />
+                </figure>
+                <div class="d-flex justify-content-between thumb-content">
+                    <div class="d-flex align-items-start flex-column">
+                          <p>{{image.title}}</p>
+                        <span class="small">{{image.post}}</span>
+                    </div>
+                    <div class="d-flex align-items-end flex-column">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a class="square-50 circle bg-primary"><i class="fa fa-eye-slash"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="square-50 circle bg-warning"><i class="fa fa-trash"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

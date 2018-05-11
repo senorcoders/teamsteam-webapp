@@ -1,0 +1,74 @@
+<div class="loginone-wrapper">
+   
+      
+        <div class="login-content text-center">
+            <div class="login-inner-wrapper-2">
+                <div class="mb-2">
+                    <span class="square-100"><i class="fa fa-unlock-alt text-warning"></i></span>
+                </div>
+                <div class="mb-3">
+                    <p class="text-primary">Welcome To TeamSteam</p>
+                    <h2 class="text-muted">Sign into your pages account</h2>
+                </div>
+                <form [formGroup]="loginForm" class="login-form" (submit)="login()">
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control form-control-lg input-square" placeholder="Email Address" formControlName="email" [ngClass]="{'is-invalid':loginForm.get('email').invalid && loginForm.get('email').touched}">
+                        <div class="invalid-feedback" *ngIf="loginForm.get('email').hasError('required')">
+                            Email Required.
+                        </div>
+                        <div class="invalid-feedback" *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
+                            Invalid Email
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <input name="lname" class="form-control form-control-lg input-square" type="password" placeholder="Password" formControlName="password" [ngClass]="{'is-invalid':loginForm.get('password').invalid && loginForm.get('password').touched}">
+                        <div class="invalid-feedback" *ngIf="loginForm.get('password').hasError('required')">
+                          Password Required.
+                        </div>
+                    </div>
+                    <div class="login-meta mb-3">
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <label class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0 d-flex">
+                                    <input class="custom-control-input" type="checkbox">
+                                    <span class="custom-control-indicator"></span>
+                                    <span class="custom-control-description">Remember Me</span>
+                                </label>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 text-right"> 
+                                <a routerLink="/session/forgot-password" class="text-muted">Forgot Password?</a> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="loginForm.invalid">Sign In</button>
+                    </div>
+                    <div class="mb-3">
+                        <a routerLink="/session/register" class="text-muted">Still no account? Please go to Register</a>
+                    </div>
+                    <div class="login-social-icon">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-google-plus fa-lg text-warning"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-twitter fa-lg text-info"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-facebook-official fa-lg text-primary"></i></a></li>
+                            <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-instagram fa-lg text-danger"></i></a></li>
+                        </ul>
+                    </div>
+                </form>
+                <!-- login form closed -->
+          
+            <!-- login inner wrapper closed -->
+      
+        <!-- login content closed -->
+    </div>
+    <!-- login form wrapper closed -->
+</div>
+<!-- login-one- wrapper closed -->
+</div>
+
+
+
+
+
+
+

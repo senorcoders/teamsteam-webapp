@@ -1,0 +1,21 @@
+<div class="gallery-wrapper">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 col-xl-4" *ngFor= "let image of images">
+            <div class="grid-thumb mb-3">
+                <img src="{{image.image}}" class="img-fluid rounded w-100" alt="buildings" width="500" height="302" />
+                <div class="d-flex justify-content-between thumb-caption">
+                    <div class="d-flex align-items-start flex-column">
+                       <p>{{image.title}}</p>
+                        <span class="small">{{image.post}}</span>
+                    </div>
+                    <div class="d-flex align-items-end flex-column">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><a class="text-muted"><i class="fa fa-eye-slash fa-lg"></i></a></li>
+                            <li class="list-inline-item"><a class="text-muted"><i class="fa fa-trash fa-lg"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

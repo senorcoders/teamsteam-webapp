@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-lg-12 col-xl-6">
+        <div class="chk-block bg-success">
+            <div class="chk-block-title">
+                <h3 class="text-capitalize">Drag and Drop anything</h3>
+            </div>
+            <div class="chk-block-content">
+                <nav [sortablejs]="list1" [sortablejsOptions]="simpleOptions" class="no-gutter">
+
+                    <div class="draggable" *ngFor="let list of list1">
+                        <div class="d-flex justify-content-start">
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="mr-4">
+                                    <span class="mr-4 sortable-draggor"><i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i></span>
+                                    <img [src]="list.image" alt="..." class="img-fluid rounded-circle img-thumbnail" width="75" height="75">
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start flex-column">
+                                <div class="pad-wrap">
+                                    <span class="font-lg"> {{ list.name }} </span>
+                                    <p class="mb-1"> <span> {{ list.subject }} </span>
+                                        <span> -- {{ list.content }} </span> </p>
+                                    <p class="small fw-bold">5 min ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-xl-6">
+        <div class="chk-block">
+            <div class="chk-block-title">
+                <h3 class="text-capitalize">Drag &amp; Drop Between Groups!</h3>
+            </div>
+            <div class="chk-block-content">
+                <div class="row">
+                    <div class="col-lg-12 col-xl-6">
+                        <div class="chk-ui-heading">
+                            <h3 class="text-capitalize">Group 1</h3>
+                        </div>
+                        <div [sortablejs]="list2" [sortablejsOptions]="groupOptions">
+                            <div class="mb-4" *ngFor="let list of list2">
+                                <h3> <i class="fa fa-bars mr-3 drag-handle" aria-hidden="true"></i> {{ list.name }} </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-xl-6">
+                        <div class="chk-ui-heading">
+                            <h3 class="text-capitalize">Group 2</h3>
+                        </div>
+                        <div [sortablejs]="numbers" [sortablejsOptions]="groupOptions">
+                            <div class="mb-4" *ngFor="let list of numbers">
+                                <h3> <i class="fa fa-bars mr-3 drag-handle" aria-hidden="true"></i> {{ list.name }}
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
