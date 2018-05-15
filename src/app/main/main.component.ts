@@ -186,6 +186,7 @@ export class MainComponent implements OnInit, OnDestroy{
     getUserInfo(){
         this.userData= this.auth.getLoginData();
         let ramdon=new Date().getTime();
+        //get user image
         this.auth.getPerfilImage(this.userData.id,ramdon).subscribe(
             result=>{
                 if (result==null) {
@@ -196,7 +197,8 @@ export class MainComponent implements OnInit, OnDestroy{
                 }
             },
             error=>{
-                console.log(error)
+                console.log(error);
+                this.perfilImage="assets/img/user-3.jpg"
             }
         )
     }
