@@ -14,12 +14,12 @@
                             <div class="bottom-block">
                                 <div class="profile-thumb text-center mb-3">
                                     <a href="javascript:void(0)">
-                                        <img src="assets/img/user-5.jpg" alt="profile thumb" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
+                                        <img src="{{perfilImage}}" alt="profile thumb" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
                                     </a>
                                 </div>
                                 <div class="thumb-content text-center mb-3">
-                                    <h2 class="text-capitalize">Shane Handcomb</h2>
-                                    <a class="small" href="user-profile.php">shanehandcomb@gmail.com</a>
+                                    <h2 class="text-capitalize">{{userData.firstName+' '+userData.lastName}}</h2>
+                                    <a class="small" href="user-profile.php">{{userData.email}}</a>
                                 </div>
                                 <div class="account-btn text-center mb-4">
                                     <ul class="list-inline">
@@ -68,12 +68,12 @@
 					            <div class="chk-block-content">  
                                     <ul class="pl-0 list-unstyled list-item-space ripple-list">
                                         <li>
-                                            <h4>Lisa Arnold</h4>
-                                            <p>Art Director</p>
+                                            <h4>{{userData.firstName+' '+userData.lastName}}</h4>
+                                            <p>{{userData.role.name}}</p>
                                         </li>
                                         <li>
                                             <div class="profile-icon-head"><i class="fa fa-envelope mr-1" aria-hidden="true"></i> <strong>E-mail</strong></div>
-                                            <div class="profile-icon-desp">  <a href="mailto:abcd@abcd.com">:abcd@abcd.com</a></div>
+                                            <div class="profile-icon-desp">  <a href="mailto:{{userData.email}}">:{{userData.email}}</a></div>
                                         </li>
                                         <li>
                                             <div class="profile-icon-head"><i class="fa fa-phone mr-1" aria-hidden="true"></i> <strong>Phone</strong></div>

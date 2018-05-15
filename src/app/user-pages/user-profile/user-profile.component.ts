@@ -1,7 +1,8 @@
 import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { PageTitleService } from '../../core/page-title/page-title.service';
 import {fadeInAnimation} from "../../core/route-animation/route.animation";
-
+//my imports
+import {AuthenticationService} from '../../services/authentication.service';
 @Component({
     selector: 'ms-user-profile',
     templateUrl:'./user-profile-component.html',
@@ -13,13 +14,35 @@ import {fadeInAnimation} from "../../core/route-animation/route.animation";
     animations: [ fadeInAnimation ]
 })
 export class UserProfileComponent implements OnInit {
-
-  constructor(private pageTitleService: PageTitleService) {}
+  //my variables
+  perfilImage:string;
+  userData:any;
+  constructor(private pageTitleService: PageTitleService, private auth:AuthenticationService) {}
 
   ngOnInit() {
     this.pageTitleService.setTitle("User Profile");
+    this.getUserInfo();
+    console.log(this.userData)
   }
-	
+	getUserInfo(){
+        this.userData= this.auth.getLoginData();
+        let ramdon=new Date().getTime();
+        //get user image
+        this.auth.getPerfilImage(this.userData.id,ramdon).subscribe(
+            result=>{
+                if (result==null) {
+                    this.perfilImage=`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}`
+                }
+                else{
+                    this.perfilImage="assets/img/user-3.jpg"
+                }
+            },
+            error=>{
+                console.log(error);
+                this.perfilImage="assets/img/user-3.jpg"
+            }
+        )
+    }
   users: Object[] = [{
       name: 'Adam',
       city: 'California',
