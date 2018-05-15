@@ -30,6 +30,7 @@ import { PageTitleService } from './core/page-title/page-title.service';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule,HttpClient } from '@angular/common/http';
 import {AuthenticationService} from './services/authentication.service';
+import {TeamService} from './services/team.service';
 import { LoginoneComponent } from './session/loginone/loginone.component';
 import { ToastrModule } from 'ngx-toastr';
 import {MyGuardService} from './services/my-guard.service';
@@ -82,6 +83,7 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		BreadcrumbService,
 		PageTitleService,
 		AuthenticationService,
+    TeamService,
 		MyGuardService
 	]
 })

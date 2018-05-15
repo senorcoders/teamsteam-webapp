@@ -22,7 +22,6 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.pageTitleService.setTitle("User Profile");
     this.getUserInfo();
-    console.log(this.userData)
   }
 	getUserInfo(){
         this.userData= this.auth.getLoginData();

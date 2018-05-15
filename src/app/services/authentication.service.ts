@@ -37,5 +37,19 @@ export class AuthenticationService {
       return false;
     }
   }
+  updateSession(old, newinfo){
+		let data={
+			"role":old.role,
+			"username":newinfo.username,
+			"firstName": newinfo.firstName,
+    	"lastName": newinfo.lastName,
+    	"email": newinfo.email,
+    	"id": old.id,
+    	"token": old.token
+    }
+		let dataString=JSON.stringify(data);
+		localStorage.removeItem('sessionToken');
+		localStorage.setItem( 'sessionToken', dataString );
+	}
 
 }
