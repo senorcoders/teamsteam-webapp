@@ -51,5 +51,12 @@ export class AuthenticationService {
 		localStorage.removeItem('sessionToken');
 		localStorage.setItem( 'sessionToken', dataString );
 	}
-
+  changePassword(data,token){
+		let body = JSON.stringify(data);
+	  return this.http.post(`${API_ENDPOINT}password/change`, body, {headers: new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8','token':`${token}`})});
+	}
+  //check if email already exist
+	checkEmail(email){
+		return this.http.get(`${API_ENDPOINT}user/enable/${email}`, httpOptions)
+	}
 }

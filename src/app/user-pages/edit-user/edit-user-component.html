@@ -1,0 +1,215 @@
+<div class="chk-content-wrapper">
+	<img src="assets/img/timeline-banner.jpg" class="img-fluid pos-relative img-pro-head" alt="timeline banner" width="2560" height="500"/>
+	<div class="chk-content">
+		<div class="user-profile-wrapper">
+			<div class="row">
+				<div class="col-sm-12 col-md-12 col-lg-12 col-xl-3">
+                    <div class="profile-left-panel">
+                        <div class="account-setting mb-3">
+                            <div class="top-block">
+                                <div class="admin-setting">
+                                    <i class="fa fa-ellipsis-h fa-lg fa-inverse"></i>
+                                </div>
+                            </div>
+                            <div class="bottom-block">
+                                <div class="profile-thumb text-center mb-3">
+                                    <a href="javascript:void(0)">
+                                        <img src="{{perfilImage}}" alt="profile thumb" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
+                                    </a>
+                                </div>
+                                <div class="thumb-content text-center mb-3">
+                                    <h2 class="text-capitalize">{{userData.firstName+' '+userData.lastName}}</h2>
+                                    <a class="small" href="user-profile.php">{{userData.email}}</a>
+                                </div>
+                                <div class="account-btn text-center mb-4">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="btn btn-primary btn-lg mb-2">Follow US</a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)" class="btn btn-danger btn-lg mb-2">Message</a></li>
+                                    </ul>
+                                </div>
+                                <div class="user-account-list">
+                                    <ul class="list-unstyled mb-0">
+                                        <li>
+                                            <a href="javascript:void(0)"><i class="fa fa-user mr-2"></i> Profile</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)"><i class="fa fa-users mr-2"></i> Account</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)"><i class="fa fa-life-bouy mr-2"></i> Help</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)"><i class="fa fa-gear mr-2"></i> Setting</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="social-widget">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-facebook fa-lg"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-twitter fa-lg"></i></a></li>
+                                        <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-linkedin-square fa-lg"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12 col-xl-9">
+                	<div class="row mb-3">
+                		<div class="col-sm-12 col-lg-12 col-xl-6 col-full-lg-down">
+                			<div class="chk-block">
+					            <div class="chk-block-title">
+					                <div class="d-flex justify-content-between">
+					                    <div class="d-flex align-self-center">
+					                        <h3 class="text-capitalize">Edit Info</h3>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="chk-block-content">  
+                         <form [formGroup]="editForm" (submit)="editPerfil()">
+                           <div class="form-group">
+                              <label><i class="fa fa-user mr-2"></i> UserName</label>
+                              <input type="text" name="username" class="form-control form-control-lg input-square" placeholder="UserName" formControlName="username" [ngClass]="{'is-invalid':editForm.get('username').invalid && editForm.get('username').touched}">
+                              <div class="invalid-feedback" *ngIf="editForm.get('username').hasError('required')">
+                                  UserName Required.
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label><i class="fa fa-user mr-2"></i> First Name</label>
+                              <input type="text" name="firstName" class="form-control form-control-lg input-square" placeholder="First Name" formControlName="firstName" [ngClass]="{'is-invalid':editForm.get('firstName').invalid && editForm.get('firstName').touched}">
+                              <div class="invalid-feedback" *ngIf="editForm.get('firstName').hasError('required')">
+                                  First Name Required.
+                              </div>
+                           </div>
+                           <div class="form-group">
+                              <label><i class="fa fa-user mr-2"></i> Last Name</label>
+                              <input type="text" name="lastName" class="form-control form-control-lg input-square" placeholder="Last Name" formControlName="lastName" [ngClass]="{'is-invalid':editForm.get('lastName').invalid && editForm.get('lastName').touched}">
+                              <div class="invalid-feedback" *ngIf="editForm.get('lastName').hasError('required')">
+                                  Last Name Required.
+                              </div>
+                           </div>
+                           <div class="form-group">
+                             <label><i class="fa fa-envelope mr-1"></i> UserName</label>
+                              <input type="email" name="email" class="form-control form-control-lg input-square" placeholder="Email Address" formControlName="email" [ngClass]="{'is-invalid':editForm.get('email').invalid && editForm.get('email').touched}">
+                              <div class="invalid-feedback" *ngIf="editForm.get('email').hasError('required')">
+                                  Email Required.
+                              </div>
+                              <div class="invalid-feedback" *ngIf="editForm.get('email').hasError('email') && !editForm.get('email').hasError('required')">
+                                  Invalid Email
+                              </div>  
+                           </div>
+                           <div class="form-group">
+                             <input type="submit" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="editForm.invalid" value="Save"/>
+                           </div>
+                         </form>
+                          <div class="chk-block-title">
+					                 <div class="d-flex justify-content-between">
+					                    <div class="d-flex align-self-center">
+					                        <h3 class="text-capitalize" (click)="showFormPassword()" style="cursor:pointer"><i class="fa fa-key"></i> Change Password</h3>
+					                    </div>
+					                 </div>
+					                </div>
+                        <div class="password-change">
+                          <form [formGroup]="changePasswordForm" *ngIf="showForm" (submit)="changePassword()">
+                            <div class="form-group">
+                                <label for="old"><i class="fa fa-unlock-alt"></i> Current Password</label>
+                                <input type="password" class="form-control" formControlName="current" id="old" placeholder="Current Password">
+                              </div>
+                              <div class="form-group">
+                                <label for="new"><i class="fa fa-unlock"></i> New Password</label>
+                                <input type="password" class="form-control" formControlName="new" id="new" placeholder="New Password">
+                              </div>
+                              <div class="form-group">
+                                <label for="repeat"><i class="fa fa-unlock"></i> Current Password</label>
+                                <input type="password" class="form-control" formControlName="repeat" id="repeat" placeholder="Repeat Password">
+                              </div>
+                              <div class="form-group">
+                                <input type="submit" value="Change" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="changePasswordForm.invalid">
+                              </div>
+                          </form>
+                        </div>
+					            </div>
+					        </div>
+                		</div>
+                		<div class="col-sm-12 col-lg-12 col-xl-6 col-full-lg-down">
+                			<div class="chk-block">
+                				<div class="chk-block-title">
+					                <div class="d-flex justify-content-between">
+					                    <div class="d-flex align-self-center">
+					                        <h3 class="text-capitalize">Notification Panel</h3>
+					                    </div>
+					                </div>
+					            </div>
+					            <div class="chk-block-content">
+                                    <div class="notification-list">
+                                        <ul class="list-unstyled">
+                                            <li>
+                                                <span class="square-50 circle bg-success mr-3">
+                                                    <i class="fa fa-bell"></i>
+                                                </span>
+                                                <span>
+                                                    You have 4 pending.
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="square-50 circle bg-warning mr-3">
+                                                    <i class="fa fa-server"></i>
+                                                </span>
+                                                <span>
+                                                    Server overloaded.
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="square-50 circle bg-yellow mr-3">
+                                                    <i class="fa fa-reply-all"></i>
+                                                </span>
+                                                <span>
+                                                    10 Order Refunded
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="square-50 circle bg-info mr-3">
+                                                    <i class="fa fa-retweet"></i>
+                                                </span>
+                                                <span>
+                                                    10 Order Refunded
+                                                </span>
+                                            </li>
+                                            <li>
+                                                <span class="square-50 circle bg-primary mr-3">
+                                                    <i class="fa fa-wrench"></i>
+                                                </span>
+                                                <span>
+                                                    New Version arrived
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                			</div>
+                		</div>
+                		
+                		<div class="col-sm-12 col-lg-12 col-xl-12">
+                			<div class="chk-block">
+                				<div class="chk-block-title">
+					                <div class="d-flex justify-content-between">
+					                    <div class="d-flex align-self-center">
+					                        <h3 class="text-capitalize">About User</h3>
+					                    </div>
+					                </div>
+					            </div>
+                               <div class="chk-block-content">
+                                   <p>Hi, This is Lisa arnold. I am feeling glad for what I have achieved here. But I think life is more about helping people rather than commanding them. I feel life is also full of variations in designs. In terms of design, nature creates beautiful graphs and sets lot of colors in our personal life. </p>
+                                   <p>
+                                       So yes I get ideas from nature. The way it designs hills, oceans and fills colors into them. I feel lucky for having this life and capable of identifying hidden treasures beneath a wonderful design. 
+                                   </p>
+                                </div>
+                            </div>
+                        </div>
+                		
+                	</div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
