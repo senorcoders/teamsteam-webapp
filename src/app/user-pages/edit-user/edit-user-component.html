@@ -13,9 +13,11 @@
                             </div>
                             <div class="bottom-block">
                                 <div class="profile-thumb text-center mb-3">
-                                    <a href="javascript:void(0)">
-                                        <img src="{{perfilImage}}" alt="profile thumb" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
-                                    </a>
+                                  <img src="{{perfilImage}}" alt="profile thumb" id="previewImg" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
+                                  <input type="file" (change)="uploadImage($event.target.files)" class="form-control edit-img">
+                                  <div class="form-group" style="background: white">
+                                    <input type="submit" (click)="updateImage()" class="btn btn-primary btn-lg mb-2" value="Change Image" *ngIf="isVisible">
+                                  </div>
                                 </div>
                                 <div class="thumb-content text-center mb-3">
                                     <h2 class="text-capitalize">{{userData.firstName+' '+userData.lastName}}</h2>
@@ -30,16 +32,7 @@
                                 <div class="user-account-list">
                                     <ul class="list-unstyled mb-0">
                                         <li>
-                                            <a href="javascript:void(0)"><i class="fa fa-user mr-2"></i> Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fa fa-users mr-2"></i> Account</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fa fa-life-bouy mr-2"></i> Help</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)"><i class="fa fa-gear mr-2"></i> Setting</a>
+                                            <a routerLink="/user-pages/userprofile"><i class="fa fa-user mr-2"></i> Profile</a>
                                         </li>
                                     </ul>
                                 </div>

@@ -23,6 +23,8 @@ export class EditUserComponent implements OnInit {
   editForm:FormGroup;
   changePasswordForm:FormGroup;
   showForm:boolean=false;
+  isVisible:boolean=false;
+  private base64image:String="";
   constructor(private pageTitleService: PageTitleService, private auth:AuthenticationService, private fb:FormBuilder, private team:TeamService,private toastr:ToastrService) {}
 
   ngOnInit() {
@@ -95,6 +97,51 @@ export class EditUserComponent implements OnInit {
     else{
       this.showError('passwords not match');
     }
+  }
+  updateImage(){
+    //prepare json data
+    let image={'id':this.userData.id,'image':this.base64image}
+    this.team.uploadImage(image).subscribe(
+    data=>{
+      this.showSuccess('Well Done');
+      //change float image with the new one
+      let preview1 = document.querySelector('#imgPerfil');
+      let preview2 = document.querySelector('#previewImgSmall');
+      let reader  = new FileReader();
+      preview2.setAttribute('src',document.getElementById("previewImg").getAttribute('src'));
+      preview1.setAttribute('src',document.getElementById("previewImg").getAttribute('src'));
+      },
+      error=>{
+        this.showError(error)
+      }
+    )
+  }
+  //function to convert base64 and show a preview
+  uploadImage(event:FileList) {
+    let preview = document.querySelector('#previewImg');
+    let file    = event.item(0);
+    this.isVisible=true;
+    //to convert base64
+    let reader  = new FileReader();
+    //to show image
+    let reader2  = new FileReader();
+    // Client-side validation example
+    if (file.type.split('/')[0] !=='image') {
+      this.showError('unsupported file type ');
+      return;
+    }
+    reader2.onloadend = function () {
+      preview.setAttribute('src',reader2.result);
+    }
+    if (file) {
+      reader.onload =this._handleReaderLoaded.bind(this);
+      reader.readAsBinaryString(file);
+      reader2.readAsDataURL(file);
+    }
+  }
+  _handleReaderLoaded(readerEvt) {
+    let binaryString = readerEvt.target.result;
+    this.base64image=btoa(binaryString);
   }
   showFormPassword(){
     if (this.showForm) {
