@@ -25,7 +25,13 @@ export const AppRoutes: Routes = [{
     path: 'dashboard',
     loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate:[MyGuardService]
-  },{
+  },
+  {
+    path: 'form-builder',
+    loadChildren: './form-builder/form-builder.module#FormBuilderModule',
+    canActivate:[MyGuardService]
+  },
+  {
     path: 'inbox',
     loadChildren: './inbox/inbox.module#InboxModule',
     canActivate:[MyGuardService]

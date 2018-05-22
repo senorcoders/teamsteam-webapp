@@ -21,6 +21,16 @@ const MENUITEMS = [
     type: 'ext-link',
     icon: 'icon-equalizer icons'
   },
+  {
+    state: 'form-builder',
+    name: 'Form Builder',
+    type: 'sub',
+    icon: 'fa fa-book',
+    children: [
+      {state: 'add', name: 'Add New'},
+      {state: 'list', name: 'List Form'},
+    ]
+  },
     {
     state: 'horizontal',
     name: 'HORIZONTAL LAYOUT',

@@ -75,7 +75,7 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		AuthComponent,
 		HorizontalLayoutComponent,
 		LoginoneComponent,
-    RegisterComponent
+    RegisterComponent,
 	],
 	entryComponents: [
 	],
