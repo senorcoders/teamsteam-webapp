@@ -37,8 +37,6 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
   ],
   declarations: [ 
-    
-    RegisterComponent,
     ForgotPasswordComponent,
     ComingSoonComponent,
     LockScreenComponent,

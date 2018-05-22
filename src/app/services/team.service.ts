@@ -46,7 +46,7 @@ export class TeamService {
   }
   register(data){
     let body = JSON.stringify(data);
-    return this.http.post(`${API_ENDPOINT}user/team/`,body, {headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
+    return this.http.post(`${API_ENDPOINT}user/team`,body, {headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
   }
   formBuilder(data){
     let body = JSON.stringify(data);

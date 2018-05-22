@@ -32,6 +32,7 @@ import { HttpClientModule,HttpClient } from '@angular/common/http';
 import {AuthenticationService} from './services/authentication.service';
 import {TeamService} from './services/team.service';
 import { LoginoneComponent } from './session/loginone/loginone.component';
+import { RegisterComponent } from './session/register/register.component';
 import { ToastrModule } from 'ngx-toastr';
 import {MyGuardService} from './services/my-guard.service';
 
@@ -74,6 +75,7 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		AuthComponent,
 		HorizontalLayoutComponent,
 		LoginoneComponent,
+    RegisterComponent
 	],
 	entryComponents: [
 	],

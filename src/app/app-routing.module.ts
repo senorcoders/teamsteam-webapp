@@ -5,6 +5,7 @@ import { MainComponent }   from './main/main.component';
 import { AuthComponent }   from './auth/auth.component';
 import { HorizontalLayoutComponent } from './horizontal-layout/horizontal-layout.component';
 import { LoginoneComponent } from './session/loginone/loginone.component';
+import { RegisterComponent } from './session/register/register.component';
 import {MyGuardService} from './services/my-guard.service';
 export const AppRoutes: Routes = [{
   path: '',
@@ -13,6 +14,9 @@ export const AppRoutes: Routes = [{
 },
 {
     path:'loginone', component:LoginoneComponent
+},
+{
+    path:'register', component:RegisterComponent
 },
 {
   path: '',
