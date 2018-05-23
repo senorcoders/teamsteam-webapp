@@ -10,7 +10,7 @@ export class MyGuardService {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
   	let result=this.autorizacionService.getLoginData()
   	if (result) {
-	    if(result.role.name=="Player" || result.role.name=="Manager"){
+	    if(result.roles[0].name=="Player" || result.roles[0].name=="Manager"){
 	        return true;
 	    }else {
 	      this.router.navigate(['/loginone']);

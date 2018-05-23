@@ -1,3 +1,99 @@
-<p>
-  add-builder works!
-</p>
+<div class="chk-block">
+    <div class="chk-block-title">
+        <h3 class="text-capitalize">Add New Register Form</h3>
+    </div>
+    <div class="chk-block-content">
+        <div class="row">
+            <div class="col-sm-12 col-lg-4 col-xl-4 mb-4">
+              <h3>Form Details</h3>
+              <div class="row">
+                <div class="col-lg-12">
+                  <form [formGroup]="builderForm" (submit)="saveForm()">
+                    <div class="form-group">
+                      <label for="name">Form Title</label>
+                      <input type="text" class="form-control form-control-lg input-square" id="name" placeholder="Title" formControlName="title" [ngClass]="{'is-invalid':builderForm.get('title').invalid && builderForm.get('title').touched}">
+                      <div class="invalid-feedback" *ngIf="builderForm.get('title').hasError('required')">Title is Required</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="description">Description</label>
+                      <input type="text" class="form-control form-control-lg input-square" placeholder="Description" id="description"  formControlName="description" [ngClass]="{'is-invalid':builderForm.get('description').invalid && builderForm.get('description').touched}">
+                      <div class="invalid-feedback" *ngIf="builderForm.get('description').hasError('required')">Description is Required</div>
+                    </div>
+                    <div class="form-group">		
+                      <label for="team">Team</label>
+                        <select class="form-control form-control-lg input-square" formControlName="team" id="team">
+                          <option *ngFor="let team of teams" value="{{team.id}}">{{team.team.name}}</option>
+                        </select>
+                      </div>
+                    <div class="form-group">
+                      <button class="btn btn-primary btn-block btn-lg btn-square" [disabled]="builderForm.invalid">Save Form</button>
+                    </div>						
+                   </form>
+                </div>
+              </div>
+              <h3>Form Fields</h3>
+              <div class="input-content">
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 ">
+                    <span class="btn-input" (click)="addInput('phone','Phone','tel', 'true','12','Add Phone','phone')"><i class="fa fa-plus"></i>Phone</span>
+                    <span class="btn-input" (click)="addInput('gender','Select Gender','select', 'true','12', 'Add Gender')"><i class="fa fa-plus"></i>Gender</span>
+                    <span class="btn-input" (click)="addInput('school','School','text', 'true','6', 'Add School and Grade')"><i class="fa fa-plus"></i>School</span>
+                    <span class="btn-input" (click)="addInput('address','Address','text', 'false','12','Add Address')"><i class="fa fa-plus"></i>Address</span>
+                    <span class="btn-input"><i class="fa fa-plus"></i>Text Area</span>
+                  </div>
+                  <div class="col-lg-6 col-md-6">
+                    <span class="btn-input" (click)="addInput('date','dd/mm/aa','date', 'true','12','Add Date')"><i class="fa fa-plus"></i>BirthDate</span>
+                    <span class="btn-input" (click)="addInput('medical','Medical Alerts/Information','text', 'true','12','Add Medical Info')"><i class="fa fa-plus"></i>Medical</span>
+                    <span class="btn-input" (click)="addInput('emerg','Emergency','text', 'true','6','Add emergency')"><i class="fa fa-plus"></i>Emerg.</span>
+                    <span class="btn-input" (click)="addInput('file','Upload','file', 'false','12', 'Add file')"><i class="fa fa-plus"></i>Upload</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="edit-form" *ngIf="editForm">
+                      <form [formGroup]="formEdit" (submit)="saveDataEdited()">
+                        <div class="form-group">
+                          <label for="label">Label</label>
+                          <input type="text" class="form-control" id="label" formControlName="label" [ngClass]="{'is-invalid':formEdit.get('label').invalid && formEdit.get('label').touched}">
+                          <div class="invalid-feedback" *ngIf="formEdit.get('label').hasError('required')">Label is Required</div>
+                        </div>
+                        <div class="form-group">
+                          <label for="desc">Description</label>
+                          <input type="text" class="form-control" id="desc" formControlName="description" [ngClass]="{'is-invalid':formEdit.get('description').invalid && formEdit.get('description').touched}">
+                          <div class="invalid-feedback" *ngIf="formEdit.get('description').hasError('required')">Description is Required</div>
+                        </div>
+                        <div class="form-group">
+                          <label>Is Required?</label>
+                          <input type="checkbox" formControlName="required">
+                          <input type="hidden" formControlName="arrayIndex">
+                          <input type="hidden" formControlName="arrayFieldIndex">
+                        </div>
+                        <div class="form-group">
+                          <button class="btn-red" [ngClass]="{'noActive':formEdit.invalid}" [disabled]="formEdit.invalid">Done</button>
+                        </div>								
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-lg-8 col-xl-8 mb-8 preview">
+              <h3>Form Preview</h3>
+              <div class="form-preview" id="preview">
+                <div class="row" *ngFor="let f of form; let i=index">
+                  <div class="order" *ngIf="i>1">
+                      <span class="btn-order" (click)="orderUp(i)"><i class="fa fa-chevron-up"></i></span>
+                      <span class="btn-order" (click)="orderDown(i)"><i class="fa fa-chevron-down"></i></span>
+                    </div>
+                  <div *ngFor="let field of f.fields; let j = index" class="col-lg-{{field.col}} col-md-{{field.col}} content-fields">
+                    <label>{{field.desc}}</label>
+                    <span class="btn-delete" *ngIf="i> 1" (click)="deleteField(i,j)"><i class="fa fa-times"></i> Delete</span>
+                    <span class="btn-edit" (click)="ShowEditForm(field,i,j)"><i class="fa fa-pencil"></i>Edit</span>
+                        <input [type]="text" [(ngModel)]="field.value" class="form-control" placeholder="{{field.label}}" disabled />
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

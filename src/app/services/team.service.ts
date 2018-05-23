@@ -36,10 +36,10 @@ export class TeamService {
     let body = JSON.stringify(image);
     return this.http.post(`${API_ENDPOINT}images/users`,body, this.httpOptions )
   }
-  getTeamsByUser(type,id){
-    type=type.toLowerCase();
-    return this.http.get(`${API_ENDPOINT}teams/${type}/${id}`,this.httpOptions)
-  }
+//   getTeamsByUser(type,id){
+//     type=type.toLowerCase();
+//     return this.http.get(`${API_ENDPOINT}teams/${type}/${id}`,this.httpOptions)
+//   }
   editUser(data){
     let body = JSON.stringify(data);
     return this.http.put(`${API_ENDPOINT}user/${this.id}`,body, this.httpOptions )
