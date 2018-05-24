@@ -53,12 +53,12 @@
                     <div class="edit-form" *ngIf="editForm">
                       <form [formGroup]="formEdit" (submit)="saveDataEdited()">
                         <div class="form-group">
-                          <label for="label">Label</label>
+                          <label for="label">Placeholder</label>
                           <input type="text" class="form-control" id="label" formControlName="label" [ngClass]="{'is-invalid':formEdit.get('label').invalid && formEdit.get('label').touched}">
                           <div class="invalid-feedback" *ngIf="formEdit.get('label').hasError('required')">Label is Required</div>
                         </div>
                         <div class="form-group">
-                          <label for="desc">Description</label>
+                          <label for="desc">Label</label>
                           <input type="text" class="form-control" id="desc" formControlName="description" [ngClass]="{'is-invalid':formEdit.get('description').invalid && formEdit.get('description').touched}">
                           <div class="invalid-feedback" *ngIf="formEdit.get('description').hasError('required')">Description is Required</div>
                         </div>
@@ -69,7 +69,7 @@
                           <input type="hidden" formControlName="arrayFieldIndex">
                         </div>
                         <div class="form-group">
-                          <button class="btn-red" [ngClass]="{'noActive':formEdit.invalid}" [disabled]="formEdit.invalid">Done</button>
+                          <button class="btn btn-primary btn-block btn-lg btn-square" [disabled]="formEdit.invalid">Done</button>
                         </div>								
                       </form>
                     </div>

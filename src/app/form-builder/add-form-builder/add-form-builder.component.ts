@@ -29,7 +29,25 @@ export class AddFormBuilderComponent implements OnInit {
   	//get user info from login
   	this.getUserInfo();
   	//add required fields to form
-  	this.form.push({
+  	this.initialData();
+    //create form to edit the fields values
+    this.formEdit=this.fb.group({
+    	label:['', Validators],
+    	description:['', Validators],
+    	required:[''],
+    	index:[''],
+    	arrayFieldIndex:['']
+
+    })
+    //create form to save the forms
+    this.builderForm=this.fb.group({
+    	title:['', Validators.required],
+    	description:['', Validators.required],
+    	team:['', Validators.required]
+    })
+  }
+  initialData(){
+    this.form.push({
   		group:"name",
   		fields:[{
   			label: 'Participant First Name',
@@ -59,21 +77,6 @@ export class AddFormBuilderComponent implements OnInit {
   		}
   		]
   	});
-    //create form to edit the fields values
-    this.formEdit=this.fb.group({
-    	label:['', Validators],
-    	description:['', Validators],
-    	required:[''],
-    	index:[''],
-    	arrayFieldIndex:['']
-
-    })
-    //create form to save the forms
-    this.builderForm=this.fb.group({
-    	title:['', Validators.required],
-    	description:['', Validators.required],
-    	team:['', Validators.required]
-    })
   }
   getUserInfo(){
     this.userData= this.auth.getLoginData();
@@ -97,7 +100,6 @@ export class AddFormBuilderComponent implements OnInit {
   //delete fields
   deleteField(i, j){
   	if (this.form[i].fields.length==1) {
-  		console.log('si')
   		this.form.splice(i,1);
   	}
   	else{
@@ -128,13 +130,16 @@ export class AddFormBuilderComponent implements OnInit {
   		'team':this.builderForm.get('team').value,
   		'fields':this.form
   	}
+    this.showSuccess('Form was saved');
   	//send the data to service
   	this.teamService.formBuilder(data).subscribe(
   		result=>{
-  			this.showSuccess('Form was saved');
+  			this.builderForm.reset();
+        this.form=[];
+        this.initialData();
   		},
   		error=>{
-  			this.showError(error)
+  			this.showError(error.error)
   			console.log(error)
   		}
   	)
@@ -272,7 +277,7 @@ export class AddFormBuilderComponent implements OnInit {
   	this.toast.error(e,"Error",{positionClass:"toast-top-center"})
   }
   showSuccess(s){
-  	this.toast.success(s.error,"Well Done",{positionClass:"toast-top-center"})
+  	this.toast.success(s,"Well Done",{positionClass:"toast-top-center"})
   }
 
 }
