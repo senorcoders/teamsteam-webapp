@@ -32,6 +32,11 @@ export const AppRoutes: Routes = [{
     canActivate:[MyGuardService]
   },
   {
+    path: 'player',
+    loadChildren: './player/player.module#PlayerModule',
+    canActivate:[MyGuardService]
+  },
+  {
     path: 'inbox',
     loadChildren: './inbox/inbox.module#InboxModule',
     canActivate:[MyGuardService]
