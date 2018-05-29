@@ -3,6 +3,7 @@ import { PageTitleService } from '../../core/page-title/page-title.service';
 import {fadeInAnimation} from "../../core/route-animation/route.animation";
 //my imports
 import {AuthenticationService} from '../../services/authentication.service';
+import { PerfilImageService } from '../../core/perfil-image/perfil-image.service';
 @Component({
     selector: 'ms-user-profile',
     templateUrl:'./user-profile-component.html',
@@ -17,7 +18,7 @@ export class UserProfileComponent implements OnInit {
   //my variables
   perfilImage:string;
   userData:any;
-  constructor(private pageTitleService: PageTitleService, private auth:AuthenticationService) {}
+  constructor(private perfilImageService:PerfilImageService, private pageTitleService: PageTitleService, private auth:AuthenticationService) {}
 
   ngOnInit() {
     this.pageTitleService.setTitle("User Profile");
@@ -25,22 +26,13 @@ export class UserProfileComponent implements OnInit {
   }
 	getUserInfo(){
         this.userData= this.auth.getLoginData();
-        let ramdon=new Date().getTime();
-        //get user image
-        this.auth.getPerfilImage(this.userData.id,ramdon).subscribe(
-            result=>{
-                if (result==null) {
-                    this.perfilImage=`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}`
-                }
-                else{
-                    this.perfilImage="assets/img/user-3.jpg"
-                }
-            },
-            error=>{
-                console.log(error);
-                this.perfilImage="assets/img/user-3.jpg"
-            }
-        )
+     /*get the perfil image from from service*/
+     this.perfilImageService.perfilImage.subscribe(
+        result=>{
+          this.perfilImage=result
+        },
+        error=>{console.log(error)}
+      )
     }
   users: Object[] = [{
       name: 'Adam',

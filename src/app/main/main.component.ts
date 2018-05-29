@@ -12,6 +12,7 @@ declare var $ : any;
 //my imports
 import {AuthenticationService} from '../services/authentication.service';
 const screenfull = require('screenfull');
+import { PerfilImageService } from '../core/perfil-image/perfil-image.service';
 
 @Component({
     selector: 'chankya-layout',
@@ -59,7 +60,7 @@ export class MainComponent implements OnInit, OnDestroy{
         this._opened = !this._opened;
      }
 
-	constructor(public tourService: TourService, public menuItems: MenuItems, private breadcrumbService: BreadcrumbService, private pageTitleService: PageTitleService, public translate: TranslateService, private router: Router, private media: ObservableMedia, private auth:AuthenticationService) {
+	constructor(public tourService: TourService, public menuItems: MenuItems, private breadcrumbService: BreadcrumbService, private pageTitleService: PageTitleService, public translate: TranslateService, private router: Router, private media: ObservableMedia, private auth:AuthenticationService, private PerfilImageService:PerfilImageService) {
         //get user data
         this.getUserInfo();
 
@@ -184,21 +185,25 @@ export class MainComponent implements OnInit, OnDestroy{
         breadcrumbService.addFriendlyNameForRoute('/session/lockscreen', 'Lock Screen');
     }
     getUserInfo(){
+        this.PerfilImageService.perfilImage.subscribe((val:string)=>{
+            this.perfilImage=val
+        })
         this.userData= this.auth.getLoginData();
         let ramdon=new Date().getTime();
         //get user image
         this.auth.getPerfilImage(this.userData.id,ramdon).subscribe(
             result=>{
                 if (result==null) {
-                    this.perfilImage=`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}`
+                    this.PerfilImageService.setPerfilImage(`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}`)
+                  console.log('aqui')
                 }
                 else{
-                    this.perfilImage="assets/img/user-3.jpg"
+                  this.PerfilImageService.setPerfilImage("assets/img/user-3.jpg");
                 }
             },
             error=>{
                 console.log(error);
-                this.perfilImage="assets/img/user-3.jpg"
+              this.PerfilImageService.setPerfilImage("assets/img/user-3.jpg");
             }
         )
     }

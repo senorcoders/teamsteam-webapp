@@ -6,6 +6,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {TeamService} from '../../services/team.service';
 import {FormBuilder, FormGroup, Validators,FormControl} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { PerfilImageService } from '../../core/perfil-image/perfil-image.service';
 @Component({
     selector: 'ms-edit-user',
     templateUrl:'./edit-user-component.html',
@@ -25,7 +26,7 @@ export class EditUserComponent implements OnInit {
   showForm:boolean=false;
   isVisible:boolean=false;
   private base64image:String="";
-  constructor(private pageTitleService: PageTitleService, private auth:AuthenticationService, private fb:FormBuilder, private team:TeamService,private toastr:ToastrService) {}
+  constructor(private pageTitleService: PageTitleService, private perfilImageService:PerfilImageService, private auth:AuthenticationService, private fb:FormBuilder, private team:TeamService,private toastr:ToastrService) {}
 
   ngOnInit() {
     this.pageTitleService.setTitle("Edit User Profile");
@@ -44,22 +45,28 @@ export class EditUserComponent implements OnInit {
   }
 	getUserInfo(){
         this.userData= this.auth.getLoginData();
-        let ramdon=new Date().getTime();
+        //let ramdon=new Date().getTime();
         //get user image
-        this.auth.getPerfilImage(this.userData.id,ramdon).subscribe(
-            result=>{
-                if (result==null) {
-                    this.perfilImage=`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}`
-                }
-                else{
-                    this.perfilImage="assets/img/user-3.jpg"
-                }
-            },
-            error=>{
-                console.log(error);
-                this.perfilImage="assets/img/user-3.jpg"
-            }
-        )
+//         this.auth.getPerfilImage(this.userData.id,ramdon).subscribe(
+//             result=>{
+//                 if (result==null) {
+//                     this.perfilImage=`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}`
+//                 }
+//                 else{
+//                     this.perfilImage="assets/img/user-3.jpg"
+//                 }
+//             },
+//             error=>{
+//                 console.log(error);
+//                 this.perfilImage="assets/img/user-3.jpg"
+//             }
+//         )
+     this.perfilImageService.perfilImage.subscribe(
+        result=>{
+          this.perfilImage=result
+        },
+        error=>{console.log(error)}
+      )
     }
     editPerfil(){
       this.team.editUser(this.editForm.value).subscribe(
@@ -104,12 +111,7 @@ export class EditUserComponent implements OnInit {
     this.team.uploadImage(image).subscribe(
     data=>{
       this.showSuccess('Well Done');
-      //change float image with the new one
-      let preview1 = document.querySelector('#imgPerfil');
-      let preview2 = document.querySelector('#previewImgSmall');
-      let reader  = new FileReader();
-      preview2.setAttribute('src',document.getElementById("previewImg").getAttribute('src'));
-      preview1.setAttribute('src',document.getElementById("previewImg").getAttribute('src'));
+      this.perfilImageService.setPerfilImage(`data:image/jpeg;base64,${this.base64image}`);
       },
       error=>{
         this.showError(error)

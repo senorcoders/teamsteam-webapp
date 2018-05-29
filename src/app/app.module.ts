@@ -35,6 +35,7 @@ import { LoginoneComponent } from './session/loginone/loginone.component';
 import { RegisterComponent } from './session/register/register.component';
 import { ToastrModule } from 'ngx-toastr';
 import {MyGuardService} from './services/my-guard.service';
+import { PerfilImageService } from './core/perfil-image/perfil-image.service';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -86,7 +87,8 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		PageTitleService,
 		AuthenticationService,
     TeamService,
-		MyGuardService
+		MyGuardService,
+    PerfilImageService
 	]
 })
 export class ChankyaAppModule { }
