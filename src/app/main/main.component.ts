@@ -24,6 +24,7 @@ export class MainComponent implements OnInit, OnDestroy{
     //my variables
     userData:any;
     perfilImage:string;
+    isManager:boolean=false;
 
     private _router: Subscription;
     header: string;
@@ -63,6 +64,9 @@ export class MainComponent implements OnInit, OnDestroy{
 	constructor(public tourService: TourService, public menuItems: MenuItems, private breadcrumbService: BreadcrumbService, private pageTitleService: PageTitleService, public translate: TranslateService, private router: Router, private media: ObservableMedia, private auth:AuthenticationService, private PerfilImageService:PerfilImageService) {
         //get user data
         this.getUserInfo();
+        if(this.userData.roles[0].name=="Manager"){
+           this.isManager=true
+           }
 
         const browserLang: string = translate.getBrowserLang();
         translate.use(browserLang.match(/en|fr/) ? browserLang : 'en');

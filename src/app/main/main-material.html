@@ -39,8 +39,8 @@
             <div class="sidenav-scrollbar-container">
                <perfect-scrollbar>
                   <nav menuToggleDirective class="navigation">
-                     <ul class="chankya-nav">
-                        <li class="nav-item" menuToggleLink *ngFor="let menuitem of menuItems.getAll()">
+                     <ul class="chankya-nav" *ngIf="isManager else menuPlayer">
+                        <li class="nav-item" menuToggleLink *ngFor="let menuitem of menuItems.getAll()" >
                            <a target="_blank" href="{{menuitem.state}}" *ngIf="menuitem.type === 'ext-link'" tourAnchor="tour-ui">
                                <i class="{{ menuitem.icon }}"></i>
                                <p class="text-nowrap mb-0">
@@ -70,6 +70,39 @@
                            </ul>
                         </li>
                      </ul>
+                    <ng-template #menuPlayer>
+                      <ul class="chankya-nav">
+                        <li class="nav-item" menuToggleLink *ngFor="let menuitem of menuItems.getPlayerMenu()" >
+                           <a target="_blank" href="{{menuitem.state}}" *ngIf="menuitem.type === 'ext-link'" tourAnchor="tour-ui">
+                               <i class="{{ menuitem.icon }}"></i>
+                               <p class="text-nowrap mb-0">
+                                  <span>{{ menuitem.name | translate }}</span>
+                               </p>
+                           </a>
+                           <a menuToggle [routerLink]="['/', menuitem.state]" routerLinkActive="active-link" *ngIf="menuitem.type === 'link'">
+                           <i class="{{ menuitem.icon }}"></i>
+                           <p class="text-nowrap mb-0">
+                              <span>{{ menuitem.name | translate }}</span>
+                           </p>
+                           </a>
+                           <a menuToggle href="javascript:void(0)" *ngIf="menuitem.type === 'sub'">
+                              <i class="{{ menuitem.icon }}"></i>
+                              <p class="text-nowrap mb-0">
+                                 <span>{{ menuitem.name | translate }}</span>
+                                 <i class="fa fa-caret-down" aria-hidden="true"></i>
+                              </p>
+                           </a>
+                           <ul class="sub-menu chankya-nav" *ngIf="menuitem.type === 'sub'">
+                              <li class="nav-item" *ngFor="let childitem of menuitem.children" routerLinkActive="open">
+                                 <a [routerLink]="['/', menuitem.state, childitem.state ]" routerLinkActive="active-link">
+                                    <i class="icon icon-arrows-right-double"></i>
+                                    <p class="text-nowrap mb-0"><span>{{ childitem.name | translate }}</span></p>
+                                 </a>
+                              </li>
+                           </ul>
+                        </li>
+                     </ul>
+                    </ng-template>
                      <ul class="add-dynamic-menu list-style-none">
                         <li>
                            <a (click)="addMenuItem()">

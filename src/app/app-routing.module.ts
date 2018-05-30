@@ -7,6 +7,7 @@ import { HorizontalLayoutComponent } from './horizontal-layout/horizontal-layout
 import { LoginoneComponent } from './session/loginone/loginone.component';
 import { RegisterComponent } from './session/register/register.component';
 import {MyGuardService} from './services/my-guard.service';
+import {PlayerRoutesService} from './services/player-routes.service';
 export const AppRoutes: Routes = [{
   path: '',
   redirectTo: 'loginone',
@@ -29,12 +30,12 @@ export const AppRoutes: Routes = [{
   {
     path: 'form-builder',
     loadChildren: './form-builder/form-builder.module#FormBuilderModule',
-    canActivate:[MyGuardService]
+    canActivate:[MyGuardService, PlayerRoutesService],
   },
   {
     path: 'player',
     loadChildren: './player/player.module#PlayerModule',
-    canActivate:[MyGuardService]
+    canActivate:[MyGuardService, PlayerRoutesService]
   },
   {
     path: 'inbox',
