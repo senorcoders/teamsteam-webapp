@@ -1,0 +1,75 @@
+<div class="datepicker-wrapper">
+    <div class="row">
+        <div class="col-lg-5">
+            <div class="chk-block">
+                <div class="chk-block-title">
+                    <h3 class="text-capitalize">Datepicker DD/MM/YY</h3>
+                </div>
+                <div class="chk-block-content">
+                    <form>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input class="form-control" placeholder="Select a date" ngx-mydatepicker name="datepicker"
+                                [(ngModel)]="model" [options]="dateOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary" (click)="dp.clearDate()">
+                                        <i class="glyphicon glyphicon-remove"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary" (click)="dp.toggleCalendar()">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="chk-block">
+                <div class="chk-block-title">
+                    <h3 class="text-capitalize">Datepicker MM/DD/YY</h3>
+                </div>
+                <div class="chk-block-content">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="Select a date" ngx-mydatepicker name="datepicker2"
+                            [(ngModel)]="model2" [options]="dateOptions2" #dp2="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-success" (click)="dp2.clearDate()">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                                <button type="button" class="btn btn-success" (click)="dp2.toggleCalendar()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="chk-block">
+                <div class="chk-block-title">
+                    <h3 class="text-capitalize">Datepicker YY/MM/DD</h3>
+                </div>
+                <div class="chk-block-content">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input class="form-control" placeholder="Select a date" ngx-mydatepicker name="datepicker3"
+                            [(ngModel)]="model3" [options]="dateOptions3" #dp3="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-warning" (click)="dp3.clearDate()">
+                                    <i class="glyphicon glyphicon-remove"></i>
+                                </button>
+                                <button type="button" class="btn btn-warning" (click)="dp3.toggleCalendar()">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

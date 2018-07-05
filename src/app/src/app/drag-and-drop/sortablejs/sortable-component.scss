@@ -1,0 +1,20 @@
+$text-color:#fff;
+$image-border-color:#fff;
+.draggable {
+   cursor: move;
+   border-bottom: 1px solid $image-border-color;
+   margin-bottom: 10px;
+   cursor: -webkit-grabbing;
+    .pad-wrap{
+        overflow: hidden;
+    }
+}
+.drag-handle {
+   cursor: move;
+   cursor: -webkit-grabbing;
+}
+@media(max-width:560px){
+    .sortable-draggor{
+ display: none;   
+}
+}

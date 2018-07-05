@@ -1,0 +1,30 @@
+<div class="gallery-wrapper">
+    <div class="row">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 mb-3" *ngFor= "let image of images">
+            <div class="card">
+                <div class="card-body">
+                    <div class="overlay-wrap mb-3">
+                        <img src="{{image.image}}" class="img-fluid rounded w-100" alt="buildings" width="500" height="302" />
+                        <div class="card-img-overlay flex-hover primary-tp-layer pos-center">
+                            
+                                <a href="javascript:void(0)" class="expand">+</a>
+                           
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-start flex-column">
+                            <p>{{image.title}}</p>
+                            <span class="text-muted small">{{image.post}}</span>
+                        </div>
+                        <div class="d-flex align-items-end flex-column">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><a class="text-muted"><i class="fa fa-eye-slash fa-lg"></i></a></li>
+                                <li class="list-inline-item"><a class="text-muted"><i class="fa fa-trash fa-lg"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

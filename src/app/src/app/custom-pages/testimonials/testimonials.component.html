@@ -1,0 +1,24 @@
+<div class="testimonail-wrapper">
+    <div class="chk-block">
+        <div class="chk-block-title">
+            <h3 class="text-capitalize">Testimonials</h3>
+        </div>
+        <div class="chk-block-content">
+            <div class="row">
+                <div class="col-md-12 col-lg-4" *ngFor = "let client of clients">
+                    <div class="testimonial-card card text-center">
+                        <div class="card-up bg-{{client.color}} p-5"></div>
+                        <div class="testimonial-user">
+                            <img src="{{client.image}}" class="img-fluid rounded-circle" alt="testimonail user thumb" width="150" height="150" />
+                        </div>
+                        <div class="card-body">
+                            <h2 class="text-uppercase text-{{client.color}}">{{client.name}}</h2>
+                            <div class="dropdown-divider my-3"></div>
+                            <p><i class="fa fa-quote-left"></i> Neque cupiditate assumenda in maiores repudiandae mollitia architecto.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- Testimonail Wrapper closed -->

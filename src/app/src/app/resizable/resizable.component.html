@@ -1,0 +1,29 @@
+<div class="chk-block">
+    <div class="chk-block-title">
+        <div class="d-flex justify-content-between">
+            <div class="d-flex align-self-center">
+                <h3 class="text-capitalize">Resizable</h3>
+            </div>
+        </div>
+    </div><!-- chk block title closed -->
+    <div class="chk-block-content">
+        <p class="text-muted">An angular 4.0+ directive that allows an element to be resized. Built with <a href="https://github.com/mattlewis92/angular-resizable-element" target="_blank" class="font-weight-bold transition">angular-resizable-element</a></p>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card resizable-card over-hidden" [ngStyle]="style" mwlResizable [validateResize]="validate" [resizeEdges]="{bottom: true, right: true, top: true, left: true}" [enableGhostResize]="true" [resizeSnapGrid]="{left: 50, right: 50}" (resizeEnd)="onResizeEnd($event)">
+                    <div class="card-header transparent border-0 text-muted">
+                        <h5 class="mb-0">Resize me! <i class="fa fa-arrows-h ml-2 mr-2"></i> <i class="fa fa-arrows-v"></i></h5>
+                    </div>
+                    <div class="card-body h-100" perfect-scrollbar>
+                        <img src="assets/img/user-1.jpg" width="150" height="150" alt="adam" class="mr-3 mb-4">
+                        <img src="assets/img/user-2.jpg" width="150" height="150" alt="ashley" class="mr-3 mb-4">
+                        <img src="assets/img/user-3.jpg" width="150" height="150" alt="bruno" class="mr-3 mb-4">
+                        <img src="assets/img/user-4.jpg" width="150" height="150" alt="julia" class="mr-3 mb-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- chk block content closed -->
+</div>
+<!-- chk block closed -->
