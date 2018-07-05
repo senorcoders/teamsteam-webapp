@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/Observable';
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8'})
   };
-const  API_ENDPOINT="http://138.68.19.227:8187/";
+const  API_ENDPOINT="https://api.lockerroomapp.com/";
 
 @Injectable()
 export class AuthenticationService {
@@ -17,6 +17,12 @@ export class AuthenticationService {
   setLoginData(data){
     data=JSON.stringify(data);
     localStorage.setItem('sessionToken',data);
+  }
+  setLocalStorage(name,data){
+    localStorage.setItem(name,data)
+  }
+  getLocalStorage(name){
+    return localStorage.getItem(name)
   }
   getLoginData(){
     let data=localStorage.getItem('sessionToken');
