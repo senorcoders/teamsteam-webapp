@@ -8,6 +8,7 @@ import { LoginoneComponent } from './session/loginone/loginone.component';
 import { RegisterComponent } from './session/register/register.component';
 import {MyGuardService} from './services/my-guard.service';
 import {PlayerRoutesService} from './services/player-routes.service';
+
 export const AppRoutes: Routes = [{
   path: '',
   redirectTo: 'loginone',

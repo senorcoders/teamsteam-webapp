@@ -31,6 +31,16 @@ const MENUITEMS = [
       {state: 'list', name: 'List Form'},
     ]
   },
+  {
+    state: 'teams',
+    name: 'Teams',
+    type: 'sub',
+    icon: 'icon-speedometer icons',
+    children: [
+      {state: 'list-team', name: 'List'},
+      {state: 'add-team', name: 'Add Team'},
+    ]
+  },
     {
     state: 'player',
     name: 'Players',
@@ -109,7 +119,7 @@ const MENUITEMS = [
   },
   {
     state: 'icons',
-    name: 'ICONS',
+    name: 'ICONSs',
     type: 'sub',
     icon: 'icon-flag icons',
     children: [
@@ -321,6 +331,16 @@ const MENUPLAYER = [
     ]
   },
   {
+    state: 'teams',
+    name: 'TEAMS',
+    type: 'sub',
+    icon: 'icon-speedometer icons',
+    children: [
+      {state: 'list-team', name: 'List'},
+      {state: 'add-team', name: 'Add Team'},
+    ]
+  },
+  {
     state: 'inbox',
     name: 'INBOX',
     type: 'link',
@@ -505,6 +525,9 @@ export class MenuItems {
     return MENUITEMS;
   }
   getPlayerMenu():Menu[]{
+    return MENUPLAYER;
+  }
+  getTeamsMenu():Menu[]{
     return MENUPLAYER;
   }
   add(menu: Menu) {

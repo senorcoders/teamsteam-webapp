@@ -38,6 +38,7 @@ export class MainComponent implements OnInit, OnDestroy{
     compactSidebar: boolean;
     customizerIn: boolean = false;
     chatWindowOpen: boolean = false;
+    teamWindowOpen: boolean = false;
     chatSidebar: boolean = false;
     sidebarClosed: boolean = false;
     root = 'ltr';
@@ -108,6 +109,9 @@ export class MainComponent implements OnInit, OnDestroy{
         breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v2', 'Dashboard V2');
         breadcrumbService.addFriendlyNameForRoute('/inbox', 'Apps / Inbox');
         breadcrumbService.addFriendlyNameForRoute('/chat', 'Apps / Chat');
+
+        breadcrumbService.addFriendlyNameForRoute('/teams/list', 'Team List');
+        
         breadcrumbService.addFriendlyNameForRoute('/calendar', 'Apps / Calendar');
 
         breadcrumbService.addFriendlyNameForRoute('/ui-elements', 'UI-Element');

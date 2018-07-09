@@ -8,6 +8,7 @@ import { LoginoneComponent } from './session/loginone/loginone.component';
 import { RegisterComponent } from './session/register/register.component';
 import {MyGuardService} from './services/my-guard.service';
 import {PlayerRoutesService} from './services/player-routes.service';
+import {TeamRoutesService} from './services/team-routes.service';
 export const AppRoutes: Routes = [{
   path: '',
   redirectTo: 'loginone',
@@ -28,14 +29,24 @@ export const AppRoutes: Routes = [{
     canActivate:[MyGuardService]
   },
   {
+    path: 'teams',
+    loadChildren: './teams/teams.module#TeamModule',
+    canActivate:[MyGuardService]
+  },
+  {
     path: 'form-builder',
     loadChildren: './form-builder/form-builder.module#FormBuilderModule',
-    canActivate:[MyGuardService, PlayerRoutesService],
+    canActivate:[MyGuardService]
   },
   {
     path: 'player',
     loadChildren: './player/player.module#PlayerModule',
     canActivate:[MyGuardService, PlayerRoutesService]
+  },
+  {
+    path: 'teams',
+    loadChildren: './teams/teams.module#TeamModule',
+    canActivate:[MyGuardService, TeamRoutesService]
   },
   {
     path: 'inbox',

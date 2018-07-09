@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-const  API_ENDPOINT="http://138.68.19.227:8187/";
+const  API_ENDPOINT="http://138.68.19.227:8188/";
 @Injectable()
 export class TeamService {
   token:string;
@@ -14,14 +14,26 @@ export class TeamService {
     if (data) {
       let json= JSON.parse(data);
       this.token= json['token'];
+      console.log(this.token);
       this.id=json['id'];
       this.httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'token':`${this.token}` })
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'token':`${this.token}` })        
       };
     } 
   }
+  getSports() {
+    return this.http.get(`${API_ENDPOINT}sports`,this.httpOptions)
+  }
+  getMyTeams() {
+    let userData=localStorage.getItem('sessionToken');
+    return this.http.get(`${API_ENDPOINT}user/${this.id}/team`,this.httpOptions)
+  }
   getTeams(){
      return this.http.get(`${API_ENDPOINT}teams/`,this.httpOptions)
+  }
+  updateTeam(team_id, team){
+    let body = JSON.stringify(team);
+    return this.http.put(`${API_ENDPOINT}teams/${team_id}`,body, this.httpOptions )
   }
   createUser(user){
     let body = JSON.stringify(user);
