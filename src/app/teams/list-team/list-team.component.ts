@@ -48,7 +48,6 @@ export class ListTeamComponent implements OnInit {
   }
   edit(team){
     this.selectedTeam = team;
-    this.toastr.success('Well Done', 'Edit' + team.name,{positionClass:"toast-top-center"});
   }
   getTeams(){    
   	this.teamservice.getTeams().subscribe(
@@ -92,9 +91,19 @@ export class ListTeamComponent implements OnInit {
       description: updateTeam.description,
       sport: updateTeam.sport
     }
-    this.toastr.success('Well Done', 'Update 1 ' + JSON.stringify(team), {positionClass:"toast-top-center"});
-    let result = this.teamservice.updateTeam(this.selectedTeam.id, team);
-    this.toastr.success('Well Done', 'Update 4 ' + JSON.stringify(result), {positionClass:"toast-top-center"});
+    
+    let result = this.teamservice.updateTeam(this.selectedTeam.id, team).subscribe(
+      data=>{
+        //document.getElementById("teamList").innerHTML = ''
+        this.selectedTeam = data;
+        //this.getMyTeams();
+        this.toastr.success('Well Done', 'Team Updated ', {positionClass:"toast-top-center"});
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+    
   /* 
 
     l
