@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
+import { PageTitleService } from '../../core/page-title/page-title.service';
 import {TeamService} from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -26,8 +27,9 @@ export class ListPlayerComponent implements OnInit {
     contacts:any;
     contactEmerg:any=[];
     def:any=`/assets/img/user-3.jpg`;
-	constructor(private team:TeamService, private auth:AuthenticationService, private fb:FormBuilder, private toast:ToastrService){}
+	constructor(private pageTitleService: PageTitleService,private team:TeamService, private auth:AuthenticationService, private fb:FormBuilder, private toast:ToastrService){}
   ngOnInit(){
+  	this.pageTitleService.setTitle("Player list");
     this.getTeam()
   }
   getTeam(){
