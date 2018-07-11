@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 
 export class ListTeamComponent implements OnInit {
+  @ViewChild('teamImage') teamImage: ElementRef;
   editTeamForm: FormGroup;
 	teams:any;
   endpoint:string;
@@ -110,18 +111,18 @@ export class ListTeamComponent implements OnInit {
       data=>{
         //document.getElementById("teamList").innerHTML = ''
         this.teams[1]= data;
-        this.toastr.success('Well Done', 'Team Updated ' + this.selectedTeam.id , {positionClass:"toast-top-center"});
+        this.toastr.success('Well Done', 'Team Updated ' + this.team_id + ' - ' + this.new_image , {positionClass:"toast-top-center"});
         
-        if(this.new_image != ""){
+        //if(this.new_image != ""){
           this.imageupload.uploadImage( this.selectedTeam.id ,'teams', this.new_image).subscribe(
               data=> {
-                this.toastr.success('Well Done', 'Image Updated', {positionClass:"toast-top-center"});
+                this.toastr.success('Well Done', 'Image Updated' + this.new_image, {positionClass:"toast-top-center"});
               },
               error=>{
                 console.log(error);
               }
             )
-        }
+        //}
         this.selectedTeam = data;
         //this.getMyTeams();
       },
@@ -164,10 +165,22 @@ export class ListTeamComponent implements OnInit {
       //myReader.readAsDataURL(file);
 
       reader.readAsDataURL(file);      
-      reader.onload = () => {
-          this.new_image = reader.result.split(',')[1];// reader.result;
+      
+      reader.onloadend = () => {        
+        
+        this.teamImage.nativeElement.src = reader.result;
+
+          //event.target.src = reader.result;
+          //this.new_image = reader.result.split(',')[1];// reader.result;
       };
+        reader.onload =this._handleReaderLoaded.bind(this);
+        reader.readAsBinaryString(file);
+        //reader2.readAsDataURL(file);
     }
+  }
+  _handleReaderLoaded(readerEvt) {
+    let binaryString = readerEvt.target.result;
+    this.new_image=btoa(binaryString);
   }
   showError(e) {
     this.toastr.error('Error', e,{positionClass:"toast-top-center"});
@@ -175,4 +188,7 @@ export class ListTeamComponent implements OnInit {
   showSuccess() {
     this.toastr.success('Well Done', 'Your player was added Successfully',{positionClass:"toast-top-center"});
   }
+  errorHandler(event, width, height) {
+   event.target.src = "http://placehold.it/"+width+"x"+height;
+ }
 }

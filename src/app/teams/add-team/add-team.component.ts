@@ -20,54 +20,7 @@ export class AddTeamComponent implements OnInit {
   @ViewChild('contacts') contacts:ElementRef;
   constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router) {
   }
-  createPlayer(){
-    let user={
-      "username":this.addPlayer.get('username').value, 
-      "firstName":this.addPlayer.get('firstname').value, 
-      "lastName":this.addPlayer.get('lastname').value, 
-      "password":this.addPlayer.get('password').value,
-      "email":this.addPlayer.get('email').value,
-      "contacts":this.addPlayer.get('contacts').value
-    }
-    this.teamservice.createUser(user).subscribe(
-      data=>{
-        let id=data['id'];
-        let player={
-          'user':id,
-          'team':this.addPlayer.get('team').value,
-          'birthDay':this.addPlayer.get('birthDay').value,
-          'yerseyNumber':this.addPlayer.get('yerseyNumber').value,
-          'gender':this.addPlayer.get('gender').value,
-          'nonPlayer':this.addPlayer.get('nonPlayer').value,
-          'managerAccess':this.addPlayer.get('managerAccess').value,
-          'positions':[this.addPlayer.get('positions').value]
-        }
-        this.teamservice.createPlayer(player).subscribe(
-          data=>{
-            let image={'id':id,'image':this.base64image}
-            this.teamservice.uploadImage(image).subscribe(
-              data=>{
-                this.showSuccess();
-              },
-              error=>{
-                this.showError(error)
-              }
-            )
-            this.addPlayer.reset();
-          },
-          error=>{
-            this.showError(error)
-            console.log(error)
-          }
-        )
-      },
-      error=>{
-        this.showError(error.err)
-        console.log(error)
-      }
-    )
-
-  }
+  
   ngOnInit() {
     this.pageTitleService.setTitle("Teams");
   	this.addPlayer=this.fb.group({

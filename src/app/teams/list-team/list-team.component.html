@@ -14,7 +14,7 @@
                             <a class="nav-link ripple" >
                                 <div class="d-flex justify-content-start">
                                     <div class="d-flex align-items-start flex-column mr-3 pos-relative">
-                                        <img src="{{endpoint}}images/wherever/teams/{{team.id}}" class="rounded-circle" width="55" height="55" alt="user thumb" />                                        
+                                        <img (error)="errorHandler($event, 80,80)" src="{{endpoint}}images/wherever/teams/{{team.id}}" class="rounded-circle" width="55" height="55" alt="user thumb" />                                        
                                     </div>
                                     <div class="d-flex align-items-start align-content-end flex-column m-w-160">
                                         <h5>{{ team.name }}</h5>
@@ -71,12 +71,9 @@
                                                     <div class="row">
                                                         <div class="col-sm-2 col-md-6 col-lg-6 mx-auto">
                                                             <div class="form-group">
-                                                                <label for="teamPicture">Team Picture</label><br>
-                                                                    <img src="{{endpoint}}images/wherever/teams/{{selectedTeam.id}}" width="300px;">
-                                                                    <img src="{{new_image}}" width="300px;">
+                                                                <label for="teamPicture">Team Picture</label><br><img #teamImage (error)="errorHandler($event, 300,300)" src="{{endpoint}}images/wherever/teams/{{selectedTeam.id}}"  width="300px;">
                                                                     <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
-                                                                    {{new_image}}
-
+                                                                    
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-6 col-lg-6 mx-auto">
