@@ -118,7 +118,7 @@ export class RegisterComponent {
   	})
   }
   register(){
-    prepare data
+    //prepare data
   	let data={
 			"username":this.registerForm.get('username').value,
 			"firstName":this.registerForm.get('firstName').value,
