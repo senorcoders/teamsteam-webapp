@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef, ViewEncapsulation } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormControl} from '@angular/forms';
 import { PageTitleService } from '../../core/page-title/page-title.service';
+import {fadeInAnimation} from "../../core/route-animation/route.animation";
 import {TeamService} from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -9,6 +10,11 @@ import { Router } from '@angular/router';
   selector: 'app-list-player',
   templateUrl: './list-player.component.html',
   styleUrls: ['./list-player.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+    host: {
+        "[@fadeInAnimation]": 'true'
+    },
+    animations: [ fadeInAnimation ]
 })
 export class ListPlayerComponent implements OnInit {
 	teams:any=[];
