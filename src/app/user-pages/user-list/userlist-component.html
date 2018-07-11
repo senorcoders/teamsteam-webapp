@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-6 col-lg-6 col-xl-3 mb-3" *ngFor = "let user of users">
                 <div class="card">
-                    <figure class="imghvr-zoom-in"><img src="{{user.image}}" class="img-fluid" alt="example-image">
+                    <figure class="imghvr-zoom-in"><img (error)="errorHandler($event)" src="{{endpoint}}images/wherever/users/{{user.id}}" class="img-fluid" alt="example-image">
                         <figcaption class="card-img-overlay pos-center text-center">
                             <div class="center-holder">
                                 <a href="javascript:void(0)" class="square-40 circle bg-danger"><i class="fa fa-search"></i></a>
@@ -14,14 +14,27 @@
                         </figcaption>
                     </figure>
                     <div class="card-body text-center">
-                        <p>{{user.name}}</p>
-                        <p class="text-muted">{{user.post}}</p>
+                        <p>{{user.firstName}} {{user.lastName}}</p>
+                        <p class="text-muted">{{user.email}}</p>
                         <div class="card-links">
                             <ul class="list-inline">
                                 <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-facebook fa-lg text-muted"></i></a></li>
                                 <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-twitter fa-lg text-muted"></i></a></li>
                                 <li class="list-inline-item"><a href="javascript:void(0)"><i class="fa fa-linkedin fa-lg text-muted"></i></a></li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <a href="javascript:void(0)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
+                                </div>
+                                <div class="col">
+                                    <a href="javascript:void(0)"><i class="fa fa-trash-o" aria-hidden="true"></i>
+Delete</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
