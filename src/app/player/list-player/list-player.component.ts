@@ -87,8 +87,8 @@ export class ListPlayerComponent implements OnInit {
 	  	)
 	  }
 	}
-	error(){
-		console.log('sii')
+	errorHandler(event){
+		event.target.src = "/assets/img/user-3.jpg";
 	}
 	showPopUp(index){
 		this.userID=this.players[index].user.id
