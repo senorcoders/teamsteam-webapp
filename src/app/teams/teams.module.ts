@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {TeamService} from '../services/team.service';
 import {AuthenticationService} from '../services/authentication.service';
+import {FileUploaderComponent } from '../components/imageBase64Uploader/file-uploader.component';
+
 import { ToastrModule } from 'ngx-toastr';
 
 import {TeamsRoutes } from './teams.routing';
@@ -20,7 +22,8 @@ import {ListTeamComponent} from './list-team/list-team.component'
   ],
   declarations: [ 
     AddTeamComponent,    
-    ListTeamComponent
+    ListTeamComponent,
+    FileUploaderComponent
   ]
 })
 

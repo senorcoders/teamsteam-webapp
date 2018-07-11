@@ -1,26 +1,38 @@
 import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TeamService} from '../../services/team.service';
+import {ImageUploadService} from '../../services/image-upload.service';
 import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-list-team',
   templateUrl: './list-team.component.html',
   styleUrls: ['./list-team.component.scss'],
 })
+
 export class ListTeamComponent implements OnInit {
   editTeamForm: FormGroup;
 	teams:any;
   endpoint:string;
   selectedTeam:any;
   sports:any;
-	constructor(private fb: FormBuilder, private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router) {
+  teamRoster:any;
+  team_id: number;
+  new_image: string;
+
+	constructor(private imageupload: ImageUploadService, private fb: FormBuilder, private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router) {
     this.teams        = { name: "" };
+    this.teamRoster   = {
+                          firstName: ""
+                        }
     this.selectedTeam = {
                           name: "",
                           description: "",
-                          city: ""
+                          city: "",
+                          sport: "",
+                          teamPicture: ""
                         };
     this.sports       = { 
                           id: 0, 
@@ -31,7 +43,10 @@ export class ListTeamComponent implements OnInit {
                           description:  [this.selectedTeam.description, Validators.required],
                           city:  [this.selectedTeam.city, Validators.required],
                           sport:  [this.selectedTeam.sport, Validators.required],
-                        } )
+                          teamPicture: [this.selectedTeam.sport, Validators.required],
+                        } );
+    this.team_id = -1;
+    this.new_image = "";
   }
   ngOnInit(){    
     this.endpoint = this.auth.getBaseUrl(); 
@@ -43,11 +58,14 @@ export class ListTeamComponent implements OnInit {
     this.toastr.success('Well Done', 'chat ' + team.name,{positionClass:"toast-top-center"});
   }
   roster(team){
+    this.getRoster(team.id);
     this.selectedTeam = team;
     this.toastr.success('Well Done', 'roster' + team.name,{positionClass:"toast-top-center"});
   }
-  edit(team){
+  edit(id,team){
     this.selectedTeam = team;
+    this.team_id = id;
+    this.toastr.success('Well Done', 'roster' + id,{positionClass:"toast-top-center"});
   }
   getTeams(){    
   	this.teamservice.getTeams().subscribe(
@@ -79,59 +97,77 @@ export class ListTeamComponent implements OnInit {
       }
     )
   }
-  onSubmit(updateTeam) {
-  console.log('sdfdfg');
-  //console.log(form.value);
-  this.toastr.success('Well Done', 'Update 2 ' + updateTeam.sport ,{positionClass:"toast-top-center"});
-  }
-  submitUpdateTeam(updateTeam) {
+ 
+  submitUpdateTeam( updateTeam) {
 
     let team = {      
       name: updateTeam.name,
       description: updateTeam.description,
       sport: updateTeam.sport
     }
-    
+    //this.toastr.success('Well Done', 'Team Updated ' + JSON.stringify(updateTeam.teamPicture), {positionClass:"toast-top-center"});
     let result = this.teamservice.updateTeam(this.selectedTeam.id, team).subscribe(
       data=>{
         //document.getElementById("teamList").innerHTML = ''
+        this.teams[1]= data;
+        this.toastr.success('Well Done', 'Team Updated ' + this.selectedTeam.id , {positionClass:"toast-top-center"});
+        
+        if(this.new_image != ""){
+          this.imageupload.uploadImage( this.selectedTeam.id ,'teams', this.new_image).subscribe(
+              data=> {
+                this.toastr.success('Well Done', 'Image Updated', {positionClass:"toast-top-center"});
+              },
+              error=>{
+                console.log(error);
+              }
+            )
+        }
         this.selectedTeam = data;
         //this.getMyTeams();
-        this.toastr.success('Well Done', 'Team Updated ', {positionClass:"toast-top-center"});
       },
       error=>{
         console.log(error)
       }
     )
-    
-  /* 
-
-    l
-    try {
-      let newTeam: any = await this.http.put("/teams/" + this.team.id, {
-        name: this.name, description: this.description,
-        sport: this.sport, city: this.city
-      }).toPromise();
-
-      if (this.updateImage === true)
-        await this.http.post("/images/teams", { id: newTeam.id, image: this.imageSrc }).toPromise();
-
-      console.log(newTeam);
-      load.dismiss();
-
-      if (this.update === true) {
-        this.navCtrl.pop();
-        return;
+      
+  }
+  deleteTeam(team_id) {
+    let result = this.teamservice.deleteTeam(this.selectedTeam.id).subscribe(
+      data=>{
+        //document.getElementById("teamList").innerHTML = ''
+        this.selectedTeam = data;
+        //this.getMyTeams();
+        this.toastr.success('Well Done', 'The Team has been deleted', {positionClass:"toast-top-center"});
+      },
+      error=>{
+        console.log(error)
       }
+    )
+  }
+  trackByTeams(index: number, team: any): number {return index; }
 
-      this.navCtrl.setRoot(TeamsProfilePage);
+  getRoster(team_id) {
+    this.teamservice.getTeamPlayers(team_id).subscribe(
+      data=>{
+        this.teamRoster=data;        
+
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+  }
+  onFileChange(event) {
+    let reader = new FileReader();
+    if(event.target.files && event.target.files.length > 0) {
+      let file = event.target.files[0];
+      //myReader.readAsDataURL(file);
+
+      reader.readAsDataURL(file);      
+      reader.onload = () => {
+          this.new_image = reader.result.split(',')[1];// reader.result;
+      };
     }
-    catch (e) {
-      load.dismiss();
-      this.alertCtrl.create({ title: "Error", message: undexM, buttons: ["Ok"] });
-      console.error(e);
-    }
-*/
   }
   showError(e) {
     this.toastr.error('Error', e,{positionClass:"toast-top-center"});

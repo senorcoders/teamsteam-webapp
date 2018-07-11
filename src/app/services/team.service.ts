@@ -35,6 +35,12 @@ export class TeamService {
     let body = JSON.stringify(team);
     return this.http.put(`${API_ENDPOINT}teams/${team_id}`,body, this.httpOptions )
   }
+  deleteTeam(team_id){
+    return this.http.delete(`${API_ENDPOINT}teams/${team_id}`, this.httpOptions )
+  }
+  getTeamPlayers(team_id){
+   return this.http.get(`${API_ENDPOINT}team/${team_id}`,this.httpOptions) 
+  }
   createUser(user){
     let body = JSON.stringify(user);
     return this.http.post(`${API_ENDPOINT}user/player/`,body, this.httpOptions )

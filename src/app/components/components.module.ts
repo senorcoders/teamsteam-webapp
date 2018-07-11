@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 
 import { ListComponent } from './list/list.component';
 import { GridsComponent } from './grids/grids.component';
+import { FileUploaderComponent } from './imageBase64Uploader/file-uploader.component';
 import { ComponentRoutes } from './components.routing';
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ComponentRoutes } from './components.routing';
   ],
   declarations: [ 
     ListComponent,
-    GridsComponent
+    GridsComponent,
+    FileUploaderComponent
   ]
 })
 
