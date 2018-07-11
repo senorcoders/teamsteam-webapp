@@ -1,6 +1,8 @@
 import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { PageTitleService } from '../../core/page-title/page-title.service';
 import {fadeInAnimation} from "../../core/route-animation/route.animation";
+import {UserService} from '../../services/user.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
     selector: 'ms-userlist',
@@ -13,47 +15,37 @@ import {fadeInAnimation} from "../../core/route-animation/route.animation";
     animations: [ fadeInAnimation ]
 })
 export class UserListComponent implements OnInit {
-
-  constructor(private pageTitleService: PageTitleService) {}
+  users:any;
+  endpoint:string;
+  constructor(private userservice: UserService, private auth:AuthenticationService, private pageTitleService: PageTitleService) {
+    this.users = [{
+        id: 0,
+        firstName: '',
+        lastName:'',
+        verified: false
+      }
+    ];
+  }
 
   ngOnInit() {
+    this.endpoint = this.auth.getBaseUrl(); 
     this.pageTitleService.setTitle("User List");
+    this.getUsers();
   }
-	
-  users: Object[] = [{
-      name: 'Belle Romero',
-      post:'Marketing',
-      image:'assets/img/user-1.jpg'
-    },{
-      name: 'Jorge Zimmerman',
-      post:'Android Dev.',
-      image:'assets/img/user-2.jpg'
-    },{
-      name: 'Michael McGee',
-      post:'Jr. Android Dev.',
-      image:'assets/img/user-3.jpg'
-    },{
-      name: 'Mary Wise',
-      post:'Designer',
-      image:'assets/img/user-4.jpg'
-    },{
-      name: 'Dennis Cook',
-      post:'UX Expert',
-      image:'assets/img/user-5.jpg'
-    },{
-      name: 'Andrew Johnston',
-      post:'Android Dev.',
-      image:'assets/img/user-6.jpg'
-    },{
-      name: 'Garrett Osborne',
-      post:'UX Expert',
-      image:'assets/img/user-7.jpg'
-    },{
-      name: 'Travis Perry',
-      post:'Sales Consultant',
-      image:'assets/img/user-8.jpg'
-    }
-  ];
+	getUsers(){    
+    this.userservice.getUsers().subscribe(
+      data=>{
+      
+        this.users=data;
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+  }
+  errorHandler(event) {
+   event.target.src = "assets/img/logo-lockerroom.png";
+ }
 	
 }
 

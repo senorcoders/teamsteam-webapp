@@ -31,6 +31,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule,HttpClient } from '@angular/common/http';
 import {AuthenticationService} from './services/authentication.service';
 import {TeamService} from './services/team.service';
+import {UserService} from './services/user.service';
 import {ImageUploadService} from './services/image-upload.service';
 import { LoginoneComponent } from './session/loginone/loginone.component';
 import { RegisterComponent } from './session/register/register.component';
@@ -39,6 +40,8 @@ import {MyGuardService} from './services/my-guard.service';
 import { PerfilImageService } from './core/perfil-image/perfil-image.service';
 import {PlayerRoutesService} from './services/player-routes.service';
 import {TeamRoutesService} from './services/team-routes.service';
+
+
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -91,6 +94,7 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		PageTitleService,
 		AuthenticationService,
     TeamService,
+    UserService,
     ImageUploadService,
 		MyGuardService,
     PerfilImageService,

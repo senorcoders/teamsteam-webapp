@@ -1,15 +1,22 @@
-import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef, ViewEncapsulation } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TeamService} from '../../services/team.service';
 import {ImageUploadService} from '../../services/image-upload.service';
+import {fadeInAnimation} from "../../core/route-animation/route.animation";
 import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
 import { Router } from '@angular/router';
+import { PageTitleService } from '../../core/page-title/page-title.service';
 
 @Component({
   selector: 'app-list-team',
   templateUrl: './list-team.component.html',
   styleUrls: ['./list-team.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+    host: {
+        "[@fadeInAnimation]": 'true'
+    },
+    animations: [ fadeInAnimation ]
 })
 
 export class ListTeamComponent implements OnInit {
@@ -23,7 +30,7 @@ export class ListTeamComponent implements OnInit {
   team_id: number;
   new_image: string;
 
-	constructor(private imageupload: ImageUploadService, private fb: FormBuilder, private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router) {
+	constructor(private imageupload: ImageUploadService, private fb: FormBuilder, private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router, private pageTitleService: PageTitleService) {
     this.teams        = { name: "" };
     this.teamRoster   = {
                           firstName: ""
@@ -53,20 +60,19 @@ export class ListTeamComponent implements OnInit {
     this.endpoint = this.auth.getBaseUrl(); 
     this.getMyTeams();
     this.sports = this.getSports();
+    this.pageTitleService.setTitle("Team List");
+
   }
   chat(team){
     this.selectedTeam = team;
-    this.toastr.success('Well Done', 'chat ' + team.name,{positionClass:"toast-top-center"});
   }
   roster(team){
     this.getRoster(team.id);
     this.selectedTeam = team;
-    this.toastr.success('Well Done', 'roster' + team.name,{positionClass:"toast-top-center"});
   }
   edit(id,team){
     this.selectedTeam = team;
     this.team_id = id;
-    this.toastr.success('Well Done', 'roster' + id,{positionClass:"toast-top-center"});
   }
   getTeams(){    
   	this.teamservice.getTeams().subscribe(

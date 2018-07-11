@@ -32,7 +32,6 @@ const MENUITEMS = [
     icon: 'icon-speedometer icons',
     children: [
       {state: 'list-team', name: 'List'},
-      {state: 'add-team', name: 'Add Team'},
     ]
   },
     {
@@ -79,7 +78,6 @@ const MENUPLAYER = [
     icon: 'icon-speedometer icons',
     children: [
       {state: 'list-team', name: 'List'},
-      {state: 'add-team', name: 'Add Team'},
     ]
   }
 
