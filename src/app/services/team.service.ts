@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 const  API_ENDPOINT="http://138.68.19.227:8188/";
+//const  API_ENDPOINT="https://api.lockerroomapp.com/";
 @Injectable()
 export class TeamService {
   token:string;
@@ -43,15 +44,15 @@ export class TeamService {
   }
   createUser(user){
     let body = JSON.stringify(user);
+    console.log(user)
     return this.http.post(`${API_ENDPOINT}user/player/`,body, this.httpOptions )
   }
-  createPlayer(player){
-    let body = JSON.stringify(player);
-    //return body
-    return this.http.post(`${API_ENDPOINT}players/`,body, this.httpOptions )
+  createPlayer(user,player){
+    return this.http.post(`${API_ENDPOINT}user/player/`,{ user: user, player: player }, this.httpOptions )
   }
   uploadImage(image){
     let body = JSON.stringify(image);
+    console.log(body)
     return this.http.post(`${API_ENDPOINT}images/users`,body, this.httpOptions )
   }
 //   getTeamsByUser(type,id){
@@ -70,5 +71,16 @@ export class TeamService {
     let body = JSON.stringify(data);
     return this.http.post(`${API_ENDPOINT}registrationtemplate`,body, this.httpOptions )
   }
-
+  getData(endpoint){
+    return this.http.get(`${API_ENDPOINT}${endpoint}`, this.httpOptions)
+  }
+  editData(endpoint, data){
+    return this.http.put(`${API_ENDPOINT}${endpoint}`,data, this.httpOptions )
+  }
+  deleteData(endpoint){
+    return this.http.delete(`${API_ENDPOINT}${endpoint}`, this.httpOptions);
+  }
+  saveData(endpoint, data){
+    return this.http.post(`${API_ENDPOINT}${endpoint}`,data, this.httpOptions )
+  }
 }

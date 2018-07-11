@@ -45,7 +45,7 @@ const MENUITEMS = [
     state: 'player',
     name: 'Players',
     type: 'sub',
-    icon: 'fa fa-user',
+    icon: 'icon-people icons',
     children: [
       {state: 'add-player', name: 'Add Player'},
       {state: 'list-player', name: 'List Player'},

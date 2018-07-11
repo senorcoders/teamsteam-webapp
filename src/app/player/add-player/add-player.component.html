@@ -1,79 +1,85 @@
 <div class="chk-block">
     <div class="chk-block-title">
-        <h3 class="text-capitalize">Add New Player</h3>
+        <h3 class="text-capitalize">Add Player</h3>
     </div>
-    <div class="chk-block-content">
+    <select (change)="newPlayer($event.target.value)" class="form-control form-control-lg input-square">
+      <option value="">Choose an option</option>
+      <option value="1">New Player</option>
+      <option value="2">Create new user and player</option>
+    </select>
+    <!-- user and player form -->
+    <div class="chk-block-content" *ngIf="showFormUser">
         <div class="row">
             <div class="col-xl-12 mb-12">
-              <form [formGroup]="addPlayer" (ngSubmit)="createPlayer()">
+              <form [formGroup]="addUser" (ngSubmit)="createUser()">
                 <div class="form-group">
                   <label for="username">UserName</label>
-                    <input type="text" class="form-control form-control-lg input-square" id="username" placeholder="UserName" formControlName="username" [ngClass]="{'is-invalid':addPlayer.get('username').invalid && addPlayer.get('username').touched}">
-                    <div *ngIf="addPlayer.get('username').hasError('required') && addPlayer.get('username').touched" class="invalid-feedback">UserName is required</div>
+                    <input type="text" class="form-control form-control-lg input-square" id="username" placeholder="UserName" formControlName="username" [ngClass]="{'is-invalid':addUser.get('username').invalid && addUser.get('username').touched}">
+                    <div *ngIf="addUser.get('username').hasError('required') && addUser.get('username').touched" class="invalid-feedback">UserName is required</div>
                 </div>
                 <div class="form-group">
                   <label for="firstname">First Name</label>
-                    <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="First Name" formControlName="firstname" [ngClass]="{'is-invalid':addPlayer.get('firstname').invalid && addPlayer.get('firstname').touched}">
-                    <div *ngIf="addPlayer.get('firstname').hasError('required') && addPlayer.get('firstname').touched" class="invalid-feedback">First Name is required</div>
+                    <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="First Name" formControlName="firstname" [ngClass]="{'is-invalid':addUser.get('firstname').invalid && addUser.get('firstname').touched}">
+                    <div *ngIf="addUser.get('firstname').hasError('required') && addUser.get('firstname').touched" class="invalid-feedback">First Name is required</div>
                 </div>
                 <div class="form-group">
                   <label for="lastname">Last Name</label>
-                    <input type="text" class="form-control form-control-lg input-square" id="lastname" placeholder="Last Name" formControlName="lastname" [ngClass]="{'is-invalid':addPlayer.get('lastname').invalid && addPlayer.get('lastname').touched}">
-                    <div *ngIf="addPlayer.get('lastname').hasError('required') && addPlayer.get('lastname').touched" class="invalid-feedback">Last Name is required</div>
+                    <input type="text" class="form-control form-control-lg input-square" id="lastname" placeholder="Last Name" formControlName="lastname" [ngClass]="{'is-invalid':addUser.get('lastname').invalid && addUser.get('lastname').touched}">
+                    <div *ngIf="addUser.get('lastname').hasError('required') && addUser.get('lastname').touched" class="invalid-feedback">Last Name is required</div>
                 </div>
                 <div class="form-group">
                   <label for="birthDay">BirthDate</label>
-                    <input type="date" class="form-control form-control-lg input-square" id="birthDay" placeholder="birthDay" formControlName="birthDay" [ngClass]="{'is-invalid':addPlayer.get('birthDay').invalid && addPlayer.get('birthDay').touched}">
+                    <input type="date" class="form-control form-control-lg input-square" id="birthDay" placeholder="birthDay" formControlName="birthDay" [ngClass]="{'is-invalid':addUser.get('birthDay').invalid && addUser.get('birthDay').touched}">
                      <small id="birthDay" class="form-text text-muted">Example 01/01/2000.</small>
-                     <div *ngIf="addPlayer.get('birthDay').hasError('required') && addPlayer.get('birthDay').touched" class="invalid-feedback">birthDay is required</div>
+                     <div *ngIf="addUser.get('birthDay').hasError('required') && addUser.get('birthDay').touched" class="invalid-feedback">birthDay is required</div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control form-control-lg input-square" id="email" aria-describedby="emailHelp" placeholder="Enter email" formControlName="email" [ngClass]="{'is-invalid':addPlayer.get('email').invalid && addPlayer.get('email').touched}">
+                    <input type="email" class="form-control form-control-lg input-square" id="email" aria-describedby="emailHelp" placeholder="Enter email" formControlName="email" [ngClass]="{'is-invalid':addUser.get('email').invalid && addUser.get('email').touched}">
                     <small id="email" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    <div *ngIf="addPlayer.get('email').touched && addPlayer.get('email').invalid" class="invalid-feedback">
-                    <div *ngIf="addPlayer.get('email').hasError('required')">
+                    <div *ngIf="addUser.get('email').touched && addUser.get('email').invalid" class="invalid-feedback">
+                    <div *ngIf="addUser.get('email').hasError('required')">
                       Email is required
                     </div>
-                    <div *ngIf="addPlayer.get('email').hasError('email') && !addPlayer.get('email').hasError('required')">
+                    <div *ngIf="addUser.get('email').hasError('email') && !addUser.get('email').hasError('required')">
                       Invalid Email
                     </div>				    	
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control form-control-lg input-square" id="password" placeholder="Password" formControlName="password" [ngClass]="{'is-invalid':addPlayer.get('password').invalid && addPlayer.get('password').touched}">
-                    <div *ngIf="addPlayer.get('password').touched && addPlayer.get('password').invalid" class="invalid-feedback">
-                    <div *ngIf="addPlayer.get('password').hasError('required')">
+                    <input type="password" class="form-control form-control-lg input-square" id="password" placeholder="Password" formControlName="password" [ngClass]="{'is-invalid':addUser.get('password').invalid && addUser.get('password').touched}">
+                    <div *ngIf="addUser.get('password').touched && addUser.get('password').invalid" class="invalid-feedback">
+                    <div *ngIf="addUser.get('password').hasError('required')">
                       password is required
                     </div>
-                    <div *ngIf="addPlayer.get('password').hasError('minlength') && !addPlayer.get('password').hasError('required')">
+                    <div *ngIf="addUser.get('password').hasError('minlength') && !addUser.get('password').hasError('required')">
                       Password need to be more than 6 characters
                     </div>				    	
                     </div>
                   </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <select class="form-control form-control-lg input-square" id="gender" formControlName="gender" [ngClass]="{'is-invalid':addPlayer.get('gender').invalid && addPlayer.get('gender').touched}">
+                    <select class="form-control form-control-lg input-square" id="gender" formControlName="gender" [ngClass]="{'is-invalid':addUser.get('gender').invalid && addUser.get('gender').touched}">
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </select>
-                    <div *ngIf="addPlayer.get('gender').hasError('required') && addPlayer.get('gender').touched" class="invalid-feedback">Gender is required</div>
+                    <div *ngIf="addUser.get('gender').hasError('required') && addUser.get('gender').touched" class="invalid-feedback">Gender is required</div>
                 </div>
                 <div class="form-group">
-                  <label for="yerseyNumber">yersey Number</label>
-                    <input type="number" class="form-control form-control-lg input-square" id="yerseyNumber" placeholder="yersey Number" formControlName="yerseyNumber" [ngClass]="{'is-invalid':addPlayer.get('yerseyNumber').invalid && addPlayer.get('yerseyNumber').touched}">
-                    <div *ngIf="addPlayer.get('yerseyNumber').hasError('required') && addPlayer.get('yerseyNumber').touched" class="invalid-feedback">Yersey Number is required</div>
+                  <label for="yerseyNumber">Jersey Number</label>
+                    <input type="number" class="form-control form-control-lg input-square" id="yerseyNumber" placeholder="jersey Number" formControlName="yerseyNumber" [ngClass]="{'is-invalid':addUser.get('yerseyNumber').invalid && addUser.get('yerseyNumber').touched}">
+                    <div *ngIf="addUser.get('yerseyNumber').hasError('required') && addUser.get('yerseyNumber').touched" class="invalid-feedback">Jersey Number is required</div>
                 </div>
                 <div class="form-group">
                   <label for="positions">Positions</label>
-                    <textarea type="text" class="form-control form-control-lg input-square" id="positions" placeholder="Positions" formControlName="positions" [ngClass]="{'is-invalid':addPlayer.get('positions').invalid && addPlayer.get('positions').touched}"></textarea>
+                    <textarea type="text" class="form-control form-control-lg input-square" id="positions" placeholder="Positions" formControlName="positions" [ngClass]="{'is-invalid':addUser.get('positions').invalid && addUser.get('positions').touched}"></textarea>
                     <small class="form-text text-muted">One position per line</small>
-                    <div *ngIf="addPlayer.get('positions').hasError('required') && addPlayer.get('positions').touched" class="invalid-feedback">Positions is required</div>
+                    <div *ngIf="addUser.get('positions').hasError('required') && addUser.get('positions').touched" class="invalid-feedback">Positions is required</div>
                 </div>
                 <div class="form-group">
                   <label for="contacts" style="width:100%">Contacts<small (click)="addItem()" style="float: right; cursor: pointer;">Add More <i class="fa fa-plus"></i></small></label>
-                  <div formArrayName="contacts" *ngFor="let item of addPlayer.get('contacts').controls; let i = index;">
+                  <div formArrayName="contacts" *ngFor="let item of addUser.get('contacts').controls; let i = index;">
                     <div [formGroupName]="i">
                       <div class="row">
                         <div class="col-lg-4">
@@ -94,35 +100,104 @@
                   </div>
                   <div class="form-group">
                     <label for="nonPlayer">nonPlayer</label>
-                    <select class="form-control form-control-lg input-square" id="nonPlayer" formControlName="nonPlayer" [ngClass]="{'is-invalid':addPlayer.get('nonPlayer').invalid && addPlayer.get('nonPlayer').touched}">
+                    <select class="form-control form-control-lg input-square" id="nonPlayer" formControlName="nonPlayer" [ngClass]="{'is-invalid':addUser.get('nonPlayer').invalid && addUser.get('nonPlayer').touched}">
                       <option value="true">True</option>
                       <option value="false">False</option>
                     </select>
-                    <div *ngIf="addPlayer.get('nonPlayer').hasError('required') && addPlayer.get('nonPlayer').touched" class="invalid-feedback">Non Player is required</div>
+                    <div *ngIf="addUser.get('nonPlayer').hasError('required') && addUser.get('nonPlayer').touched" class="invalid-feedback">Non Player is required</div>
                 </div>
                 <div class="form-group">
                     <label for="managerAccess">managerAccess</label>
-                    <select class="form-control form-control-lg input-square" id="managerAccess" formControlName="managerAccess" [ngClass]="{'is-invalid':addPlayer.get('managerAccess').invalid && addPlayer.get('managerAccess').touched}">
+                    <select class="form-control form-control-lg input-square" id="managerAccess" formControlName="managerAccess" [ngClass]="{'is-invalid':addUser.get('managerAccess').invalid && addUser.get('managerAccess').touched}">
                       <option value="true">True</option>
                       <option value="false">False</option>
                     </select>
-                    <div *ngIf="addPlayer.get('managerAccess').hasError('required') && addPlayer.get('managerAccess').touched" class="invalid-feedback">Manager Access is required</div>
+                    <div *ngIf="addUser.get('managerAccess').hasError('required') && addUser.get('managerAccess').touched" class="invalid-feedback">Manager Access is required</div>
                 </div>
                   <div class="form-group">
                     <label for="teams">Teams</label>
-                    <select class="form-control form-control-lg input-square" id="team" formControlName="team"  [ngClass]="{'is-invalid':addPlayer.get('team').invalid && addPlayer.get('team').touched}">
+                    <select class="form-control form-control-lg input-square" id="team" formControlName="team"  [ngClass]="{'is-invalid':addUser.get('team').invalid && addUser.get('team').touched}">
                       <option *ngFor="let team of teams" value="{{team.id}}">{{team.name}}</option>
                     </select>
-                    <div *ngIf="addPlayer.get('team').hasError('required') && addPlayer.get('team').touched" class="invalid-feedback">Team is required</div>
+                    <div *ngIf="addUser.get('team').hasError('required') && addUser.get('team').touched" class="invalid-feedback">Team is required</div>
                 </div>
                 <div class="form-group">
                   <input type="file" (change)="uploadImage($event.target.files)" class="form-control">
                   <img src="" height="200" alt="Image preview..." id="previewPlayerImg">
                 </div>
                   <div class="form-group">
-                      <input type="submit" value="Create" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="addPlayer.invalid">
+                      <input type="submit" value="Create" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="addUser.invalid">
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+    <!-- player form -->
+    <div class="chk-block-content" *ngIf="showFormPlayer">
+        <div class="row">
+            <div class="col-xl-12 mb-12">
+              <form [formGroup]="addPlayer" (ngSubmit)="savePlayer()">
+                <div class="form-group">
+                  <label for="username">User</label>
+                  <input type="email" class="form-control form-control-lg input-square" id="user" placeholder="User" formControlName="user" [ngClass]="{'is-invalid':addPlayer.get('user').invalid && addPlayer.get('user').touched}" (change)="checkUser($event.target.value)" />
+                  <div *ngIf="addPlayer.get('user').hasError('required') && addPlayer.get('user').touched" class="invalid-feedback">User is required</div>
+                  <div *ngIf="findUser" class="feedback">Well Done. We found the user</div>
+                  <div *ngIf="noFindUser" class="feedback">Sorry, We couldn't find the user</div>
+                </div>
+                <div *ngIf="showPlayerFields">
+                  <div class="form-group">
+                    <label for="birthDay">BirthDate</label>
+                      <input type="date" class="form-control form-control-lg input-square" id="birthDay" placeholder="birthDay" formControlName="birthDay" [ngClass]="{'is-invalid':addPlayer.get('birthDay').invalid && addPlayer.get('birthDay').touched}">
+                       <small id="birthDay" class="form-text text-muted">Example 01/01/2000.</small>
+                       <div *ngIf="addPlayer.get('birthDay').hasError('required') && addPlayer.get('birthDay').touched" class="invalid-feedback">birthDay is required</div>
+                  </div>
+                  <div class="form-group">
+                      <label for="gender">Gender</label>
+                      <select class="form-control form-control-lg input-square" id="gender" formControlName="gender" [ngClass]="{'is-invalid':addPlayer.get('gender').invalid && addPlayer.get('gender').touched}">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                      <div *ngIf="addPlayer.get('gender').hasError('required') && addPlayer.get('gender').touched" class="invalid-feedback">Gender is required</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="yerseyNumber">Jersey Number</label>
+                      <input type="number" class="form-control form-control-lg input-square" id="yerseyNumber" placeholder="Jersey Number" formControlName="yerseyNumber" [ngClass]="{'is-invalid':addPlayer.get('yerseyNumber').invalid && addPlayer.get('yerseyNumber').touched}">
+                      <div *ngIf="addPlayer.get('yerseyNumber').hasError('required') && addPlayer.get('yerseyNumber').touched" class="invalid-feedback">Jersey Number is required</div>
+                  </div>
+                  <div class="form-group">
+                    <label for="positions">Positions</label>
+                      <textarea type="text" class="form-control form-control-lg input-square" id="positions" placeholder="Positions" formControlName="positions" [ngClass]="{'is-invalid':addPlayer.get('positions').invalid && addPlayer.get('positions').touched}"></textarea>
+                      <small class="form-text text-muted">One position per line</small>
+                      <div *ngIf="addPlayer.get('positions').hasError('required') && addPlayer.get('positions').touched" class="invalid-feedback">Positions is required</div>
+                  </div>
+                  <div class="form-group">
+                      <label for="nonPlayer">nonPlayer</label>
+                      <select class="form-control form-control-lg input-square" id="nonPlayer" formControlName="nonPlayer" [ngClass]="{'is-invalid':addPlayer.get('nonPlayer').invalid && addPlayer.get('nonPlayer').touched}">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                      </select>
+                      <div *ngIf="addPlayer.get('nonPlayer').hasError('required') && addPlayer.get('nonPlayer').touched" class="invalid-feedback">Non Player is required</div>
+                  </div>
+                  <div class="form-group">
+                      <label for="managerAccess">managerAccess</label>
+                      <select class="form-control form-control-lg input-square" id="managerAccess" formControlName="managerAccess" [ngClass]="{'is-invalid':addPlayer.get('managerAccess').invalid && addPlayer.get('managerAccess').touched}">
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                      </select>
+                      <div *ngIf="addPlayer.get('managerAccess').hasError('required') && addPlayer.get('managerAccess').touched" class="invalid-feedback">Manager Access is required</div>
+                  </div>
+                    <div class="form-group">
+                      <label for="teams">Teams</label>
+                      <select class="form-control form-control-lg input-square" id="team" formControlName="team"  [ngClass]="{'is-invalid':addPlayer.get('team').invalid && addPlayer.get('team').touched}">
+                        <option *ngFor="let team of teams" value="{{team.id}}">{{team.name}}</option>
+                      </select>
+                      <div *ngIf="addPlayer.get('team').hasError('required') && addPlayer.get('team').touched" class="invalid-feedback">Team is required</div>
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="addPlayer.invalid">
+                  </div>
+                </div>
+              </form>
             </div>
         </div>
     </div>

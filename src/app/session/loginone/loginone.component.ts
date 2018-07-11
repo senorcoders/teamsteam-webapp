@@ -55,10 +55,8 @@ export class LoginoneComponent implements OnInit {
   }
   ngOnInit() {
     let uuid=this.auth.getLocalStorage('uuid')
-    console.log(uuid)
     if(uuid && uuid!=''){
       this.uuid=uuid
-      console.log('si')
     }
     else{
         console.log('no')
