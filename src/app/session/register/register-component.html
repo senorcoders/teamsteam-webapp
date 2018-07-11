@@ -17,14 +17,6 @@
                               <div class="invalid-feedback" *ngIf="registerForm.get('username').hasError('required')">UserName is Required</div>
                             </div>
                             <div class="form-group">
-                              <input type="password" class="form-control form-control-lg input-square" id="password" formControlName="password" placeholder="Password" [ngClass]="{'is-invalid':registerForm.get('password').invalid && registerForm.get('password').touched}">
-                              <div class="invalid-feedback" *ngIf="registerForm.get('password').hasError('required')">Password is Required</div>
-                            </div>
-                            <div class="form-group">
-                              <input type="password" class="form-control form-control-lg input-square" id="repassword" placeholder="Repeat Password" formControlName="repassword" [ngClass]="{'is-invalid':registerForm.get('repassword').invalid && registerForm.get('repassword').touched}">
-                              <div class="invalid-feedback" *ngIf="registerForm.get('repassword').hasError('required')">Password is Required</div>
-                            </div>
-                            <div class="form-group">
                               <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="First Name" formControlName="firstName" [ngClass]="{'is-invalid':registerForm.get('firstName').invalid && registerForm.get('firstName').touched}">
                               <div class="invalid-feedback" *ngIf="registerForm.get('firstName').hasError('required')">First Name is Required</div>
                             </div>
@@ -33,9 +25,10 @@
                               <div class="invalid-feedback" *ngIf="registerForm.get('lastName').hasError('required')">Last Name is Required</div>
                             </div>
                             <div class="form-group">
-                              <input type="email" class="form-control form-control-lg input-square" id="email" placeholder="Email" formControlName="email" [ngClass]="{'is-invalid':registerForm.get('email').invalid && registerForm.get('email').touched}">
+                              <input type="email" class="form-control form-control-lg input-square" id="email" placeholder="Email" formControlName="email" [ngClass]="{'is-invalid':registerForm.get('email').invalid && registerForm.get('email').touched}" (change)="checkEmail()">
                               <div class="invalid-feedback" *ngIf="registerForm.get('email').hasError('required')">Email is Required</div>
                               <div class="invalid-feedback" *ngIf="registerForm.get('email').hasError('email') && !registerForm.get('email').hasError('required')">Email invalid</div>
+                              <div class="is-invalid" *ngIf="showEmailStatus">Email having already been used.</div>
                             </div>
                             <div class="form-group">
                               <input type="text" class="form-control form-control-lg input-square" id="teamname" placeholder="Team Name" formControlName="teamName" [ngClass]="{'is-invalid':registerForm.get('teamName').invalid && registerForm.get('teamName').touched}">
@@ -70,10 +63,10 @@
                                 </div>
                             </div>
                             <!-- login meta closed -->
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="registerForm.invalid">Register</button>
+                            <div class="mb-3" >
+                                <button type="submit" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="registerForm.invalid" *ngIf="showButton">Register</button>
                             </div>
-                            <span>Dont have account yet? <a routerLink="/session/loginone" class="text-muted">Sign in here!</a></span>
+                            <span>Dont have account yet? <a routerLink="/loginone" class="text-muted">Sign in here!</a></span>
                         </form>
                         <!-- Login Form closed -->
                     </div>
