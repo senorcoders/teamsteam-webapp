@@ -106,6 +106,9 @@ export class MainComponent implements OnInit, OnDestroy{
         breadcrumbService.addFriendlyNameForRoute('/dashboard', 'Dashboard');
         breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v1', 'Dashboard V1');
         breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v2', 'Dashboard V2');
+
+        breadcrumbService.addFriendlyNameForRoute('/teams/list', 'Team List');
+
         breadcrumbService.addFriendlyNameForRoute('/inbox', 'Apps / Inbox');
         breadcrumbService.addFriendlyNameForRoute('/chat', 'Apps / Chat');
         breadcrumbService.addFriendlyNameForRoute('/calendar', 'Apps / Calendar');

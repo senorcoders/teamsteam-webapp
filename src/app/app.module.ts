@@ -31,12 +31,14 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule,HttpClient } from '@angular/common/http';
 import {AuthenticationService} from './services/authentication.service';
 import {TeamService} from './services/team.service';
+import {ImageUploadService} from './services/image-upload.service';
 import { LoginoneComponent } from './session/loginone/loginone.component';
 import { RegisterComponent } from './session/register/register.component';
 import { ToastrModule } from 'ngx-toastr';
 import {MyGuardService} from './services/my-guard.service';
 import { PerfilImageService } from './core/perfil-image/perfil-image.service';
 import {PlayerRoutesService} from './services/player-routes.service';
+import {TeamRoutesService} from './services/team-routes.service';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http, 'assets/i18n', '.json');
@@ -77,6 +79,7 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		AuthComponent,
 		HorizontalLayoutComponent,
 		LoginoneComponent,
+		
     RegisterComponent,
 	],
 	entryComponents: [
@@ -88,9 +91,11 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		PageTitleService,
 		AuthenticationService,
     TeamService,
+    ImageUploadService,
 		MyGuardService,
     PerfilImageService,
-    PlayerRoutesService
+    PlayerRoutesService,
+    TeamRoutesService
 	]
 })
 export class ChankyaAppModule { }

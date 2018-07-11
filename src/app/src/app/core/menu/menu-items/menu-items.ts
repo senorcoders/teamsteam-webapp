@@ -504,6 +504,9 @@ export class MenuItems {
   getAll(): Menu[] {
     return MENUITEMS;
   }
+  getTeamsMenu():Menu[]{
+    return MENUPLAYER;
+  }
   getPlayerMenu():Menu[]{
     return MENUPLAYER;
   }
