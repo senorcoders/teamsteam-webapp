@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {FormBuilderRoutes } from './form-builder.routing';
 import {AddFormBuilderComponent} from './add-form-builder/add-form-builder.component';
 import {ListFormBuilderComponent} from './list-form-builder/list-form-builder.component'
+import {EditFormBuilderComponent} from './edit-form-builder/edit-form-builder.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import {ListFormBuilderComponent} from './list-form-builder/list-form-builder.co
   ],
   declarations: [ 
     AddFormBuilderComponent,
-    ListFormBuilderComponent
+    ListFormBuilderComponent,
+    EditFormBuilderComponent
   ]
 })
 

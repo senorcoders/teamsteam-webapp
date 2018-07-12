@@ -1,6 +1,6 @@
 <div class="chk-block">
     <div class="chk-block-title">
-        <h3 class="text-capitalize">Add New Register Form</h3>
+        <h3 class="text-capitalize">Edit Register Form</h3>
     </div>
     <div class="chk-block-content">
         <div class="row">
@@ -8,7 +8,7 @@
               <h3>Form Details</h3>
               <div class="row">
                 <div class="col-lg-12">
-                  <form [formGroup]="builderForm" (submit)="saveForm()">
+                  <form [formGroup]="builderForm" (submit)="EditForm()">
                     <div class="form-group">
                       <label for="name">Form Title</label>
                       <input type="text" class="form-control form-control-lg input-square" id="name" placeholder="Title" formControlName="title" [ngClass]="{'is-invalid':builderForm.get('title').invalid && builderForm.get('title').touched}">
@@ -26,7 +26,7 @@
                         </select>
                       </div>
                     <div class="form-group">
-                      <button class="btn btn-primary btn-block btn-lg btn-square" [disabled]="builderForm.invalid">Save Form</button>
+                      <button class="btn btn-primary btn-block btn-lg btn-square" [disabled]="builderForm.invalid">Edit Form</button>
                     </div>						
                    </form>
                 </div>

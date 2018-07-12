@@ -1,3 +1,37 @@
-<p>
-  form-builder works!
-</p>
+<div class="form-group">
+    <label for="gender">Teams</label>
+    <select class="form-control form-control-lg input-square" id="forms" (change)="getFormsByTeam($event.target.value)">
+    	<option value="">Choose a team</option>
+      	<option value="{{team.id}}" *ngFor="let team of teams">{{team.name}}</option>
+    </select>
+</div>
+<div class="row" *ngIf="showLoading">
+	<div class="col-12 loaderLocker">
+		<img src="/assets/img/loader.gif" alt="">
+	</div>
+</div>
+<div class="row" *ngIf="!noForms">
+	<div class="col-md-4" *ngFor="let form of forms; let i=index">
+		<div class="square">
+			<div class="perfil"><img src="/assets/img/defaultFormImage.png"></div>
+			<div class="info">
+				<span class="form-name">{{form.title}}</span>
+			</div>
+			<div class="actions">
+				<i class="fa fa-pencil edit" (click)="showPopUp(i)"></i>
+				<i class="fa fa-remove delete" (click)="deleteForm(i)"></i>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row" *ngIf="noForms">
+	<div class="col-12">
+		<h3>No forms was found</h3>
+	</div>
+</div>
+<div class="popup" *ngIf="showPopup">
+	<div class="close" (click)="closePopUp()"></div>
+	<div class="content">
+		<app-edit-form-builder data="{{data}}"></app-edit-form-builder>
+	</div>
+</div>

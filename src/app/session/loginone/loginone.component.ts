@@ -68,7 +68,7 @@ export class LoginoneComponent implements OnInit {
       email:['', [Validators.required, Validators.email]]
     })
     if(this.auth.isLogged()){
-      this.router.navigate(["/teams/list-team"])
+      this.router.navigate(["/user-pages/userprofile"])
     }
   }	
   //get SO

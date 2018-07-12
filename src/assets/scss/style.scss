@@ -5,3 +5,28 @@
 @import "core";
 @import "elements";
 @import "utilities/utilities";
+.actions{
+	i{
+		display: inline-block;
+	    padding: 5px;
+	    color: white;
+	    margin: 10px 2px;
+	    cursor: pointer;
+	}
+	.edit{
+		background: #0066eb;
+	}
+	.chat{
+		background: #272b39;
+	}
+	.delete{
+	    background: #f54b5e;
+	}
+}
+.loaderLocker{
+	img{
+		max-width: 100%;
+	    height: 200px;
+	}
+	text-align: center;
+}

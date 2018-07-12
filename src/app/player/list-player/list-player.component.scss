@@ -17,24 +17,6 @@
 	max-width: 100%;
 	max-height: 100px;
 }
-.actions{
-	i{
-		display: inline-block;
-	    padding: 5px;
-	    color: white;
-	    margin: 10px 2px;
-	    cursor: pointer;
-	}
-	.edit{
-		background: #0066eb;
-	}
-	.chat{
-		background: #272b39;
-	}
-	.delete{
-	    background: #f54b5e;
-	}
-}
 .popup{
     position: fixed;
     width: 100%;

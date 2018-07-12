@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation, Input } from '@angular/core';
 import { PageTitleService } from '../../core/page-title/page-title.service';
 import {fadeInAnimation} from "../../core/route-animation/route.animation";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
@@ -6,30 +6,36 @@ import {TeamService} from '../../services/team.service';
 import {AuthenticationService} from '../../services/authentication.service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
-  selector: 'app-add-form-builder',
-  templateUrl: './add-form-builder.component.html',
-  styleUrls: ['./add-form-builder.component.scss'],
+  selector: 'app-edit-form-builder',
+  templateUrl: './edit-form-builder.component.html',
+  styleUrls: ['./edit-form-builder.component.scss'],
   encapsulation: ViewEncapsulation.None,
     host: {
         "[@fadeInAnimation]": 'true'
     },
     animations: [ fadeInAnimation ]
 })
-export class AddFormBuilderComponent implements OnInit {
+export class EditFormBuilderComponent implements OnInit {
+  @Input() data: any;
   form:any=[];
 	editForm:boolean=false;
 	formEdit:FormGroup;
 	builderForm:FormGroup;
 	teams:any=[];
 	userData:any;
+  dataFormat:any;
   constructor(private pageTitleService: PageTitleService,private fb:FormBuilder, private teamService: TeamService, private auth: AuthenticationService, private toast:ToastrService) { }
 
   ngOnInit() {
-    this.pageTitleService.setTitle("Add Form Builder");
+    this.dataFormat=JSON.parse(this.data);
+    //set the values
+    this.dataFormat.fields.forEach((data)=>{
+      this.form.push(data)
+    })
+    console.log(this.form)
+    console.log(this.dataFormat)
   	//get user info from login
   	this.getUserInfo();
-  	//add required fields to form
-  	this.initialData();
     //create form to edit the fields values
     this.formEdit=this.fb.group({
     	label:['', Validators],
@@ -41,42 +47,10 @@ export class AddFormBuilderComponent implements OnInit {
     })
     //create form to save the forms
     this.builderForm=this.fb.group({
-    	title:['', Validators.required],
-    	description:['', Validators.required],
-    	team:['', Validators.required]
+    	title:[this.dataFormat.title, Validators.required],
+    	description:[this.dataFormat.description, Validators.required],
+    	team:[this.dataFormat.team.id, Validators.required]
     })
-  }
-  initialData(){
-    this.form.push({
-  		group:"name",
-  		fields:[{
-  			label: 'Participant First Name',
-	      	type: "text",
-	      	required:true,
-	      	col:6,
-	      	desc:'User Name',
-  		},
-		{
-  			label: 'Participant Last Name',
-      		type: "text",
-      		required:true,
-	      	col:6,
-	      	desc:'User Name',
-  		}
-  		]
-  	},
-  	{
-  		group:'email',
-  		fields:[{
-  			label: 'Participant Email',
-      		type: "email",
-	      	required:true,
-	      	col:12,
-	      	desc:'User Email',
-	      	collection:"email",
-  		}
-  		]
-  	});
   }
   getUserInfo(){
     this.userData= this.auth.getLoginData();
@@ -129,8 +103,8 @@ export class AddFormBuilderComponent implements OnInit {
 		this.form[i+1] = tmp;
 	}
   }
-  //save the forms
-  saveForm(){
+  //edit the forms
+  EditForm(){
   	//create the json data
   	let data={
   		'title':this.builderForm.get('title').value,
@@ -138,16 +112,15 @@ export class AddFormBuilderComponent implements OnInit {
   		'team':this.builderForm.get('team').value,
   		'fields':this.form
   	}
-    this.showSuccess('Form was saved');
   	//send the data to service
-  	this.teamService.formBuilder(data).subscribe(
+  	this.teamService.editData(`registrationtemplate/${this.dataFormat.id}`,data).subscribe(
   		result=>{
   			this.builderForm.reset();
         this.form=[];
-        this.initialData();
+        this.showSuccess('Form was edited')
   		},
   		error=>{
-  			this.showError(error.error)
+  			this.showError('Something wrong happened. Please try again')
   			console.log(error)
   		}
   	)
