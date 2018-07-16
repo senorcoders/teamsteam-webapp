@@ -82,8 +82,7 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		AuthComponent,
 		HorizontalLayoutComponent,
 		LoginoneComponent,
-		
-    RegisterComponent,
+		RegisterComponent,
 	],
 	entryComponents: [
 	],
@@ -93,13 +92,13 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		BreadcrumbService,
 		PageTitleService,
 		AuthenticationService,
-    TeamService,
-    UserService,
-    ImageUploadService,
+	    TeamService,
+	    UserService,
+	    ImageUploadService,
 		MyGuardService,
-    PerfilImageService,
-    PlayerRoutesService,
-    TeamRoutesService
+	    PerfilImageService,
+	    PlayerRoutesService,
+	    TeamRoutesService
 	]
 })
 export class ChankyaAppModule { }

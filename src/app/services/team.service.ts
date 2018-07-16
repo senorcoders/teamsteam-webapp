@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-const  API_ENDPOINT="http://138.68.19.227:8188/";
+const  API_ENDPOINT="https://api.lockerroomapp.com/";
 //const  API_ENDPOINT="https://api.lockerroomapp.com/";
 @Injectable()
 export class TeamService {

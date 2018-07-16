@@ -107,90 +107,14 @@ export class MainComponent implements OnInit, OnDestroy{
         breadcrumbService.addFriendlyNameForRoute('/dashboard', 'Dashboard');
         breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v1', 'Dashboard V1');
         breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v2', 'Dashboard V2');
-        //breadcrumbService.addFriendlyNameForRoute('/inbox', 'Apps / Inbox');
-        // breadcrumbService.addFriendlyNameForRoute('/chat', 'Apps / Chat');
-
         breadcrumbService.addFriendlyNameForRoute('/teams/list', 'Team List');
-        
-        //breadcrumbService.addFriendlyNameForRoute('/calendar', 'Apps / Calendar');
-
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements', 'UI-Element');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/buttons', 'Buttons');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/progress', 'Progress');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/tabs', 'Tabs');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/accordions', 'Accordions');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/pagination', 'Pagination');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/tooltip', 'Tooltip');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/cards', 'Cards');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/social-icons', 'Social Icons');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/typography', 'Typography');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/dropdown', 'Dropdown');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/alert', 'Alert');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/carousel', 'Carousel');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/datepicker', 'Datepicker');
-        // breadcrumbService.addFriendlyNameForRoute('/ui-elements/slider', 'Slider');
-
         breadcrumbService.addFriendlyNameForRoute('/components', 'Components');
         breadcrumbService.addFriendlyNameForRoute('/components/list', 'List');
         breadcrumbService.addFriendlyNameForRoute('/components/grids', 'Grids');
-
-        // breadcrumbService.addFriendlyNameForRoute('/forms', 'Forms');
-        // breadcrumbService.addFriendlyNameForRoute('/forms/form-elements', 'Form Elements');
-        // breadcrumbService.addFriendlyNameForRoute('/forms/form-group', 'Form Group');
-        // breadcrumbService.addFriendlyNameForRoute('/forms/form-wizard', 'Form Wizard');
-        // breadcrumbService.addFriendlyNameForRoute('/forms/form-validation', 'Form Validation');
-        // breadcrumbService.addFriendlyNameForRoute('/forms/form-upload', 'Form Upload');
-        // breadcrumbService.addFriendlyNameForRoute('/forms/form-tree', 'Tree');
-
-        // breadcrumbService.addFriendlyNameForRoute('/tables', 'Table');
-        // breadcrumbService.addFriendlyNameForRoute('/tables/fullscreen', 'Full Screen');
-        // breadcrumbService.addFriendlyNameForRoute('/tables/selection', 'Selection');
-        // breadcrumbService.addFriendlyNameForRoute('/tables/pinning', 'Pinning');
-        // breadcrumbService.addFriendlyNameForRoute('/tables/sorting', 'Sorting');
-        // breadcrumbService.addFriendlyNameForRoute('/tables/Paging', 'Paging');
-        // breadcrumbService.addFriendlyNameForRoute('/tables/editing', 'Editing');
-        // breadcrumbService.addFriendlyNameForRoute('/tables/filter', 'Filter');
-
-        // breadcrumbService.addFriendlyNameForRoute('/dragndrop', 'Drag and Drop');
-        // breadcrumbService.addFriendlyNameForRoute('/dragndrop/dragula', 'Dragula');
-        // breadcrumbService.addFriendlyNameForRoute('/dragndrop/sortable', 'SortableJS');
-
-        // breadcrumbService.addFriendlyNameForRoute('/chart', 'Charts');
-        // breadcrumbService.addFriendlyNameForRoute('/chart/ng2-charts', 'NG2 Charts');
-        // breadcrumbService.addFriendlyNameForRoute('/chart/easy-pie-chart', 'Easy Pie');
-        // breadcrumbService.addFriendlyNameForRoute('/chart/google-chart', 'Google Charts');
-
-        // breadcrumbService.addFriendlyNameForRoute('/maps', 'Maps');
-        // breadcrumbService.addFriendlyNameForRoute('/maps/googlemap', 'Google Map');
-        // breadcrumbService.addFriendlyNameForRoute('/maps/vectormap', 'Vector Map');
-        // breadcrumbService.addFriendlyNameForRoute('/maps/leaflet', 'Leaflet Map');
-
         breadcrumbService.addFriendlyNameForRoute('/user-pages', 'User Pages');
         breadcrumbService.addFriendlyNameForRoute('/user-pages/userlist', 'User List');
         breadcrumbService.addFriendlyNameForRoute('/user-pages/usertable', 'User Table');
         breadcrumbService.addFriendlyNameForRoute('/user-pages/userprofile', 'User Profile');
-
-        // breadcrumbService.addFriendlyNameForRoute('/emails', 'Emails');
-        // breadcrumbService.addFriendlyNameForRoute('/emails/email-listing', 'Email Listing');
-        // breadcrumbService.addFriendlyNameForRoute('/emails/email-detail', 'Email Detail');
-        // breadcrumbService.addFriendlyNameForRoute('/emails/email-compose', 'Email Compose');
-
-        // breadcrumbService.addFriendlyNameForRoute('/ecommerce', 'Ecommerce');
-        // breadcrumbService.addFriendlyNameForRoute('/ecommerce/ecommerce-product', 'Ecommerce Product');
-        // breadcrumbService.addFriendlyNameForRoute('/ecommerce/ecommerce-product-detail', 'Ecommerce Product Detail');
-
-        // breadcrumbService.addFriendlyNameForRoute('/pages', 'Pages');
-        // breadcrumbService.addFriendlyNameForRoute('/pages/timeline', 'Timeline');
-        // breadcrumbService.addFriendlyNameForRoute('/pages/subscribes', 'Subscribes');
-        // breadcrumbService.addFriendlyNameForRoute('/pages/undermaintance', 'Under Maintance');
-        // breadcrumbService.addFriendlyNameForRoute('/pages/testimonials', 'Testimonials');
-        // breadcrumbService.addFriendlyNameForRoute('/pages/pricing', 'Pricing');
-        // breadcrumbService.addFriendlyNameForRoute('/pages/blank', 'Blank');
-        // breadcrumbService.addFriendlyNameForRoute('/session', 'Session');
-        // breadcrumbService.addFriendlyNameForRoute('/session/login', 'Login');
-        // breadcrumbService.addFriendlyNameForRoute('/session/register', 'Register');
-        // breadcrumbService.addFriendlyNameForRoute('/session/forgot-password', 'Forgot');
-        // breadcrumbService.addFriendlyNameForRoute('/session/lockscreen', 'Lock Screen');
     }
     getUserInfo(){
         this.PerfilImageService.perfilImage.subscribe((val:string)=>{

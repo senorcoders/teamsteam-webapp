@@ -45,10 +45,14 @@ const MENUITEMS = [
     ]
   },
   {
-    state: '',
-    name: '',
-    type: '',
-    icon: ''
+    state: 'tasks',
+    name: 'My Tasks',
+    type: 'sub',
+    icon: 'fa fa-tasks',
+    children:[
+      {state:'add', name:'Add task'},
+      {state:'list',name:'List task'}
+    ]
   },
     
 

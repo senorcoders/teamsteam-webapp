@@ -1,0 +1,61 @@
+<div class="chk-block">
+    <div class="chk-block-title">
+        <h3 class="text-capitalize">Add Task</h3>
+    </div>
+    <!-- user and player form -->
+    <div class="chk-block-content">
+        <div class="row">
+            <div class="col-xl-12 mb-12">
+              <form [formGroup]="taskForm" (submit)="saveTask()">
+                <div class="form-group">
+                  <label for="username">Name</label>
+                    <input type="text" class="form-control form-control-lg input-square" id="username" placeholder="UserName" formControlName="name" [ngClass]="{'is-invalid':taskForm.get('name').invalid && taskForm.get('name').touched}">
+                    <div *ngIf="taskForm.get('name').hasError('required') && taskForm.get('name').touched" class="invalid-feedback">name is required</div>
+                </div>
+                <div class="form-group">
+                  <label for="firstname">Description</label>
+                    <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="Description" formControlName="text" [ngClass]="{'is-invalid':taskForm.get('text').invalid && taskForm.get('text').touched}">
+                    <div *ngIf="taskForm.get('text').hasError('required') && taskForm.get('text').touched" class="invalid-feedback">Description is required</div>
+                </div>
+                <div class="form-group">
+                    <label for="teams">Teams</label>
+                    <select class="form-control form-control-lg input-square" id="team" formControlName="team"  [ngClass]="{'is-invalid':taskForm.get('team').invalid && taskForm.get('team').touched}" (change)="getPlayerByTeam($event.target.value)">
+                      <option *ngFor="let team of teams" value="{{team.id}}">{{team.name}}</option>
+                    </select>
+                    <div *ngIf="taskForm.get('team').hasError('required') && taskForm.get('team').touched" class="invalid-feedback">Team is required</div>
+                </div>
+                <div class="form-group" *ngIf="showPlayer">
+                    <label for="for">Player</label>
+                    <select class="form-control form-control-lg input-square" id="for" formControlName="for"  [ngClass]="{'is-invalid':taskForm.get('for').invalid && taskForm.get('for').touched}">
+                      <option *ngFor="let player of players" value="{{player.user.id}}">{{player.user.firstName}} {{player.user.lastName}}</option>
+                    </select>
+                    <div *ngIf="taskForm.get('for').hasError('required') && taskForm.get('for').touched" class="invalid-feedback">Player is required</div>
+                </div>
+                <div class="form-group">
+                	<label>Date</label>
+                	<div class="input-group">
+	                    <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="dateTime" formControlName="dateTime" [options]="myDatePickerOptions" #dp="ngx-mydatepicker" (click)="dp.toggleCalendar()"/>
+	                    <span class="input-group-btn">
+				            <button type="button" class="btn btn-default" (click)="dp.clearDate()">
+				                <i class="glyphicon glyphicon-remove"></i>
+				            </button>
+				            <button type="button" class="btn btn-default" (click)="dp.toggleCalendar()">
+				                <i class="glyphicon glyphicon-calendar"></i>
+				            </button>
+				        </span>
+                	</div>
+                </div>
+                <div class="form-group">
+                	 <label for="time">Time</label>
+                	<input class="form-control" type="time" id="time"  [ngClass]="{'is-invalid':taskForm.get('time').invalid && taskForm.get('time').touched}" formControlName="time">
+                	<div *ngIf="taskForm.get('time').hasError('required') && taskForm.get('time').touched" class="invalid-feedback">Time is required</div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="taskForm.invalid">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+   
