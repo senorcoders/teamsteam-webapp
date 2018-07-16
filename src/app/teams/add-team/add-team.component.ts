@@ -71,6 +71,9 @@ addItem(): void {
   this.contactEmerg = this.addPlayer.get('contacts') as FormArray;
   this.contactEmerg.push(this.createContact());
 }
+createPlayer(){
+  
+}
   uploadImage(event:FileList) {
   let preview = document.querySelector('#previewPlayerImg');
   let file    = event.item(0);

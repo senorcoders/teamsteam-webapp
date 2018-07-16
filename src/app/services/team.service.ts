@@ -15,7 +15,6 @@ export class TeamService {
     if (data) {
       let json= JSON.parse(data);
       this.token= json['token'];
-      console.log(this.token);
       this.id=json['id'];
       this.httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', 'token':`${this.token}` })        

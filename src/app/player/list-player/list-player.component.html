@@ -5,6 +5,11 @@
       	<option value="{{team.id}}" *ngFor="let team of teams">{{team.name}}</option>
     </select>
 </div>
+<div class="row" *ngIf="showLoading">
+  <div class="col-12 loaderLocker">
+    <img src="/assets/img/loader.gif" alt="">
+  </div>
+</div>
 <div class="row">
 	<div class="col-md-4" *ngFor="let player of players; let i=index">
 		<div class="square">

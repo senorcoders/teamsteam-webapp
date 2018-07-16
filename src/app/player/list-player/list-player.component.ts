@@ -27,6 +27,7 @@ export class ListPlayerComponent implements OnInit {
 	showPlayer:boolean=false;
 	showNoPlayer:boolean=false;
 	showPopup:boolean=false;
+	showLoading:boolean=false;
 	private base64image:String="";
 	editPlayer:FormGroup;
     preview:string;
@@ -71,6 +72,7 @@ export class ListPlayerComponent implements OnInit {
     
    }
   getPlayerByTeam(val){
+  	this.showLoading=true;
   	if(val!=''){
   		this.teamID=val;
 	  	this.team.getData(`players?where={"team":"${val}"}`).subscribe(
@@ -79,6 +81,7 @@ export class ListPlayerComponent implements OnInit {
 	  			if(this.players.length>0){
 	  				this.showPlayer=true
 	  				this.showNoPlayer=false
+	  				this.showLoading=false;
 	  				// this.players.forEach((data,index)=>{
 	  				// 	console.log(data)
 	  				// 	this.getUserImage(data.user.id)
@@ -87,10 +90,12 @@ export class ListPlayerComponent implements OnInit {
 	  			else{
 	  				this.showPlayer=false
 	  				this.showNoPlayer=true;
+	  				this.showLoading=false;
 	  			}
 	  		},
 	  		e=>{
 	  			console.log(e)
+	  			this.showLoading=false;
 	  		}
 	  	)
 	  }
