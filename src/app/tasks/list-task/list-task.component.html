@@ -1,0 +1,56 @@
+<div class="pricing-wrapper">
+    <div class="row">
+        <div class="col-sm-12 co-md-8 col-lg-6 mx-auto">
+            <div class="chk-heading text-center mb-5">
+                <h2 class="text-capitalize mb-4 font-2x fw-bold">Choose Team</h2>
+                <div class="form-group">
+                    <select class="form-control form-control-lg input-square" id="forms" (change)="getTaskByTeam($event.target.value)">
+                        <option value="">Choose a team</option>
+                        <option value="{{team.team.id}}" *ngFor="let team of teams">{{team.team.name}}</option>
+                    </select>
+                    <div *ngIf="showLoading">
+                        <div class="col-12 loaderLocker">
+                            <img src="/assets/img/loader.gif" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="showTask">
+        <div class="col-md-6 col-lg-4 col-xl-4" *ngFor="let task of tasks; let i =index">
+            <div class="card text-center">
+                <div class="card-body">
+                    <label class="ribbon top-left" [ngClass]="task.completad ? 'ribbon-warning' : 'ribbon-primary'">
+                        <span class="day">{{getDay(task.dateTime)}}</span>
+                    </label>
+                    <p class="text-primary font-2x">{{getMonthName(task.dateTime)}}</p>
+                    <h2 class="font-2x">{{task.name}}</h2>
+                    <p class="text-capitalize mb-4 text-muted">{{smallDesc(task.text)}}</p>
+                    <hr>
+                    <div class="card-feature mb-4 actions">
+                        <i class="fa fa-eye edit" (click)="showPopUp(i)"></i>
+                        <i class="fa fa-remove delete" (click)="deleteTask(task.id, task.team)"></i>
+                    </div>
+                    <!-- <a href="javascript:void(0)" class="btn btn-primary btn-lg"><i class="la la-cart-plus mr-2 la-lg"></i> Buy Now</a> -->
+                </div>
+            </div><!-- Card Closed -->
+        </div>
+    </div>
+    <div class="row" *ngIf="noTask">
+        <div class="col-12">
+            <p class="text-primary font-2x">You dont have task</p>
+        </div>
+    </div>
+</div>
+<div class="popup" *ngIf="showPopup">
+    <div class="close" (click)="closePopUp()"></div>
+    <div class="content">
+        <b>Name: </b> {{currentTask.name}} <br>
+        <b>Description: </b> {{currentTask.text}} <br>
+        <b>Date: </b>{{getFullDate(currentTask.dateTime)}} <br>
+        <b>To:</b> {{playerInfo.username}} <br>
+        <b>Status: </b> <span *ngIf="currentTask.completad; else noComplete">Complete</span><ng-template #noComplete>Incomplete</ng-template> <br>
+        <div style="text-align: center;margin-top: 20px" *ngIf="!currentTask.completad"><button class="btn btn-primary btn-circle square-40  mr-2 mb-3" type="button" (click)="markComplete(currentTask.id, currentTask.team)"><i class="fa fa-check" aria-hidden="true"></i></button></div>
+    </div>
+</div>
