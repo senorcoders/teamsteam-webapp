@@ -1,14 +1,20 @@
-import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef, ViewEncapsulation } from '@angular/core';
 import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 import {TeamService} from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
 import { PageTitleService } from '../../core/page-title/page-title.service';
 import { Router } from '@angular/router';
+import {fadeInAnimation} from "../../core/route-animation/route.animation";
 @Component({
   selector: 'app-add-player',
   templateUrl: './add-player.component.html',
   styleUrls: ['./add-player.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  host: {
+        "[@fadeInAnimation]": 'true'
+    },
+  animations: [ fadeInAnimation ]
 })
 export class AddPlayerComponent implements OnInit {
 	addUser:FormGroup;
