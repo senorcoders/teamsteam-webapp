@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-const  API_ENDPOINT="http://138.68.19.227:8188/";
-//const  API_ENDPOINT="https://api.lockerroomapp.com/";
+//const  API_ENDPOINT="http://138.68.19.227:8188/";
+const  API_ENDPOINT="https://api.lockerroomapp.com/";
 @Injectable()
 export class UserService {
   token:string;
@@ -22,17 +22,16 @@ export class UserService {
       };
     } 
   }
- 
   
   getUsers(){
-     return this.http.get(`${API_ENDPOINT}user/`,this.httpOptions)
+     return this.http.get(`${API_ENDPOINT}user?limit=100`,this.httpOptions)
   }
-  updateTeam(team_id, team){
-    let body = JSON.stringify(team);
-    return this.http.put(`${API_ENDPOINT}user/${team_id}`,body, this.httpOptions )
+  updateUser(user_id, user){
+    let body = JSON.stringify(user);
+    return this.http.put(`${API_ENDPOINT}user/${user_id}`,body, this.httpOptions )
   }
-  deleteTeam(team_id){
-    return this.http.delete(`${API_ENDPOINT}user/${team_id}`, this.httpOptions )
+  deleteUser(user_id){
+    return this.http.delete(`${API_ENDPOINT}user/${user_id}`, this.httpOptions )
   }
   
   

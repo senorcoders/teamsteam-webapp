@@ -1,0 +1,6 @@
+$breakpoint-tablet: 768px;
+@media (min-width: $breakpoint-tablet) {
+	.modal-lg {
+    	max-width: 1000px;
+	}  
+}
