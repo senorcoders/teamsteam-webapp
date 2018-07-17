@@ -40,7 +40,7 @@ export class LoginoneComponent implements OnInit {
         }
         else{
           this.auth.setLoginData(data)
-          this.router.navigate(['/teams/list-team']);
+          this.router.navigate(['/user-pages/userprofile']);
         }
       },
       error=>{

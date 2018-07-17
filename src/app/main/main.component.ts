@@ -100,10 +100,6 @@ export class MainComponent implements OnInit, OnDestroy{
         }]
       );
         this.tourService.start();
-      
-
-
-
         breadcrumbService.addFriendlyNameForRoute('/dashboard', 'Dashboard');
         breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v1', 'Dashboard V1');
         breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v2', 'Dashboard V2');
@@ -258,20 +254,7 @@ export class MainComponent implements OnInit, OnDestroy{
 
     changeThemeColor(color){
         this.themeSkinColor = color; 
-    }
-
-    addMenuItem(): void {
-        this.menuItems.add({
-            state: 'pages',
-            name: 'CHANKYA MENU',
-            type: 'sub',
-            icon: 'icon-plus icons',
-            children: [
-                {state: 'blank', name: 'SUB MENU1'}
-            ]
-        });
-    }
-    
+    }    
     onActivate(e, scrollContainer) {
     scrollContainer.scrollTop = 0;
   }
