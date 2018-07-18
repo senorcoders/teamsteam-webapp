@@ -101,16 +101,16 @@ export class MainComponent implements OnInit, OnDestroy{
       );
         this.tourService.start();
         breadcrumbService.addFriendlyNameForRoute('/dashboard', 'Dashboard');
-        breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v1', 'Dashboard V1');
-        breadcrumbService.addFriendlyNameForRoute('/dashboard/dashboard-v2', 'Dashboard V2');
+        breadcrumbService.addFriendlyNameForRoute('/dashboard-v1', 'Dashboard V1');
+        breadcrumbService.addFriendlyNameForRoute('/dashboard-v2', 'Dashboard V2');
         breadcrumbService.addFriendlyNameForRoute('/teams/list', 'Team List');
         breadcrumbService.addFriendlyNameForRoute('/components', 'Components');
         breadcrumbService.addFriendlyNameForRoute('/components/list', 'List');
         breadcrumbService.addFriendlyNameForRoute('/components/grids', 'Grids');
-        breadcrumbService.addFriendlyNameForRoute('/user-pages', 'User Pages');
-        breadcrumbService.addFriendlyNameForRoute('/user-pages/userlist', 'User List');
-        breadcrumbService.addFriendlyNameForRoute('/user-pages/usertable', 'User Table');
-        breadcrumbService.addFriendlyNameForRoute('/user-pages/userprofile', 'User Profile');
+        breadcrumbService.addFriendlyNameForRoute('', 'User Pages');
+        breadcrumbService.addFriendlyNameForRoute('/userlist', 'User List');
+        breadcrumbService.addFriendlyNameForRoute('/usertable', 'User Table');
+        breadcrumbService.addFriendlyNameForRoute('/userprofile', 'User Profile');
     }
     getUserInfo(){
         this.PerfilImageService.perfilImage.subscribe((val:string)=>{

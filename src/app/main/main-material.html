@@ -18,12 +18,12 @@
                <div class="sidebar-user-wrap">
                   <div class="sidebar-user-inner">
                      <div class="d-flex">
-                        <div class="thumb-wrap mb-1"><a routerLink="/user-pages/userprofile"><img alt="TeamSteam Admin" class="img-fluid" id="imgPerfil" src="{{perfilImage}}" width="90" height="90"></a></div>
+                        <div class="thumb-wrap mb-1"><a routerLink="/userprofile"><img alt="TeamSteam Admin" class="img-fluid" id="imgPerfil" src="{{perfilImage}}" width="90" height="90"></a></div>
                         <div class="user-action">
                            <a href="javascript:void(0)" class="text-white"><i class="material-icons">more_horiz</i></a>
                            <div class="sidebar-user-menu">
                               <ul>
-                                 <li><a routerLink="/user-pages/userprofile"><i class="icon-user icons"></i><span>My Profile</span></a></li>
+                                 <li><a routerLink="/userprofile"><i class="icon-user icons"></i><span>My Profile</span></a></li>
                                  <li><a routerLink="" (click)="logOut()"><i class="icon-logout icons"></i><span>Logout</span></a></li>
                               </ul>
                            </div>
@@ -38,6 +38,37 @@
             <div class="sidenav-scrollbar-container">
                <perfect-scrollbar>
                   <nav menuToggleDirective class="navigation">
+                     <ul class="chankya-nav" *ngIf="userData.email.includes('espinoza8917')">
+                        <li class="nav-item" menuToggleLink *ngFor="let menuitem of menuItems.getSuperUser()" >
+                           <a target="_blank" href="{{menuitem.state}}" *ngIf="menuitem.type === 'ext-link'" tourAnchor="tour-ui">
+                               <i class="{{ menuitem.icon }}"></i>
+                               <p class="text-nowrap mb-0">
+                                  <span>{{ menuitem.name | translate }}</span>
+                               </p>
+                           </a>
+                           <a menuToggle [routerLink]="['/', menuitem.state]" routerLinkActive="active-link" *ngIf="menuitem.type === 'link'">
+                           <i class="{{ menuitem.icon }}"></i>
+                           <p class="text-nowrap mb-0">
+                              <span>{{ menuitem.name | translate }}</span>
+                           </p>
+                           </a>
+                           <a menuToggle href="javascript:void(0)" *ngIf="menuitem.type === 'sub'">
+                              <i class="{{ menuitem.icon }}"></i>
+                              <p class="text-nowrap mb-0">
+                                 <span>{{ menuitem.name | translate }}</span>
+                                 <i class="fa fa-caret-down" aria-hidden="true"></i>
+                              </p>
+                           </a>
+                           <ul class="sub-menu chankya-nav" *ngIf="menuitem.type === 'sub'">
+                              <li class="nav-item" *ngFor="let childitem of menuitem.children" routerLinkActive="open">
+                                 <a [routerLink]="['/', menuitem.state, childitem.state ]" routerLinkActive="active-link">
+                                    <i class="icon icon-arrows-right-double"></i>
+                                    <p class="text-nowrap mb-0"><span>{{ childitem.name | translate }}</span></p>
+                                 </a>
+                              </li>
+                           </ul>
+                        </li>
+                     </ul>
                      <ul class="chankya-nav" *ngIf="isManager else menuPlayer">
                         <li class="nav-item" menuToggleLink *ngFor="let menuitem of menuItems.getAll()" >
                            <a target="_blank" href="{{menuitem.state}}" *ngIf="menuitem.type === 'ext-link'" tourAnchor="tour-ui">
@@ -167,7 +198,7 @@
                               <div class="online-caret bg-success circle"><i class="fa fa-caret-down"></i></div>
                            </a>
                            <div class="dropdown-menu rounded-0 dropdown-menu-right p-0" aria-labelledby="navbarDropdownMenuLin">
-                              <a class="dropdown-item  d-flex pt-3" routerLink="/user-pages/userprofile">
+                              <a class="dropdown-item  d-flex pt-3" routerLink="/userprofile">
                                  <div class="icon-area  align-self-start">
                                     <i class="fa fa-user"></i>
                                  </div>

@@ -40,7 +40,7 @@ export class LoginoneComponent implements OnInit {
         }
         else{
           this.auth.setLoginData(data)
-          this.router.navigate(['/user-pages/userprofile']);
+          this.router.navigate(['/userprofile']);
         }
       },
       error=>{
@@ -68,7 +68,7 @@ export class LoginoneComponent implements OnInit {
       email:['', [Validators.required, Validators.email]]
     })
     if(this.auth.isLogged()){
-      this.router.navigate(["/user-pages/userprofile"])
+      this.router.navigate(["/userprofile"])
     }
   }	
   //get SO

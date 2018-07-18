@@ -57,9 +57,27 @@ const MENUITEMS = [
     
 
 ];
+const SUPERMENUITEMS = [    
+  {
+    state: 'dashboard-v1',
+    name: 'Dashboard',    
+    icon: 'fa fa-tachometer',
+    type: 'link'
+  },
+  {
+    state: 'userlist',
+    name: 'Users',    
+    icon: 'fa fa-user',
+    type: 'link'
+  }
+
+];
 @Injectable()
 export class MenuItems {
   getAll(): Menu[] {
     return MENUITEMS;
+  }
+  getSuperUser(): Menu[] {
+    return SUPERMENUITEMS;
   }
 }

@@ -24,7 +24,7 @@ export const AppRoutes: Routes = [{
   path: '',
   component: MainComponent,
   children: [{
-    path: 'dashboard',
+    path: '',
     loadChildren: './dashboard/dashboard.module#DashboardModule',
     canActivate:[MyGuardService]
   },
@@ -49,7 +49,7 @@ export const AppRoutes: Routes = [{
     canActivate:[MyGuardService, PlayerRoutesService]
   },
   {
-    path: 'user-pages',
+    path: '',
     loadChildren: './user-pages/users.module#UsersDemoModule',
     canActivate:[MyGuardService]
   }],
@@ -79,7 +79,7 @@ export const AppRoutes: Routes = [{
     loadChildren: './ngx-toaster/toaster.module#ToasterDemoModule',
     canActivate:[MyGuardService]
   },{
-    path: 'user-pages',
+    path: '',
     loadChildren: './user-pages/users.module#UsersDemoModule',
     canActivate:[MyGuardService]
   }
