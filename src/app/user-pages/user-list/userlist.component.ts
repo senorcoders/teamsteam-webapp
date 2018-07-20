@@ -6,6 +6,8 @@ import {UserService} from '../../services/user.service';
 import {ImageUploadService} from '../../services/image-upload.service';
 import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
+import {TeamService} from '../../services/team.service';
+
 
 @Component({
     selector: 'ms-userlist',
@@ -25,7 +27,11 @@ export class UserListComponent implements OnInit {
   userIndex: number;
   endpoint:string;
   new_image: string;
-  constructor(private imageupload: ImageUploadService, private userservice: UserService, private toastr: ToastrService, private fb: FormBuilder, private auth:AuthenticationService, private pageTitleService: PageTitleService) {
+  showPopup:boolean=false
+  teams:any;
+  noResult:boolean=false;
+  constructor(private imageupload: ImageUploadService, private userservice: UserService, private toastr: ToastrService, private fb: FormBuilder,
+   private auth:AuthenticationService, private pageTitleService: PageTitleService, private team:TeamService) {
     this.users = [{
         id: 0,
         firstName: '',
@@ -146,6 +152,27 @@ export class UserListComponent implements OnInit {
         console.log(error)
       }
     )
+  }
+  showPopUp(id){
+    this.team.getData(`roles?where={"user":"${id}"}`).subscribe(
+      result=>{
+        if(result['length']>0){
+          this.teams=result;
+          this.noResult=false;
+        }
+        else{
+          this.noResult=true;
+        }
+        this.showPopup=true
+      },
+      e=>{
+        console.log(e)
+        this.toastr.error('Something wrong happened. please try again', 'Error', {positionClass:"toast-top-center"});
+      }
+    )
+  }
+  closePopUp(){
+    this.showPopup=false
   }
 }
 

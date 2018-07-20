@@ -1,4 +1,7 @@
 $breakpoint-tablet: 768px;
+	.badge{
+		float: right;
+	}
 @media (min-width: $breakpoint-tablet) {
 	.modal-lg {
     	max-width: 1000px;
