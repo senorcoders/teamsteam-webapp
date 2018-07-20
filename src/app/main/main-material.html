@@ -38,7 +38,7 @@
             <div class="sidenav-scrollbar-container">
                <perfect-scrollbar>
                   <nav menuToggleDirective class="navigation">
-                     <ul class="chankya-nav" *ngIf="userData.email.includes('@senorcoders')">
+                     <ul class="chankya-nav"  *ngIf="userData.email.includes('@senorcoders')">
                         <li class="nav-item" menuToggleLink *ngFor="let menuitem of menuItems.getSuperUser()" >
                            <a target="_blank" href="{{menuitem.state}}" *ngIf="menuitem.type === 'ext-link'" tourAnchor="tour-ui">
                                <i class="{{ menuitem.icon }}"></i>

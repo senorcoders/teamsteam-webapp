@@ -46,7 +46,7 @@
                 <div class="chk-block-content">
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="tab-2" role="tabpanel">
-                            Select a Team
+                            
                         </div><!-- default tab -->
                         <div class="tab-pane fade " id="tab-edit" role="tabpanel">
                            <div class="row">
@@ -56,7 +56,7 @@
                                             <h3 class="text-capitalize">Edit Team {{selectedTeam.name}}</h3>
                                         </div>
                                         <div class="chk-block-content">
-                                            <form (ngSubmit)="submitUpdateTeam(updateTeam.value)"  #updateTeam="ngForm"  [formGroup]="editTeamForm">
+                                            <form enctype="multipart/form-data" (ngSubmit)="submitUpdateTeam(updateTeam.value)"  #updateTeam="ngForm"  [formGroup]="editTeamForm">
                                                 <div class="container">
                                                     <div class="row">
                                                         <div class="col-sm-2 col-md-6 col-lg-6 mx-auto">

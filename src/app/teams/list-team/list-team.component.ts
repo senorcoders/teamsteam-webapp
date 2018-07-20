@@ -36,7 +36,7 @@ export class ListTeamComponent implements OnInit {
                           firstName: ""
                         }
     this.selectedTeam = {
-                          name: "",
+                          name: "Select a Team",
                           description: "",
                           city: "",
                           sport: "",
@@ -116,10 +116,11 @@ export class ListTeamComponent implements OnInit {
     let result = this.teamservice.updateTeam(this.selectedTeam.id, team).subscribe(
       data=>{
         //document.getElementById("teamList").innerHTML = ''
-        this.teams[1]= data;
-        this.toastr.success('Well Done', 'Team Updated ' + this.team_id + ' - ' + this.new_image , {positionClass:"toast-top-center"});
+        this.teams[this.team_id]= data;
+        this.toastr.success('Well Done', 'Team Updated ' , {positionClass:"toast-top-center"});
         
         //if(this.new_image != ""){
+          //alert(this.new_image);
           this.imageupload.uploadImage( this.selectedTeam.id ,'teams', this.new_image).subscribe(
               data=> {
                 this.toastr.success('Well Done', 'Image Updated' + this.new_image, {positionClass:"toast-top-center"});
@@ -176,8 +177,9 @@ export class ListTeamComponent implements OnInit {
         
         this.teamImage.nativeElement.src = reader.result;
 
-          //event.target.src = reader.result;
-          //this.new_image = reader.result.split(',')[1];// reader.result;
+        //event.target.src = reader.result;
+        this.new_image = reader.result;// reader.result;
+
       };
         reader.onload =this._handleReaderLoaded.bind(this);
         reader.readAsBinaryString(file);
@@ -186,7 +188,7 @@ export class ListTeamComponent implements OnInit {
   }
   _handleReaderLoaded(readerEvt) {
     let binaryString = readerEvt.target.result;
-    this.new_image=btoa(binaryString);
+    //this.new_image=btoa(binaryString);
   }
   showError(e) {
     this.toastr.error('Error', e,{positionClass:"toast-top-center"});
