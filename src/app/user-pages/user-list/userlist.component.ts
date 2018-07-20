@@ -55,7 +55,6 @@ export class UserListComponent implements OnInit {
 	getUsers(){    
     this.userservice.getUsers().subscribe(
       data=>{
-      
         this.users=data;
       },
       error=>{
@@ -71,7 +70,10 @@ export class UserListComponent implements OnInit {
   errorHandler(event) {
     event.target.src = "assets/img/logo-lockerroom.png";
   }
-
+  getFormateDate(val){
+    let date=new Date(val)
+    return date.toString().split("GMT",1)
+  }
   submitUpdateUser( updateUser) {
 
     let user = {      
