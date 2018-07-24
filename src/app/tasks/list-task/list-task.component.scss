@@ -27,5 +27,60 @@
 	}
 }
 .see{
-    background: #ff5723
+    color: #00caac;
+    cursor: pointer;
+}
+.edit, .blue-bar{
+    color: #0066eb;
+    cursor: pointer;
+}
+.delete,{
+    color: #f54b5e;
+    cursor: pointer;
+}
+.ripple{
+    padding: 1rem 1.25rem;
+    margin-bottom: 0 !important;
+}
+.complete{
+    .month{
+        background: #0066eb;
+    }
+    .day{
+        background: #d4e5fb;
+    }
+}
+.noComplete{
+    .month{
+        background: #f54b5e;
+    }
+    .day{
+        background: #ffe5e5;
+    }
+}
+.month{
+    display: block;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 100px;
+    max-width: 100%;
+}
+.day{
+    display: block;
+    text-align: center;
+    padding: 5px 10px;
+    color: black;
+    font-weight: bold;
+    font-size: 26px;
+}
+.d-flex{
+    align-items:center;
+    p{
+        margin-bottom: 0
+    }
+}
+.taskComplete{
+    opacity: 0.5
 }

@@ -26,7 +26,6 @@ export class ListTaskComponent implements OnInit {
 	noTask:boolean=false;
 	showPopup:boolean=false;
 	currentTask:any;
-	playerInfo:any;
 	players:any;
 	taskForm:FormGroup
 	seeTask:boolean=false
@@ -59,6 +58,7 @@ export class ListTaskComponent implements OnInit {
   	//is manager or not
   	this.team.getData(`task/from/${this.userData.id}/${id}`).subscribe(
   		result=>{
+        console.log(result)
 			if(result['length']>0){
 				this.tasks=result
 				this.showLoading=false;
@@ -89,15 +89,22 @@ export class ListTaskComponent implements OnInit {
   	)
   }
   	smallDesc(str) {
-    	return str.split(/\s+/).slice(0,10).join(" ");
+      if(str.length>20){
+        let text=str.split(/\s+/).slice(0,20).join(" ")
+        return text+'...' 
+      }
+      else{
+        return str
+      }
 	}
 	saveTask(){
 		let dateTime=this.taskForm.get('dateTime').value;
-		let date=new Date(dateTime);
 		let formatDate;
+    let date;
 		if(dateTime!=''){
 			dateTime=dateTime['date']['year']+'-'+dateTime['date']['month']+'-'+dateTime['date']['day']+' '+this.taskForm.get('time').value
-			formatDate=date.toISOString()
+      date=new Date(dateTime)
+      formatDate=date.toISOString()
 		}
 		let data={
 	  		name:this.taskForm.get('name').value,
@@ -125,13 +132,26 @@ export class ListTaskComponent implements OnInit {
 		this.taskID=this.tasks[i].id
 		this.showPopup=true
 		this.seeTask=false
+    //get full date on string format
+    let stringFullDate=this.tasks[i].dateTime;
+    //get only date on string format
+    let stringDate=stringFullDate.toString().split("T",1)
+    //get full date to get time but first convert to date format
+    let stringTime=new Date(stringFullDate)
+    //convert date to string and take only the time
+    let timeArray=stringTime.toString().split(" ")
+    //get time 
+    let dateArray=stringDate[0].split('-')
+    let month=parseInt(dateArray[1]);
+    let year=dateArray[0];
+    let day=dateArray[2]
 		this.getPlayerByTeam(this.tasks[i].team)
 		this.taskForm=this.fb.group({
 	  		name:[this.tasks[i].name, Validators.required],
 	  		text:[this.tasks[i].text, Validators.required],
 	  		team:[this.tasks[i].team],
-	  		dateTime:[''],
-	  		time:[''],
+	  		dateTime:[{date: {year: year, month: month, day:day}}],
+	  		time:[timeArray[4]],
 	  		for:[this.tasks[i].for],
 	  		completad:[this.tasks[i].completad]
 		})
@@ -139,7 +159,7 @@ export class ListTaskComponent implements OnInit {
   showPopUp(i){
   	this.seeTask=true
   	this.currentTask=this.tasks[i];
-  	this.getUser(this.currentTask.for);
+    this.showPopup=true;
   }
   closePopUp(){
   	this.showPopup=false
@@ -167,14 +187,6 @@ export class ListTaskComponent implements OnInit {
   		},
   		e=>{
 	      	this.toast.error("Something wrong happened. Please try again", "Error",{positionClass:"toast-top-right"} );
-  		}
-  	)
-  }
-  getUser(val){
-  	this.team.getData('user/'+val).subscribe(
-  		result=>{
-  			this.playerInfo=result
-  			this.showPopup=true;
   		}
   	)
   }
