@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {FormBuilder, FormGroup, Validators,FormControl} from '@angular/forms';
 import {AuthenticationService} from "../../services/authentication.service";
-import {Observable} from "rxjs/Rx";
+import {Observable} from "rxjs";
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

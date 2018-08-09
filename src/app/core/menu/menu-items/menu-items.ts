@@ -40,6 +40,7 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'icon-people icons',
     children: [
+      {state: 'upload-roster', name: 'Upload Roster'},
       {state: 'add-player', name: 'Add Player'},
       {state: 'list-player', name: 'List Player'},
     ]

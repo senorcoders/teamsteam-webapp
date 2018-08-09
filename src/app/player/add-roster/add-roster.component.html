@@ -1,0 +1,30 @@
+<div class="chk-block">
+  <div class="chk-block-title">
+    <h3 class="text-capitalize">Upload Roster</h3>
+  </div>
+  <div>
+    <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplate()">Download Template</button>
+  </div>
+  <!-- user and player form -->
+  <div class="chk-block-content">
+    <div class="row">
+      <div class="col-xl-12 mb-12">
+        <form [formGroup]="template" (ngSubmit)="uploadTemplate()">
+          <div class="form-group">
+            <label for="teams">Teams</label>
+            <select class="form-control form-control-lg input-square" [(ngModel)]="team" formControlName="team">
+              <option *ngFor="let team of teams" value="{{team.team.id}}">{{team.team.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <input type="file" formControlName="roster" accept=".csv" multiple="false" (change)="getFile($event.target.files)">
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Upload" class="btn btn-primary btn-block btn-lg btn-square">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

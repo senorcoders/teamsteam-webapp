@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import {TeamService} from "../../services/team.service";
 import {AuthenticationService} from "../../services/authentication.service";
-import {Observable} from "rxjs/Rx";
+import {Observable} from "rxjs";
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

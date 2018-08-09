@@ -28,6 +28,9 @@ export class TeamService {
     let userData=localStorage.getItem('sessionToken');
     return this.http.get(`${API_ENDPOINT}user/${this.id}/team`,this.httpOptions)
   }
+  getMyTeamsForUser(id) {
+    return this.http.get(`${API_ENDPOINT}roles?where={"user":"${id}","name":"Manager"}`,this.httpOptions)
+  }
   getTeams(){
      return this.http.get(`${API_ENDPOINT}teams/`,this.httpOptions)
   }
@@ -80,6 +83,9 @@ export class TeamService {
     return this.http.delete(`${API_ENDPOINT}${endpoint}`, this.httpOptions);
   }
   saveData(endpoint, data){
+    return this.http.post(`${API_ENDPOINT}${endpoint}`,data, this.httpOptions )
+  }
+  uploadTemplateRoster(endpoint, data){
     return this.http.post(`${API_ENDPOINT}${endpoint}`,data, this.httpOptions )
   }
 }

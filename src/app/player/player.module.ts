@@ -9,6 +9,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {PlayerRoutes } from './player.routing';
 import {AddPlayerComponent} from './add-player/add-player.component';
 import {ListPlayerComponent} from './list-player/list-player.component'
+import { AddRosterComponent } from './add-roster/add-roster.component';
 
 @NgModule({
   imports: [
@@ -16,11 +17,12 @@ import {ListPlayerComponent} from './list-player/list-player.component'
     FormsModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    RouterModule.forChild(PlayerRoutes)
+    RouterModule.forChild(PlayerRoutes),
   ],
   declarations: [ 
     AddPlayerComponent,
-    ListPlayerComponent
+    ListPlayerComponent,
+    AddRosterComponent
   ]
 })
 

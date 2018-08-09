@@ -1,0 +1,12 @@
+#paste-file{
+  height: 200px;
+  width: 300px;
+  border: 1px solid rgb(99, 166, 253);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#paste-file:hover{
+  background-color: red;
+}
