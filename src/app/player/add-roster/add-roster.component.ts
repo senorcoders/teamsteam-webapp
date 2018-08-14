@@ -24,6 +24,7 @@ export class AddRosterComponent implements OnInit {
   private enableUpload = false;
   public team = "";
   public file: File;
+  public showLoading=false;
 
   constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,
     private teamservice: TeamService, private toastr: ToastrService,
@@ -66,6 +67,7 @@ export class AddRosterComponent implements OnInit {
     let data = localStorage.getItem('sessionToken');
 
     if (data && this.enableUpload === true && this.team !== "") {
+      this.showLoading = true;
       let fd = new FormData();
       fd.append("roster", this.file); console.log(fd);
       let json = JSON.parse(data);
@@ -78,6 +80,8 @@ export class AddRosterComponent implements OnInit {
       this.http.post("https://api.lockerroomapp.com/roster/" + this.team+"?token="+token, fd, httpOptionsForm).subscribe(res => {
         if (res.hasOwnProperty("msg") && (res as any).msg === "success") {
           this.showSuccess();
+        }else{
+          this.showError("Error in process");
         }
       }, this.showError);
 
@@ -95,15 +99,21 @@ export class AddRosterComponent implements OnInit {
   }
 
   showError(e) {
+    this.showLoading = false;
     this.toastr.error(e, 'Error', { positionClass: "toast-top-right" });
   }
 
   showSuccess() {
+    this.showLoading = false;
     this.toastr.success('Well Done', 'Your roster was added Successfully', { positionClass: "toast-top-right" });
   }
 
-  public downloadTemplate(){
-    window.open("https://api.lockerroomapp.com/roster/template");
+  public downloadTemplateCSV(){
+    window.open("https://api.lockerroomapp.com/roster/template-csv");
+  }
+
+  public downloadTemplateXLSX(){
+    window.open("https://api.lockerroomapp.com/roster/template-xlsx");
   }
 
 

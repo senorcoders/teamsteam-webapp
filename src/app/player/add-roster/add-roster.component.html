@@ -3,10 +3,16 @@
     <h3 class="text-capitalize">Upload Roster</h3>
   </div>
   <div>
-    <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplate()">Download Template</button>
+    <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateCSV()">Download Template CSV</button>
+    <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateXLSX()">Download Template EXCEL</button>
   </div>
   <!-- user and player form -->
   <div class="chk-block-content">
+    <div class="row" *ngIf="showLoading">
+      <div class="col-12 loaderLocker">
+        <img src="/assets/img/loader.gif" alt="">
+      </div>
+    </div>
     <div class="row">
       <div class="col-xl-12 mb-12">
         <form [formGroup]="template" (ngSubmit)="uploadTemplate()">
@@ -17,7 +23,7 @@
             </select>
           </div>
           <div class="form-group">
-            <input type="file" formControlName="roster" accept=".csv" multiple="false" (change)="getFile($event.target.files)">
+            <input type="file" formControlName="roster" accept=".csv,.xlsx" multiple="false" (change)="getFile($event.target.files)">
           </div>
           <div class="form-group">
             <input type="submit" value="Upload" class="btn btn-primary btn-block btn-lg btn-square">
