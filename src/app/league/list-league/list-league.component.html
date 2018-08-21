@@ -1,0 +1,14 @@
+<div class="row">
+	<div class="col-md-4" *ngFor="let lea of leagues; let i=index">
+		<div class="square">
+			<div class="perfil"><img [src]="lea.league.imgSrc" (error)="errorHandler($event)"></div>
+			<div class="info">
+				<span class="username">{{lea.league.name}}</span>
+			</div>
+			<div class="actions">
+				<i class="fa fa-pencil edit" (click)="showPopUp(i)"></i>
+			</div>
+		</div>
+	</div>
+</div>
+<h3 *ngIf="showNotLeague">It does not have leagues</h3>

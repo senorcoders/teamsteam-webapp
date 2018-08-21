@@ -7,6 +7,7 @@ import {ImageUploadService} from '../../services/image-upload.service';
 import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
 import {TeamService} from '../../services/team.service';
+import { Interceptor } from '../../interceptor/interceptor';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.endpoint = this.auth.getBaseUrl(); 
+    this.endpoint = Interceptor.url; 
     this.pageTitleService.setTitle("User List");
     this.getUsers();
   }

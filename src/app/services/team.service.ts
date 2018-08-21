@@ -1,91 +1,79 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-const  API_ENDPOINT="https://api.lockerroomapp.com/";
-//const  API_ENDPOINT="https://api.lockerroomapp.com/";
+import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class TeamService {
-  token:string;
-  id:string;
-  httpOptions:any;
-  teamId:string;
-  constructor(private http:HttpClient) {this.getToken() }
-  getToken(){
-    let data=localStorage.getItem('sessionToken');
-    if (data) {
-      let json= JSON.parse(data);
-      this.token= json['token'];
-      this.id=json['id'];
-      this.httpOptions = {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'token':`${this.token}` })        
-      };
-    } 
+  token: string;
+  id: string;
+  teamId: string;
+  constructor(private http: HttpClient) {
+
   }
   getSports() {
-    return this.http.get(`${API_ENDPOINT}sports`,this.httpOptions)
+    return this.http.get(`/sports`)
   }
   getMyTeams() {
-    let userData=localStorage.getItem('sessionToken');
-    return this.http.get(`${API_ENDPOINT}user/${this.id}/team`,this.httpOptions)
+    let userData = localStorage.getItem('sessionToken');
+    return this.http.get(`/user/${this.id}/team`)
   }
   getMyTeamsForUser(id) {
-    return this.http.get(`${API_ENDPOINT}roles?where={"user":"${id}","name":"Manager"}`,this.httpOptions)
+    return this.http.get(`/roles?where={"user":"${id}","name":"Manager"}`)
   }
-  getTeams(){
-     return this.http.get(`${API_ENDPOINT}teams/`,this.httpOptions)
+  getTeams() {
+    return this.http.get(`/teams/`)
   }
-  updateTeam(team_id, team){
+  updateTeam(team_id, team) {
     let body = JSON.stringify(team);
-    return this.http.put(`${API_ENDPOINT}teams/${team_id}`,body, this.httpOptions )
+    return this.http.put(`/teams/${team_id}`, body)
   }
-  deleteTeam(team_id){
-    return this.http.delete(`${API_ENDPOINT}teams/${team_id}`, this.httpOptions )
+  deleteTeam(team_id) {
+    return this.http.delete(`/teams/${team_id}`)
   }
-  getTeamPlayers(team_id){
-   return this.http.get(`${API_ENDPOINT}team/${team_id}`,this.httpOptions) 
+  getTeamPlayers(team_id) {
+    return this.http.get(`/team/${team_id}`)
   }
-  createUser(user){
+  createUser(user) {
     let body = JSON.stringify(user);
     console.log(user)
-    return this.http.post(`${API_ENDPOINT}user/player/`,body, this.httpOptions )
+    return this.http.post(`/user/player/`, body)
   }
-  createPlayer(user,player){
-    return this.http.post(`${API_ENDPOINT}user/player/`,{ user: user, player: player }, this.httpOptions )
+  createPlayer(user, player) {
+    return this.http.post(`/user/player/`, { user: user, player: player })
   }
-  uploadImage(image){
+  uploadImage(image) {
     let body = JSON.stringify(image);
     console.log(body)
-    return this.http.post(`${API_ENDPOINT}images/users`,body, this.httpOptions )
+    return this.http.post(`/images/users`, body)
   }
-//   getTeamsByUser(type,id){
-//     type=type.toLowerCase();
-//     return this.http.get(`${API_ENDPOINT}teams/${type}/${id}`,this.httpOptions)
-//   }
-  editUser(data){
+  //   getTeamsByUser(type,id){
+  //     type=type.toLowerCase();
+  //     return this.http.get(`/teams/${type}/${id}`)
+  //   }
+  editUser(data) {
     let body = JSON.stringify(data);
-    return this.http.put(`${API_ENDPOINT}user/${this.id}`,body, this.httpOptions )
+    return this.http.put(`/user/${this.id}`, body)
   }
-  register(data){
+  register(data) {
     let body = JSON.stringify(data);
-    return this.http.post(`${API_ENDPOINT}user/team`,body, {headers: new HttpHeaders({ 'Content-Type': 'application/json'})})
+    return this.http.post(`/user/team`, body)
   }
-  formBuilder(data){
+  formBuilder(data) {
     let body = JSON.stringify(data);
-    return this.http.post(`${API_ENDPOINT}registrationtemplate`,body, this.httpOptions )
+    return this.http.post(`/registrationtemplate`, body)
   }
-  getData(endpoint){
-    return this.http.get(`${API_ENDPOINT}${endpoint}`, this.httpOptions)
+  getData(endpoint) {
+    return this.http.get(`/${endpoint}`)
   }
-  editData(endpoint, data){
-    return this.http.put(`${API_ENDPOINT}${endpoint}`,data, this.httpOptions )
+  editData(endpoint, data) {
+    return this.http.put(`/${endpoint}`, data)
   }
-  deleteData(endpoint){
-    return this.http.delete(`${API_ENDPOINT}${endpoint}`, this.httpOptions);
+  deleteData(endpoint) {
+    return this.http.delete(`/${endpoint}`);
   }
-  saveData(endpoint, data){
-    return this.http.post(`${API_ENDPOINT}${endpoint}`,data, this.httpOptions )
+  saveData(endpoint, data) {
+    return this.http.post(`/${endpoint}`, data)
   }
-  uploadTemplateRoster(endpoint, data){
-    return this.http.post(`${API_ENDPOINT}${endpoint}`,data, this.httpOptions )
+  uploadTemplateRoster(endpoint, data) {
+    return this.http.post(`/${endpoint}`, data)
   }
 }

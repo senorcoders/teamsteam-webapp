@@ -5,7 +5,7 @@ import { fadeInAnimation } from "../../core/route-animation/route.animation";
 import { TeamService } from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Router } from '@angular/router';
+import { Interceptor } from '../../interceptor/interceptor';
 @Component({
 	selector: 'app-list-player',
 	templateUrl: './list-player.component.html',
@@ -68,7 +68,7 @@ export class ListPlayerComponent implements OnInit {
 		//         console.log(error);
 		//     }
 		// )
-		return `https://api.lockerroomapp.com/images/${ramdon}/users&thumbnail/${id}`
+		return `${Interceptor.url}/images/${ramdon}/users&thumbnail/${id}`
 
 	}
 	getPlayerByTeam(val) {

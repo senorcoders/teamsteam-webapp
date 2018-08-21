@@ -49,6 +49,11 @@ export const AppRoutes: Routes = [{
     canActivate:[MyGuardService, PlayerRoutesService]
   },
   {
+    path: 'league',
+    loadChildren: './league/league.module#LeagueModule',
+    canActivate:[MyGuardService]
+  },
+  {
     path: '',
     loadChildren: './user-pages/users.module#UsersDemoModule',
     canActivate:[MyGuardService]

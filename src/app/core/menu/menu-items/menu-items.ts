@@ -55,7 +55,17 @@ const MENUITEMS = [
       {state:'list',name:'List task'}
     ]
   },
-    
+  {
+    state: "league",
+    name: "Leagues",
+    type: "sub",
+    icon: "fa fa-list-alt",
+    children:[
+      {state:"list",name:"List League"},
+      {state:"add",name:"Create League"},
+      {state:"upload",name:"Upload League"}
+    ]
+  }
 
 ];
 const SUPERMENUITEMS = [    

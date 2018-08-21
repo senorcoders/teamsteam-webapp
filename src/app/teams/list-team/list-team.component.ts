@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { PageTitleService } from '../../core/page-title/page-title.service';
+import { Interceptor } from '../../interceptor/interceptor';
 
 @Component({
   selector: 'app-list-team',
@@ -57,7 +58,7 @@ export class ListTeamComponent implements OnInit {
     this.new_image = "";
   }
   ngOnInit(){    
-    this.endpoint = this.auth.getBaseUrl(); 
+    this.endpoint = Interceptor.url; 
     this.getMyTeams();
     this.sports = this.getSports();
     this.pageTitleService.setTitle("Team List");

@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8'})
-  };
-const API_ENDPOINT="https://api.lockerroomapp.com/";
-//const API_ENDPOINT="http://138.68.19.227:8188/";
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
@@ -13,10 +7,7 @@ export class AuthenticationService {
  constructor(private http: HttpClient) { }
   login(login){
     let body = JSON.stringify(login);
-	return this.http.post(`${API_ENDPOINT}login`, body, httpOptions);
-  }
-  getBaseUrl(){
-    return API_ENDPOINT;
+	return this.http.post(`/login`, body);
   }
   setLoginData(data){
     data=JSON.stringify(data);
@@ -36,7 +27,7 @@ export class AuthenticationService {
     localStorage.removeItem('sessionToken');
   }
   getPerfilImage(id, ramdon){
-    return this.http.get(`${API_ENDPOINT}images/${ramdon}/users/${id}`, httpOptions)
+    return this.http.get(`/images/${ramdon}/users/${id}`)
   }
   isLogged(){
     let data=this.getLoginData();
@@ -63,10 +54,10 @@ export class AuthenticationService {
 	}
   changePassword(data,token){
 		let body = JSON.stringify(data);
-	  return this.http.post(`${API_ENDPOINT}password/change`, body, {headers: new HttpHeaders({ 'Content-Type': 'application/json;charset=UTF-8','token':`${token}`})});
+	  return this.http.post(`/password/change`, body);
 	}
   //check if email already exist
 	checkEmail(email){
-		return this.http.get(`${API_ENDPOINT}user/enable/${email}`, httpOptions)
+		return this.http.get(`/user/enable/${email}`)
 	}
 }

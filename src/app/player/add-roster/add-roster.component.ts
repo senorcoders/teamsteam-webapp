@@ -116,5 +116,12 @@ export class AddRosterComponent implements OnInit {
     window.open("https://api.lockerroomapp.com/roster/template-xlsx");
   }
 
+  public downloadTemplateCSVEmail(){
+    window.open("https://api.lockerroomapp.com/roster/template-csv-email");
+  }
+
+  public downloadTemplateXLSXEmail(){
+    window.open("https://api.lockerroomapp.com/roster/template-xlsx-email");
+  }
 
 }
