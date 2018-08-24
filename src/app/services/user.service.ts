@@ -24,17 +24,17 @@ export class UserService {
   }
   
   getUsers(){
-     return this.http.get(`${API_ENDPOINT}user?limit=100`,this.httpOptions)
+     return this.http.get(`/user?limit=100`)
   }
   updateUser(user_id, user){
     let body = JSON.stringify(user);
-    return this.http.put(`${API_ENDPOINT}user/${user_id}`,body, this.httpOptions )
+    return this.http.put(`/user/${user_id}`,body)
   }
   deleteUser(user_id){
-    return this.http.delete(`${API_ENDPOINT}user/${user_id}`, this.httpOptions )
+    return this.http.delete(`/user/${user_id}`)
   }
   getDashboard(){
-    return this.http.get(`${API_ENDPOINT}dashboard`,this.httpOptions) 
+    return this.http.get(`/dashboard`,this.httpOptions) 
   }
   
 }

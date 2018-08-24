@@ -23,7 +23,7 @@ import { Interceptor } from '../../interceptor/interceptor';
 export class ListTeamComponent implements OnInit {
   @ViewChild('teamImage') teamImage: ElementRef;
   editTeamForm: FormGroup;
-	teams:any;
+	teams:any[]=[];
   endpoint:string;
   selectedTeam:any;
   sports:any;
@@ -32,7 +32,7 @@ export class ListTeamComponent implements OnInit {
   new_image: string;
 
 	constructor(private imageupload: ImageUploadService, private fb: FormBuilder, private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router, private pageTitleService: PageTitleService) {
-    this.teams        = { name: "" };
+    // this.teams        = { name: "" };
     this.teamRoster   = {
                           firstName: ""
                         }
@@ -78,7 +78,7 @@ export class ListTeamComponent implements OnInit {
   getTeams(){    
   	this.teamservice.getTeams().subscribe(
       data=>{
-        this.teams=data;
+        this.teams=data as any;
       },
       error=>{
         console.log(error)
@@ -88,7 +88,7 @@ export class ListTeamComponent implements OnInit {
   getMyTeams(){
     this.teamservice.getMyTeams().subscribe(
       data=>{
-        this.teams=data;
+        this.teams=data as any;
       },
       error=>{
         console.log(error)
@@ -179,7 +179,7 @@ export class ListTeamComponent implements OnInit {
         this.teamImage.nativeElement.src = reader.result;
 
         //event.target.src = reader.result;
-        this.new_image = reader.result;// reader.result;
+        this.new_image = reader.result as any;// reader.result;
 
       };
         reader.onload =this._handleReaderLoaded.bind(this);

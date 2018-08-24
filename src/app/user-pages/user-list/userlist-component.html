@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-sm-6 col-lg-6 col-xl-3 mb-3" *ngFor = "let user of users; let i = index;  trackBy: trackByUsers" [attr.data-index]="i">
                 <div class="card">
-                    <figure class="imghvr-zoom-in"><img (error)="errorHandler($event)" src="{{endpoint}}images/wherever/users/{{user.id}}" class="img-fluid" alt="example-image">
+                    <figure class="imghvr-zoom-in"><img (error)="errorHandler($event)" src="{{endpoint}}/images/wherever/users/{{user.id}}" class="img-fluid" alt="example-image">
                         
                     </figure>
                     <div class="card-body text-center">

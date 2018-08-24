@@ -13,8 +13,9 @@ export class TeamService {
     return this.http.get(`/sports`)
   }
   getMyTeams() {
-    let userData = localStorage.getItem('sessionToken');
-    return this.http.get(`/user/${this.id}/team`)
+    let userData: any = localStorage.getItem('sessionToken');
+    userData = JSON.parse(userData);
+    return this.http.get(`/user/${userData.id}/team`)
   }
   getMyTeamsForUser(id) {
     return this.http.get(`/roles?where={"user":"${id}","name":"Manager"}`)
