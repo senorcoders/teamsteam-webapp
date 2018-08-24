@@ -8,6 +8,7 @@ import {LeagueRoutes } from './league.routing';
 import { ListLeagueComponent } from './list-league/list-league.component';
 import { AddLeagueComponent } from './add-league/add-league.component';
 import { AddTeamModal } from './add-team-modal/add-team-modal';
+import { UploadLeagueComponent } from './upload-league/upload-league.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { AddTeamModal } from './add-team-modal/add-team-modal';
   ],
   declarations: [
     ListLeagueComponent,
-    AddLeagueComponent
+    AddLeagueComponent,
+    UploadLeagueComponent
   ]
 })
 

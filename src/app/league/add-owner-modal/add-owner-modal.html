@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Owners</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(teamsSelect)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="input-group mb-3">
+        <input type="search" class="form-control" [(ngModel)]="search" placeholder="Email" (keyup)="searchOwners()">
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let owner of owners">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 avatar-owners">
+                    <img [src]="owner.imgSrc" alt="{{owner.username}}" [hidden]="!owner.loadImage" (load)="loadImage(owner)">
+                    <img src="/assets/img/logo-icon.png" [alt]="owner.username" [hidden]="owner.loadImage"> 
+                    {{owner.firstName+ " "+ owner.lastName}}
+                </h5>
+                <small>
+                    <i (click)="addOwner(owner)" style="cursor: pointer;" class="fa fa-plus" aria-hidden="true"></i>
+                </small>
+            </div>
+        </li>
+    </ul>
+</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="add()">Add</button>
+</div> -->

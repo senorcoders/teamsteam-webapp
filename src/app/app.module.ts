@@ -42,6 +42,7 @@ import { PlayerRoutesService } from './services/player-routes.service';
 import { TeamRoutesService } from './services/team-routes.service';
 import { Interceptor } from './interceptor/interceptor';
 import { AddTeamModal } from './league/add-team-modal/add-team-modal';
+import { AddOwnerModal } from './league/add-owner-modal/add-owner-modal';
 
 
 
@@ -85,10 +86,12 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		HorizontalLayoutComponent,
 		LoginoneComponent,
 		RegisterComponent,
-		AddTeamModal
+		AddTeamModal,
+		AddOwnerModal
 	],
 	entryComponents: [
-		AddTeamModal
+		AddTeamModal,
+		AddOwnerModal
 	],
 	bootstrap: [ChankyaAppComponent],
 	providers: [

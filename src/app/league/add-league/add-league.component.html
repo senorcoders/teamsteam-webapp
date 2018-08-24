@@ -2,6 +2,11 @@
     <div class="chk-block-title">
         <h3 class="text-capitalize">Add League</h3>
     </div>
+    <div class="row" *ngIf="showLoading">
+        <div class="col-12 loaderLocker">
+            <img src="/assets/img/loader.gif" alt="">
+        </div>
+    </div>
     <!-- user and player form -->
     <div class="chk-block-content">
         <div class="row">
@@ -9,24 +14,52 @@
                 <form [formGroup]="form" (submit)="saveLeague()">
                     <div class="form-group">
                         <label for="username">Name</label>
-                        <input type="text" class="form-control form-control-lg input-square" id="username" placeholder="UserName" formControlName="name"
-                            [ngClass]="{'is-invalid':form.get('name').invalid && form.get('name').touched}">
+                        <input type="text" class="form-control form-control-lg input-square" placeholder="name" formControlName="name" [ngClass]="{'is-invalid':form.get('name').invalid && form.get('name').touched}">
                         <div *ngIf="form.get('name').hasError('required') && form.get('name').touched" class="invalid-feedback">name
                             is required</div>
                     </div>
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="Description" formControlName="description">
+                        <input type="text" class="form-control form-control-lg input-square" [(ngModel)]="description" formControlName="desc" placeholder="Description">
                     </div>
                     <div class="form-group">
                         <label for="team">Teams</label>
-                        <li *ngFor="let team of teams" value="{{team.id}}">{{team.name}}></li>
-                        <button class="btn btn-primary btn-square" (click)="addTeam()">Add Team</button>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let team of teams">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1 avatar-teams">
+                                        <img [src]="team.imgSrc" alt="{{team.name}}" [hidden]="!team.loadImage" (load)="loadImage(team)">
+                                        <img src="/assets/img/logo-icon.png" [alt]="team.name" [hidden]="team.loadImage">                                        {{team.name}}
+                                    </h5>
+                                </div>
+                                <small class="text-muted" style="color:#ff2323 !important; cursor: pointer;" (click)="removeTeam(team)">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    Remove
+                                </small>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn btn-primary btn-square" style="margin-top:10px;" (click)="addTeam()">Add
+                            Team</button>
                     </div>
                     <div class="form-group">
                         <label for="owners">Owners</label>
-                        <li *ngFor="let owner of owners" value="{{owner.id}}">{{owner.firstName+ " "+ owner.lastName}}></li>
-                        <button class="btn btn-primary btn-square">Add Owner</button>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let owner of owners">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1 avatar-teams">
+                                        <img [src]="owner.imgSrc" [hidden]="!owner.loadImage" (load)="loadImage(owner)">
+                                        <img src="/assets/img/logo-icon.png" [alt]="owner.name" [hidden]="owner.loadImage">                                        {{owner.firstName+
+                                        " "+ owner.lastName}}
+                                    </h5>
+                                </div>
+                                <small class="text-muted" style="color:#ff2323 !important; cursor: pointer;" (click)="removeOwner(owner)">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    Remove
+                                </small>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn btn-primary btn-square" style="margin-top:10px;" (click)="addOwner()">Add
+                            Owner</button>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Create" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="form.invalid">

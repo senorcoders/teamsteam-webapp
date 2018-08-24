@@ -1,12 +1,28 @@
 <div class="modal-header">
-    <h4 class="modal-title">Add Team</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <h4 class="modal-title" id="modal-basic-title">Add Teams</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close(teamsSelect)">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
-    <p>Hello, {{name}}!</p>
+    <div class="input-group mb-3">
+        <input type="search" class="form-control" [(ngModel)]="search" (keyup)="searchTeams()">
+    </div>
+    <ul class="list-group">
+        <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let team of teams">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 avatar-teams">
+                    <img [src]="team.imgSrc" alt="{{team.name}}" [hidden]="!team.loadImage" (load)="loadImage(team)">
+                    <img src="/assets/img/logo-icon.png" [alt]="team.name" [hidden]="team.loadImage"> {{team.name}}
+                </h5>
+                <small>
+                    <i (click)="addTeam(team)" style="cursor: pointer;" class="fa fa-plus" aria-hidden="true"></i>
+                </small>
+            </div>
+            <p class="mb-1">{{team.description}}</p>
+        </li>
+    </ul>
 </div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Close</button>
-</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="add()">Add</button>
+</div> -->
