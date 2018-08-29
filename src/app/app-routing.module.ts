@@ -33,11 +33,11 @@ export const AppRoutes: Routes = [{
     loadChildren: './teams/teams.module#TeamModule',
     canActivate:[MyGuardService]
   },
-  {
-    path: 'form-builder',
-    loadChildren: './form-builder/form-builder.module#FormBuilderModule',
-    canActivate:[MyGuardService]
-  },
+  // {
+  //   path: 'form-builder',
+  //   loadChildren: './form-builder/form-builder.module#FormBuilderModule',
+  //   canActivate:[MyGuardService]
+  // },
   {
     path: 'tasks',
     loadChildren: './tasks/task.module#TaskModule',

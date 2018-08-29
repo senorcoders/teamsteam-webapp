@@ -26,7 +26,8 @@ export class ListTeamComponent implements OnInit {
 	teams:any[]=[];
   endpoint:string;
   selectedTeam:any;
-  sports:any;
+  sports:any=[];
+  sport:any;
   teamRoster:any;
   team_id: number;
   new_image: string;
@@ -43,10 +44,10 @@ export class ListTeamComponent implements OnInit {
                           sport: "",
                           teamPicture: ""
                         };
-    this.sports       = { 
-                          id: 0, 
-                          value: ""
-                        };
+    // this.sports       = { 
+    //                       id: 0, 
+    //                       value: ""
+    //                     };
     this.editTeamForm = fb.group({
                           name:  [this.selectedTeam.name, Validators.required],
                           description:  [this.selectedTeam.description, Validators.required],
@@ -60,7 +61,7 @@ export class ListTeamComponent implements OnInit {
   ngOnInit(){    
     this.endpoint = Interceptor.url; 
     this.getMyTeams();
-    this.sports = this.getSports();
+    this.getSports();
     this.pageTitleService.setTitle("Team List");
 
   }
@@ -96,9 +97,20 @@ export class ListTeamComponent implements OnInit {
     )
   }
   getSports(){
+    //api is returning value like SPORT.name
     this.teamservice.getSports().subscribe(
       data=>{
-        this.sports = data;
+        this.sport= data;
+        this.sport.forEach((value,index)=>{
+          let name=value.value
+          name=name.split('.').pop();
+          //remove SPORT.
+          let newData={
+            id:value.id,
+            value:name
+          }
+          this.sports[index]=newData
+        })
       },
       error=>{
         console.log(error)

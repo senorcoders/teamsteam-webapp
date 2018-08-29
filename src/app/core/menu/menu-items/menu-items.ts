@@ -15,16 +15,16 @@ export interface Menu {
 }
 
 const MENUITEMS = [  
-  {
-    state: 'form-builder',
-    name: 'Form Builder',
-    type: 'sub',
-    icon: 'fa fa-book',
-    children: [
-      {state: 'add', name: 'Add New'},
-      {state: 'list', name: 'List Form'},
-    ]
-  },
+  // {
+  //   state: 'form-builder',
+  //   name: 'Form Builder',
+  //   type: 'sub',
+  //   icon: 'fa fa-book',
+  //   children: [
+  //     {state: 'add', name: 'Add New'},
+  //     {state: 'list', name: 'List Form'},
+  //   ]
+  // },
   {
     state: 'teams',
     name: 'Teams',
