@@ -8,7 +8,7 @@ import { NgModule } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { AgmCoreModule } from '@agm/core';
+// import { AgmCoreModule } from '@agm/core';
 import { TourNgBootstrapModule } from 'ngx-tour-ng-bootstrap';
 
 import { PerfectScrollbarModule, PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
@@ -45,7 +45,6 @@ import { AddTeamModal } from './league/add-team-modal/add-team-modal';
 import { AddOwnerModal } from './league/add-owner-modal/add-owner-modal';
 
 
-
 export function createTranslateLoader(http: Http) {
 	return new TranslateStaticLoader(http, 'assets/i18n', '.json');
 }
@@ -67,7 +66,7 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		FlexLayoutModule,
 		NgbModalModule.forRoot(),
 		Ng2BreadcrumbModule.forRoot(),
-		AgmCoreModule.forRoot({ apiKey: 'AIzaSyBtdO5k6CRntAMJCF-H5uZjTCoSGX95cdk' }),
+		// AgmCoreModule.forRoot({ apiKey: 'AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q' }),
 		PerfectScrollbarModule.forRoot(perfectScrollbarConfig),
 		MenuToggleModule,
 		HttpClientModule,

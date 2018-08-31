@@ -1,0 +1,135 @@
+<div class="chk-block">
+    <div class="chk-block-title">
+        <h3 class="text-capitalize">Add Task</h3>
+    </div>
+    <!-- user and player form -->
+    <div class="chk-block-content">
+        <div class="row" *ngIf="showLoading">
+            <div class="col-12 loaderLocker">
+                <img src="/assets/img/loader.gif" alt="">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 mb-12">
+                <form [formGroup]="form" (submit)="saveEvent()">
+                    <div class="form-group">
+                        <label for="teams">Team</label>
+                        <select class="form-control form-control-lg input-square" formControlName="team">
+                            <option [value]="team.team.id" *ngFor="let team of teams">{{team.team.name}}</option>
+                        </select>
+                        <div *ngIf="form.get('name').hasError('required') && form.get('name').touched" class="invalid-feedback">Team
+                            is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control form-control-lg input-square" placeholder="Name" formControlName="name" [ngClass]="{'is-invalid':form.get('name').invalid && form.get('name').touched}">
+                        <div *ngIf="form.get('name').hasError('required') && form.get('name').touched" class="invalid-feedback">name
+                            is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="teams">Type</label>
+                        <select class="form-control form-control-lg input-square" formControlName="type" [ngClass]="{'is-invalid':form.get('type').invalid && form.get('type').touched}">
+                            <option value="practice">Practice</option>
+                            <option value="game">Game</option>
+                            <option value="event">Event</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="for">Repeats</label>
+                        <ui-switch (change)="onChange($event)"></ui-switch>
+                    </div>
+                    <div class="form-group" [hidden]="!repeats">
+                        <label for="for">Daily</label>
+                        <ui-switch (change)="onChangeDaily($event)"></ui-switch>
+                    </div>
+                    <div class="form-group" [hidden]="repeatsDaysValid()">
+                        <div id="repeats-days">
+                            <h4 (click)="selectDay('m')" [ngClass]="getSelectDays('m') ? 'select' : '' ">Monday</h4>
+                            <h4 (click)="selectDay('tu')" [ngClass]="getSelectDays('tu') ? 'select' : '' ">Tuesday</h4>
+                            <h4 (click)="selectDay('w')" [ngClass]="getSelectDays('w') ? 'select' : '' ">Wednesday</h4>
+                            <h4 (click)="selectDay('th')" [ngClass]="getSelectDays('th') ? 'select' : '' ">Thursday</h4>
+                            <h4 (click)="selectDay('f')" [ngClass]="getSelectDays('f') ? 'select' : '' ">Friday</h4>
+                            <h4 (click)="selectDay('sa')" [ngClass]="getSelectDays('sa') ? 'select' : '' ">Saturday</h4>
+                            <h4 (click)="selectDay('su')" [ngClass]="getSelectDays('su') ? 'select' : '' ">Sunday</h4>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="!repeats">
+                        <label for="date">Date</label>
+                        <input class="form-control" type="date" [ngClass]="{'is-invalid':form.get('date').invalid && form.get('date').touched}" formControlName="date">
+                        <div *ngIf="form.get('date').hasError('required') && form.get('date').touched" class="invalid-feedback">Date
+                            is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Time</label>
+                        <input class="form-control" type="time" id="time" [ngClass]="{'is-invalid':form.get('time').invalid && form.get('time').touched}"
+                            formControlName="time">
+                        <div *ngIf="form.get('time').hasError('required') && form.get('time').touched" class="invalid-feedback">Time
+                            is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">End Time</label>
+                        <input class="form-control" type="time" id="time" [ngClass]="{'is-invalid':form.get('dateTimeEnd').invalid && form.get('dateTimeEnd').touched}"
+                            formControlName="dateTimeEnd">
+                        <div *ngIf="form.get('dateTimeEnd').hasError('required') && form.get('dateTimeEnd').touched" class="invalid-feedback">End
+                            Time is required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea type="text" class="form-control form-control-lg input-square" placeholder="Description" formControlName="description"
+                            [ngClass]="{'is-invalid':form.get('description').invalid && form.get('description').touched}"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="percentageNotification">Percentage Attendance to receive notification</label>
+                        <input type="number" min="0" max="100" class="form-control form-control-lg input-square" formControlName="percentageNotification"
+                            [ngClass]="{'is-invalid':form.get('percentageNotification').invalid && form.get('percentageNotification').touched}">
+                    </div>
+                    <div class="form-group">
+                        <label for="for">Looking for players?</label>
+                        <ui-switch (change)="onChangePlayer($event)"></ui-switch>
+                    </div>
+                    <div class="form-group" [hidden]="!searchPlayer" *ngFor="let play of searchPlayers; let i=index; trackBy:trackByIndex">
+                        <label for="name">Position</label>
+                        <input type="text" class="form-control form-control-lg input-square" [(ngModel)]="searchPlayers[i]">
+                    </div>
+                    <div class="form-group" [hidden]="!searchPlayer">
+                        <button type="button" class="btn btn-primary btn-lg btn-square" (click)="addPosition()">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <h5>Location</h5>
+                    <agm-map [zoom]="12" [latitude]="lat" style="width: 100%; height: 300px; " [longitude]="lng" (mapClick)="placeMarker($event)">
+                        <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                    </agm-map>
+
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label for="address">Address</label>
+                        <textarea class="form-control form-control-lg input-square" placeholder="Address" formControlName="address" [ngClass]="{'is-invalid':form.get('address').invalid && form.get('address').touched}"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="locationDetail">Location Detail</label>
+                        <textarea class="form-control form-control-lg input-square" placeholder="Location Detail" formControlName="locationDetail"
+                            [ngClass]="{'is-invalid':form.get('locationDetail').invalid && form.get('locationDetail').touched}"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="locationLink">Website</label>
+                        <input class="form-control form-control-lg input-square" type="url" placeholder="Website" [ngClass]="{'is-invalid':form.get('dateTimeEnd').invalid && form.get('dateTimeEnd').touched}"
+                            formControlName="locationLink">
+                    </div>
+
+                    <div class="mb-12" style="margin-bottom: 1rem;">
+                        <img [src]="imgSrc" style="border: 1px dashed black" (click)="addImage()" alt="profile thumb" id="previewImg" class="img-fluid"
+                            width="200" height="200">
+                        <input hidden type="file" id="inputFile" accept=".png,.jpg,.jpeg" (change)="uploadImage($event.target.files)" class="form-control edit-img">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="form.invalid">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

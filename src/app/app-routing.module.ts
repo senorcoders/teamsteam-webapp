@@ -54,6 +54,11 @@ export const AppRoutes: Routes = [{
     canActivate:[MyGuardService]
   },
   {
+    path: 'events',
+    loadChildren: './events/events.module#EventsModule',
+    canActivate:[MyGuardService]
+  },
+  {
     path: '',
     loadChildren: './user-pages/users.module#UsersDemoModule',
     canActivate:[MyGuardService]

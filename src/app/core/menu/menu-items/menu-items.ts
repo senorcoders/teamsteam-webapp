@@ -14,7 +14,7 @@ export interface Menu {
   children?: ChildrenItems[];
 }
 
-const MENUITEMS = [  
+const MENUITEMS = [
   // {
   //   state: 'form-builder',
   //   name: 'Form Builder',
@@ -31,18 +31,28 @@ const MENUITEMS = [
     type: 'sub',
     icon: 'icon-speedometer icons',
     children: [
-      {state: 'list-team', name: 'List'},
+      { state: 'list-team', name: 'List' },
     ]
   },
-    {
+  {
+    state: 'events',
+    name: 'Event',
+    type: 'sub',
+    icon: 'icon-people icons',
+    children: [
+      { state: 'list', name: 'List Events' },
+      { state: 'add', name: 'Add' },
+    ]
+  },
+  {
     state: 'player',
     name: 'Players',
     type: 'sub',
     icon: 'icon-people icons',
     children: [
-      {state: 'upload-roster', name: 'Upload Roster'},
-      {state: 'add-player', name: 'Add Player'},
-      {state: 'list-player', name: 'List Player'},
+      { state: 'upload-roster', name: 'Upload Roster' },
+      { state: 'add-player', name: 'Add Player' },
+      { state: 'list-player', name: 'List Player' },
     ]
   },
   {
@@ -50,9 +60,9 @@ const MENUITEMS = [
     name: 'My Tasks',
     type: 'sub',
     icon: 'fa fa-tasks',
-    children:[
-      {state:'add', name:'Add task'},
-      {state:'list',name:'List task'}
+    children: [
+      { state: 'add', name: 'Add task' },
+      { state: 'list', name: 'List task' }
     ]
   },
   {
@@ -60,24 +70,24 @@ const MENUITEMS = [
     name: "Leagues",
     type: "sub",
     icon: "fa fa-list-alt",
-    children:[
-      {state:"list",name:"List League"},
-      {state:"add",name:"Create League"},
-      {state:"upload",name:"Upload League"}
+    children: [
+      { state: "list", name: "List League" },
+      { state: "add", name: "Create League" },
+      { state: "upload", name: "Upload League" }
     ]
   }
 
 ];
-const SUPERMENUITEMS = [    
+const SUPERMENUITEMS = [
   {
     state: 'dashboard-v1',
-    name: 'Dashboard',    
+    name: 'Dashboard',
     icon: 'fa fa-tachometer',
     type: 'link'
   },
   {
     state: 'userlist',
-    name: 'Users',    
+    name: 'Users',
     icon: 'fa fa-user',
     type: 'link'
   }

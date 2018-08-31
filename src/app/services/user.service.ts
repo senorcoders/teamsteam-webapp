@@ -24,7 +24,7 @@ export class UserService {
   }
   
   getUsers(){
-     return this.http.get(`/user?limit=100`)
+     return this.http.get(`/user?sort=createdAt DESC&limit=3000`)
   }
   updateUser(user_id, user){
     let body = JSON.stringify(user);
