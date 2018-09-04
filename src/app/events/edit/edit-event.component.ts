@@ -78,12 +78,11 @@ export class EditEventComponent implements OnInit {
     }
 
     async ngOnInit() {
-        this.pageTitleService.setTitle("Add Team");
+        this.pageTitleService.setTitle("Events");
         this.userData = this.auth.getLoginData();
-        this.getTeams();
+        await this.getTeams();
 
         let event = await this.http.get("/event/" + this.id).toPromise() as any;
-        console.log(event);
         this.team = event.team.id;
         console.log(this.team);
         this.imgSrc = Interceptor.url+ `/images/wherever/events/${event.id}`;

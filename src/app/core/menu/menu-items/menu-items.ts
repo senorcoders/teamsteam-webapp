@@ -36,12 +36,12 @@ const MENUITEMS = [
   },
   {
     state: 'events',
-    name: 'Event',
+    name: 'Events',
     type: 'sub',
     icon: 'icon-people icons',
     children: [
-      { state: 'list', name: 'List Events' },
-      { state: 'add', name: 'Add' },
+      { state: 'list', name: 'View Events' },
+      { state: 'add', name: 'Create New Event' },
     ]
   },
   {

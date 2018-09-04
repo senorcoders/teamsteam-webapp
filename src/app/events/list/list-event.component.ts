@@ -33,18 +33,21 @@ export class ListEventComponent implements OnInit {
 
     constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,
         private auth: AuthenticationService, public http: HttpClient,
-        public toastr: ToastrService, public route:Router
+        public toastr: ToastrService, public route: Router
     ) {
     }
 
     async ngOnInit() {
-
+        this.pageTitleService.setTitle("Events");
         this.userData = this.auth.getLoginData();
 
         let teams = await this.http.get(`/roles?where={"name":"Manager","user":"${this.userData.id}"}`).toPromise() as any[];
         this.teams = teams.filter(it => {
             return it.team !== undefined;
         });
+        if (this.teams[0]) {
+            this.team = this.teams[0].team.id;
+        }
 
         this.getEvents();
     }
@@ -63,8 +66,8 @@ export class ListEventComponent implements OnInit {
         event.target.src = "assets/img/logo-lockerroom.png";
     }
 
-    public editEvent(event){
-        this.route.navigate(["/events/edit/"+ event.id]);
+    public editEvent(event) {
+        this.route.navigate(["/events/edit/" + event.id]);
     }
 
     showError(e) {
@@ -77,6 +80,6 @@ export class ListEventComponent implements OnInit {
         this.toastr.success('Well Done', 'Your event was added Successfully', { positionClass: "toast-top-right" });
     }
 
-    public trackByUsers(index: number, user: any): number {return index; }
+    public trackByUsers(index: number, user: any): number { return index; }
 
 }

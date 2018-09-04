@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-6 col-lg-6 col-xl-3 mb-3">
                 <div class="form-group">
-                    <label for="teams">Team</label>
+                    <label for="teams">Choose Team</label>
                     <select [(ngModel)]="team" class="form-control form-control-lg input-square" (change)="getEvents()">
                         <option *ngFor="let team of teams" value="{{team.team.id}}">{{team.team.name}}</option>
                     </select>

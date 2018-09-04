@@ -59,7 +59,7 @@ export class AddEventComponent implements OnInit {
     }
 
     async ngOnInit() {
-        this.pageTitleService.setTitle("Add Team");
+        this.pageTitleService.setTitle("Events");
         this.userData = this.auth.getLoginData();
         this.getTeams()
         this.form = this.fb.group({
@@ -266,6 +266,7 @@ export class AddEventComponent implements OnInit {
         this.teams = teams.filter(it => {
             return it.team !== undefined;
         });
+
     }
 
     showError(e) {

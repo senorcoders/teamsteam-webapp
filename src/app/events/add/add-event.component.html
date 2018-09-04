@@ -1,6 +1,6 @@
 <div class="chk-block">
     <div class="chk-block-title">
-        <h3 class="text-capitalize">Add Task</h3>
+        <h3 class="text-capitalize">Add Event</h3>
     </div>
     <!-- user and player form -->
     <div class="chk-block-content">
@@ -13,7 +13,7 @@
             <div class="col-xl-12 mb-12">
                 <form [formGroup]="form" (submit)="saveEvent()">
                     <div class="form-group">
-                        <label for="teams">Team</label>
+                        <label for="teams">Choose Team</label>
                         <select class="form-control form-control-lg input-square" formControlName="team">
                             <option [value]="team.team.id" *ngFor="let team of teams">{{team.team.name}}</option>
                         </select>
