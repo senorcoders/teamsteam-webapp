@@ -31,7 +31,7 @@ export class ListTeamComponent implements OnInit {
   teamRoster:any;
   team_id: number;
   new_image: string;
-
+  showLoading:boolean=false;
 	constructor(private imageupload: ImageUploadService, private fb: FormBuilder, private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router, private pageTitleService: PageTitleService) {
     // this.teams        = { name: "" };
     this.teamRoster   = {
@@ -89,6 +89,7 @@ export class ListTeamComponent implements OnInit {
   getMyTeams(){
     this.teamservice.getMyTeams().subscribe(
       data=>{
+        console.log(data)
         this.teams=data as any;
       },
       error=>{
@@ -119,38 +120,34 @@ export class ListTeamComponent implements OnInit {
   }
  
   submitUpdateTeam( updateTeam) {
-
     let team = {      
       name: updateTeam.name,
       description: updateTeam.description,
       sport: updateTeam.sport
     }
-    //this.toastr.success('Well Done', 'Team Updated ' + JSON.stringify(updateTeam.teamPicture), {positionClass:"toast-top-center"});
     let result = this.teamservice.updateTeam(this.selectedTeam.id, team).subscribe(
       data=>{
-        //document.getElementById("teamList").innerHTML = ''
         this.teams[this.team_id]= data;
         this.toastr.success('Well Done', 'Team Updated ' , {positionClass:"toast-top-center"});
-        
-        //if(this.new_image != ""){
-          //alert(this.new_image);
+        if(this.new_image && this.new_image!=''){
+          this.showLoading=true
           this.imageupload.uploadImage( this.selectedTeam.id ,'teams', this.new_image).subscribe(
-              data=> {
-                this.toastr.success('Well Done', 'Image Updated' + this.new_image, {positionClass:"toast-top-center"});
-              },
-              error=>{
-                console.log(error);
-              }
-            )
-        //}
-        this.selectedTeam = data;
-        //this.getMyTeams();
+            data=> {
+              this.showLoading=false
+              this.toastr.success('Well Done', 'Image Updated', {positionClass:"toast-top-center"});
+            },
+            error=>{
+              this.showLoading=false
+              console.log(error);
+            }
+          )
+         }
+          this.selectedTeam = data;
       },
       error=>{
         console.log(error)
       }
     )
-      
   }
   deleteTeam(team_id) {
     let result = this.teamservice.deleteTeam(this.selectedTeam.id).subscribe(

@@ -63,6 +63,7 @@
     </div>
 </div>
 <div class="popup" *ngIf="showPopup">
+    {{showPopup}}
     <div class="close" (click)="closePopUp()"></div>
     <div class="content" *ngIf="seeTask; else edit">
         <b>Name: </b> {{currentTask.name}} <br>
