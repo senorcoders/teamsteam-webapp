@@ -310,7 +310,7 @@ export class EditEventComponent implements OnInit {
         this.toastr.success('Well Done', 'Your event was added Successfully', { positionClass: "toast-top-right" });
     }
 
-    private async deleteEvent(){
+    public async deleteEvent(){
         let valid = true;
 
         try {

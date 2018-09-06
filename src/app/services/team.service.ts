@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from 'environments/environment';
 @Injectable()
 export class TeamService {
   token: string;
@@ -15,13 +16,26 @@ export class TeamService {
   getMyTeams() {
     let userData: any = localStorage.getItem('sessionToken');
     userData = JSON.parse(userData);
-    return this.http.get(`/user/${userData.id}/team`)
+    if(environment.superadmin === userData.email){
+      return this.http.get(`/teams/`)
+
+    }else{
+      return this.http.get(`/user/${userData.id}/team`)
+
+    }
   }
   getMyTeamsForUser(id) {
     return this.http.get(`/roles?where={"user":"${id}","name":"Manager"}`)
   }
   getTeams() {
     return this.http.get(`/teams/`)
+  }
+  getRoles() {
+    return this.http.get(`/roles/`)
+  }
+
+  getLeagues() {
+    return this.http.get(`/leagues/`)
   }
   updateTeam(team_id, team) {
     let body = JSON.stringify(team);

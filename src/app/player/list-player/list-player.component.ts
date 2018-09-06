@@ -6,6 +6,7 @@ import { TeamService } from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Interceptor } from '../../interceptor/interceptor';
+import { environment } from 'environments/environment';
 @Component({
 	selector: 'app-list-player',
 	templateUrl: './list-player.component.html',
@@ -41,15 +42,31 @@ export class ListPlayerComponent implements OnInit {
 	}
 	getTeam() {
 		let login = this.auth.getLoginData();
-		login.roles.forEach((data) => {
-			if (data.name == "Manager") {
-				let team = {
-					id: data.team.id,
-					name: data.team.name
+		if(login.email === environment.superadmin){
+			this.team.getRoles().subscribe(result => {
+				let equipos:any = result;
+				equipos.forEach((data) => {
+					if (data.name == "Manager") {
+						let team = {
+							id: data.team.id,
+							name: data.team.name
+						}
+						this.teams.push(team);
+					}
+				})
+			})
+		}else{
+			login.roles.forEach((data) => {
+				if (data.name == "Manager") {
+					let team = {
+						id: data.team.id,
+						name: data.team.name
+					}
+					this.teams.push(team);
 				}
-				this.teams.push(team);
-			}
-		})
+			})
+		}
+		
 	}
 	getUserImage(id) {
 		let ramdon = 213213;
