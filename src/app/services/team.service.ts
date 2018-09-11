@@ -17,7 +17,7 @@ export class TeamService {
     let userData: any = localStorage.getItem('sessionToken');
     userData = JSON.parse(userData);
     if(environment.superadmin === userData.email){
-      return this.http.get(`/teams/`)
+      return this.http.get(`/teams?limit=500`)
 
     }else{
       return this.http.get(`/user/${userData.id}/team`)
@@ -28,7 +28,7 @@ export class TeamService {
     return this.http.get(`/roles?where={"user":"${id}","name":"Manager"}`)
   }
   getTeams() {
-    return this.http.get(`/teams/`)
+    return this.http.get(`/teams/?limit=500`)
   }
   getRoles() {
     return this.http.get(`/roles/`)
