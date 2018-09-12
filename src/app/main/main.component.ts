@@ -122,7 +122,7 @@ export class MainComponent implements OnInit, OnDestroy{
         this.auth.getPerfilImage(this.userData.id,ramdon).subscribe(
             result=>{
                 if (result==null) {
-                    this.PerfilImageService.setPerfilImage(`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}`)
+                    this.PerfilImageService.setPerfilImage(`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}-thumbnail`)
                   console.log('aqui')
                 }
                 else{

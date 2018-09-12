@@ -85,7 +85,7 @@ export class ListPlayerComponent implements OnInit {
 		//         console.log(error);
 		//     }
 		// )
-		return `${Interceptor.url}/images/${ramdon}/users&thumbnail/${id}`
+		return `${Interceptor.url}/images/${ramdon}/users/${id}-thumbnail`
 
 	}
 	getPlayerByTeam(val) {

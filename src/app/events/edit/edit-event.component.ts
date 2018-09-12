@@ -86,7 +86,7 @@ export class EditEventComponent implements OnInit {
         let event = await this.http.get("/event/" + this.id).toPromise() as any;
         this.team = event.team.id;
         console.log(this.team);
-        this.imgSrc = Interceptor.url+ `/images/wherever/events/${event.id}`;
+        this.imgSrc = Interceptor.url+ `/images/wherever/events/${event.id}-thumbnail`;
         this.form.patchValue({
             name: event.name,
             type: event.type,
