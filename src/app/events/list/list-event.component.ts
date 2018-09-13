@@ -65,7 +65,6 @@ export class ListEventComponent implements OnInit {
         else{
             this.showEvents=false
         }
-        console.log(this.showEvents);
     }
 
     public errorHandler(event) {

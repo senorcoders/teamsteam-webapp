@@ -103,6 +103,14 @@
                 transform: scale(1) translate(0px);
             }
         }
+        .loading-open{
+            text-align: center;
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
     </style>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -114,9 +122,8 @@
     <chankya-app>
         <!-- Page Loader -->
         <div class="block">
-            <div class="loading">
-                <span class="ball1"></span>
-                <span class="ball2"></span>
+            <div class="loading-open">
+                <img src="./assets/img/loader_sports.gif" alt="" style="max-width: 300px;">
             </div>
         </div>
         <!-- Page loader Closed -->

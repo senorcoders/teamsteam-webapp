@@ -30,7 +30,7 @@
 .loaderLocker{
 	position: fixed;
 	z-index: 1000;
-	left: 0;
+	left: 8rem;
 	img{
 		max-width: 100%;
 	    height: 200px;
@@ -48,4 +48,9 @@
 }
 .user-profile-wrapper .top-block, .bg-success {
     background: #fe324d !important;
+}
+@media(max-width: 960px) {
+	.loaderLocker{
+		left: 0
+	}
 }
