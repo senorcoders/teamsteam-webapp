@@ -6,7 +6,9 @@
 .user-profile-wrapper {
 	padding: 0 30px;
 }
-
+.user-profile-wrapper .top-block, .bg-success{
+	background: #fe324d !important;
+}
 @media(max-width:560px){
     .img-pro-head{
      display: none;   

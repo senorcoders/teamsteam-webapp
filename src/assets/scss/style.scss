@@ -14,14 +14,18 @@
 	    cursor: pointer;
 	}
 	.edit{
-		background: #0066eb;
+		background: #fe324d;
 	}
 	.chat{
 		background: #272b39;
 	}
 	.delete{
-	    background: #f54b5e;
+	    background: #008e76;
 	}
+}
+.btn-primary{
+	background: #fe324d !important;
+	border: 0 !important;
 }
 .loaderLocker{
 	position: fixed;
@@ -32,4 +36,16 @@
 	    height: 200px;
 	}
 	text-align: center;
+}
+.btn-secondary {
+    background-color: #008e76 !important;
+    border-color: #008e76 !important;
+    color: white !important;
+}
+.btn-danger{
+	background: #e7cc61 !important;
+	border-color:#e7cc61 !important;
+}
+.user-profile-wrapper .top-block, .bg-success {
+    background: #fe324d !important;
 }
