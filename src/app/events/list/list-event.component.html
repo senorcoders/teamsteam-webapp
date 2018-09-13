@@ -4,18 +4,16 @@
         </div>-->
     <div class="chk-block-content">
         <div class="row">
-            <div class="col-sm-6 col-lg-6 col-xl-3 mb-3">
+            <div class="col-6">
                 <div class="form-group">
-                    <label for="teams">Choose Team</label>
-                    <select [(ngModel)]="team" class="form-control form-control-lg input-square" (change)="getEvents()">
+                    <select [(ngModel)]="team" class="form-control form-control-lg input-square event-team" (change)="getEvents()">
                         <option *ngFor="let team of teams" value="{{team.team.id}}">{{team.team.name}}</option>
                     </select>
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-6 col-xl-3 mb-3">
+            <div class="col-6">
                 <div class="form-group">
-                    <label for="teams">By</label>
-                    <select [(ngModel)]="by" class="form-control form-control-lg input-square" (change)="getEvents()">
+                    <select [(ngModel)]="by" class="form-control form-control-lg input-square event-time" (change)="getEvents()">
                         <option  value="upcoming">Upcoming</option>
                         <option  value="past">Past</option>
                     </select>
@@ -23,33 +21,29 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <div class="row">
-            <div class="col-sm-6 col-lg-6 col-xl-3 mb-3" *ngFor="let event of events; let i = index;  trackBy: trackByUsers" [attr.data-index]="i">
-                <div class="card">
-                    <figure class="imghvr-zoom-in"><img (error)="errorHandler($event)" src="{{endpoint}}/images/wherever/events/{{event.id}}-thumbnail"
-                            class="img-fluid" alt="example-image">
-
-                    </figure>
-                    <div class="card-body text-center">
+        <div class="row" *ngIf="this.showEvents;else noEvent">
+            <div class="col-12 mb-3 event" *ngFor="let event of events; let i = index;  trackBy: trackByUsers" [attr.data-index]="i">
+                <div class="row" (click)="editEvent(event)">
+                    <div class="col-3 col-md-2">
+                        <!-- <img (error)="errorHandler($event)" src="{{endpoint}}/images/wherever/events/{{event.id}}-thumbnail" class="img-fluid" alt="example-image"> -->
+                        <div class="calendar">
+                            <span class="month">{{getMonthName(event.date)}}</span>
+                            <span class="day">{{getDay(event.date)}}</span>
+                        </div>
+                        <div class="location">{{event.locationDetail}}</div>
+                    </div>
+                    <div class="col-6 col-md-8">
                         <p>{{event.name}}</p>
                         <p class="text-muted">{{event.description}}</p>
                     </div>
-                    <div class="card-footer text-center">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <a data-toggle="modal" data-target="#editModal" (click)="editEvent(event)" href="javascript:void(0)"><i
-                                            class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
-                                </div>
-                                <!-- <div class="col">
-                                    <a (click)="deleteUser(i, user.id)" href="javascript:void(0)"><i class="fa fa-trash-o"
-                                            aria-hidden="true"></i>Delete</a>
-                                </div> -->
-                            </div>
-                        </div>
+                    <div class="col-3 col-md-2">
+                      <span class="hour">{{getHours(event.dateTime)}}</span>  
                     </div>
                 </div>
             </div>
         </div>
+        <ng-template #noEvent>
+            <div class="row"><div class="col" style="color: #008e76;text-align: center;font-size: 1.3rem;letter-spacing: 2px;">Well, this is boring. Add events</div></div>
+        </ng-template>
     </div>
 </div>

@@ -1,0 +1,62 @@
+.day{
+	display: block;
+    color: #5d6d81;
+    padding: 0 5px 10px 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.month{
+	display: block;
+    color: #fe324d;
+    text-transform: UPPERCASE;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    padding: 10px 5px 0;
+}
+.calendar{
+	border: 1px solid #fe324d;
+    text-align: center;
+}
+.event{
+	cursor: pointer;
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.hour{
+	display: block;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	font-style: oblique;
+}
+.location{
+	text-align: center;
+	padding-top: 5px;
+}
+.chk-block-content{
+    background: #e8eaf6;
+}
+.event-time{
+    background: #fe324d !important;
+    border-radius: 20px;
+    color: white !important;
+    text-align: center;
+    height: auto !important;
+    padding: 5px;
+    max-width: 200px;
+    margin: 0 0 0 auto;
+    text-align-last:center;
+}
+.event-team{
+    border-radius: 20px;
+    text-align: center;
+    height: auto !important;
+    padding: 5px;
+    color:#5d6d81 !important;
+    max-width: 200px;
+    text-align-last:center;
+}
