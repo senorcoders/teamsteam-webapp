@@ -71,8 +71,8 @@ export class ListEventComponent implements OnInit {
         event.target.src = "assets/img/logo-lockerroom.png";
     }
 
-    public editEvent(event) {
-        this.route.navigate(["/events/edit/" + event.id]);
+    public detailEvent(event) {
+        this.route.navigate(["/events/detail/" + event.id]);
     }
 
     showError(e) {

@@ -91,4 +91,13 @@ export class TeamService {
   uploadTemplateRoster(endpoint, data) {
     return this.http.post(`/${endpoint}`, data)
   }
+  uploadFile(endpoint, field, fileToUpload){
+    let httpOptionsForm:any = {headers: new HttpHeaders() };
+    httpOptionsForm.headers.append('Content-Type', 'multipart/form-data');
+    const formData: FormData = new FormData();
+    for(var i = 0; i < fileToUpload.length; i++) {
+      formData.append(field, fileToUpload[i]);
+  }
+    return this.http.post(`/${endpoint}`, formData, httpOptionsForm);
+  }
 }

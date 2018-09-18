@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { AddEventComponent } from './add/add-event.component';
 import { ListEventComponent } from './list/list-event.component';
 import { EditEventComponent } from './edit/edit-event.component';
-
+import { DetailEventComponent } from './detail/detail-event.component';
 
 export const EventsRoutes: Routes = [{
     path: '',
@@ -21,6 +21,10 @@ export const EventsRoutes: Routes = [{
     {
         path: "edit/:id",
         component: EditEventComponent
+    },
+    {
+        path: "detail/:id",
+        component: DetailEventComponent
     }
     ]
 }];

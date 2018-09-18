@@ -10,6 +10,7 @@ import { UiSwitchModule } from 'ngx-ui-switch';
 import { AgmCoreModule } from '@agm/core'
 import { ListEventComponent } from './list/list-event.component';
 import { EditEventComponent } from './edit/edit-event.component';
+import { DetailEventComponent } from './detail/detail-event.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { EditEventComponent } from './edit/edit-event.component';
   declarations: [
       AddEventComponent,
       ListEventComponent,
-      EditEventComponent
+      EditEventComponent,
+      DetailEventComponent
   ]
 })
 

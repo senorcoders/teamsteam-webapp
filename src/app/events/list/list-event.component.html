@@ -23,7 +23,7 @@
         <!-- Button trigger modal -->
         <div class="row" *ngIf="this.showEvents;else noEvent">
             <div class="col-12 mb-3 event" *ngFor="let event of events; let i = index;  trackBy: trackByUsers" [attr.data-index]="i">
-                <div class="row" (click)="editEvent(event)">
+                <div class="row" (click)="detailEvent(event)">
                     <div class="col-3 col-md-2">
                         <!-- <img (error)="errorHandler($event)" src="{{endpoint}}/images/wherever/events/{{event.id}}-thumbnail" class="img-fluid" alt="example-image"> -->
                         <div class="calendar">
