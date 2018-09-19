@@ -53,7 +53,7 @@ export class TeamService {
     return this.http.post(`/user/player/`, body)
   }
   createPlayer(user, player) {
-    return this.http.post(`/user/player/`, { user: user, player: player })
+    return this.http.post(`/user/player`, { user: user, player: player })
   }
   uploadImage(image) {
     let body = JSON.stringify(image);

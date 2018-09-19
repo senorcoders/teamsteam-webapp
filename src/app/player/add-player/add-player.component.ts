@@ -35,38 +35,57 @@ export class AddPlayerComponent implements OnInit {
   constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router) {
   }
   createUser(){
+    let contacts=[];
+    let contact=this.addUser.get('contacts').value
+    if(contact[0].type=="" && contact[0].name=="" && contact[0].info==""){
+      contacts[0]={
+        type:"not provided",
+        name:"not provided",
+        info:"not provided"
+      }
+    }
+    else{
+      contacts=this.addUser.get('contacts').value;
+    }
+    let player={
+      'team':this.addUser.get('team').value,
+      'birthDay':this.addUser.get('birthDay').value,
+      'yerseyNumber':this.addUser.get('yerseyNumber').value,
+      'gender':this.addUser.get('gender').value,
+      'nonPlayer':this.addUser.get('nonPlayer').value,
+      'managerAccess':this.addUser.get('managerAccess').value,
+      'positions':[this.addUser.get('positions').value]
+    }
     let user={
-      "username":this.addUser.get('username').value, 
       "firstName":this.addUser.get('firstname').value, 
       "lastName":this.addUser.get('lastname').value, 
       "password":this.addUser.get('password').value,
       "email":this.addUser.get('email').value,
-      "contacts":this.addUser.get('contacts').value
+      "contacts":contacts
     }
-    let player={
-          'team':this.addUser.get('team').value,
-          'birthDay':this.addUser.get('birthDay').value,
-          'yerseyNumber':this.addUser.get('yerseyNumber').value,
-          'gender':this.addUser.get('gender').value,
-          'nonPlayer':this.addUser.get('nonPlayer').value,
-          'managerAccess':this.addUser.get('managerAccess').value,
-          'positions':[this.addUser.get('positions').value]
-        }
-    this.teamservice.createPlayer(user,player).subscribe(
+    let data={
+      'user':user,
+      'player':player
+    }
+    this.teamservice.saveData('user/player',data).subscribe(
       result=>{
+        this.showSuccess('Your player was added Successfully');
         if(this.base64image!=""){
-          let image={'id':result['id'],'image':this.base64image}
-          this.teamservice.uploadImage(image).subscribe(
-            data=>{
-              this.showSuccess();
-            },
-            error=>{
-              this.showError(error)
-            }
-          )
-        }
-        else{
-          this.showSuccess();
+          let image={
+            id: result['id'],
+            image: this.base64image,
+            team: this.addUser.get('team').value
+          }
+          this.teamservice.saveData("userprofile/images",image).subscribe(
+              result=>{
+                this.addUser.reset()
+                this.showSuccess('Your Image was added Successfully');
+              },
+              e=>{
+                this.showError(e)
+                console.log(e)
+              }
+            )
         }
       },
       e=>{
@@ -133,34 +152,40 @@ export class AddPlayerComponent implements OnInit {
       'gender':this.addPlayer.get('gender').value,
       'nonPlayer':this.addPlayer.get('nonPlayer').value,
       'managerAccess':this.addPlayer.get('managerAccess').value,
-      'positions':[this.addPlayer.get('positions').value],
-      'user':this.userID
+      'positions':[this.addPlayer.get('positions').value]
     }
-    this.teamservice.saveData('players/',player).subscribe(
+    let user={
+      "firstName": this.users[0].firstName,
+      "lastName": this.users[0].lastName,
+      "password": this.users[0].password,
+      "email": this.users[0].email.toLowerCase()
+      //"image": this.imageSrc
+    }
+    let data={
+      'user':user,
+      'player':player
+    }
+    this.teamservice.saveData('user/player',data).subscribe(
       result=>{
-        //add role to the user.
-        let name;
-        if(result['managerAccess']){
-          name="Manager"
+        //add image
+        if(this.base64image!=''){
+          this.teamservice.saveData("userprofile/images", {id: this.userID,image: this.base64image,team: this.addPlayer.get('team').value}).subscribe(
+              result=>{
+                this.addPlayer.reset()
+                this.showSuccess('Your Image was added Successfully');
+              },
+              e=>{
+                console.log(e)
+              }
+            )
         }
-        else{name="Player"}
-        let data={
-          team:result['team'],
-          user:result['user'],
-          name: name
+        else{
+          this.showSuccess('Your player was added Successfully');
+          this.addPlayer.reset()
         }
-        this.teamservice.saveData('roles/',data).subscribe(
-          result=>{
-            this.showSuccess();
-            console.log(result)
-          },
-          e=>{
-            this.showError('Something wrong happened, Please try againg');
-          }
-        )
       },
       e=>{
-        console.log()
+        console.log(e)
         this.showError('Something wrong happened, Please try againg');
       }
     )
@@ -168,7 +193,7 @@ export class AddPlayerComponent implements OnInit {
   ngOnInit() {
     this.pageTitleService.setTitle("Add Player");
   	this.addUser=this.fb.group({
-  		username:['', Validators.required],
+      username:[''],
   		firstname:['', Validators.required],
   		lastname:['', Validators.required],
   		birthDay:['', Validators.required],
@@ -180,7 +205,7 @@ export class AddPlayerComponent implements OnInit {
       nonPlayer:['', Validators.required],
       managerAccess:['', Validators.required],
       team:['', Validators.required],
-      contacts: this.fb.array([ this.createContact() ])
+      contacts: this.fb.array([this.createContact() ])
   	});
     this.getTeams();
     if(!this.auth.isLogged()){
@@ -200,15 +225,15 @@ export class AddPlayerComponent implements OnInit {
   showError(e) {
     this.toastr.error(e,'Error',{positionClass:"toast-top-right"});
   }
-  showSuccess() {
-    this.toastr.success('Well Done', 'Your player was added Successfully',{positionClass:"toast-top-right"});
+  showSuccess(val) {
+    this.toastr.success('Well Done', val,{positionClass:"toast-top-right"});
   }
   /*add contacts Dynamically */
   createContact(): FormGroup {
   return this.fb.group({
-    name: '',
-    info: '',
-    type: '',
+    "name": '',
+    "info": '',
+    "type": '',
   });
 }
 addItem(): void {
