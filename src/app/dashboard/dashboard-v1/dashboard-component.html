@@ -12,7 +12,7 @@
          </div>
       </div>
    </div>
-   <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-6 col-one-half-lg-down fade-in-up">
+   <!-- <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-6 col-one-half-lg-down fade-in-up">
       <div class="bg-success pl-2 lazy-up">
          <div class="d-flex bg-light justify-content-between p-4">
             <div>
@@ -24,7 +24,7 @@
             </div>
          </div>
       </div>
-   </div>
+   </div> -->
    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 mb-6 col-one-half-lg-down fade-in-up">
       <div class="bg-warning pl-2 lazy-up">
          <div class="d-flex bg-light justify-content-between p-4">
@@ -41,3 +41,99 @@
    
 </div>
 <!-- Base Card Closed -->
+<br><br>
+<div class="row base-card" *ngIf="showAnalytics">
+    <div class="col-xs-12">
+        <h2 class="fw-normal">Analytical Information</h2>
+    </div>  
+      
+</div>
+<br>
+<div *ngIf="showAnalytics">
+        <input
+        type='text'
+        style='padding:8px;margin:15px auto;width:30%;'
+        placeholder='Type the screen name to filter'
+        (keyup)='updateFilter($event)'
+      />
+    <ngx-datatable 
+    #myTable
+    class='material expandable'
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="50"
+    [rows]='rows'
+    (page)="onPage($event)"      
+        >
+        <ngx-datatable-row-detail [rowHeight]="50" #myDetailRow (toggle)="onDetailToggle($event)">
+            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+              <div style="padding-left:60px; font-size:14px">
+            
+                <div> {{row.screen}}, {{row.timeVisited}}, {{row.startTime}}, {{row.endTime}}</div>
+              </div>
+            </ng-template>
+          </ngx-datatable-row-detail>
+
+           <!-- Column Templates -->
+         <ngx-datatable-column
+         [width]="50"
+         [resizeable]="false"
+         [sortable]="false"
+         [draggable]="false"
+         [canAutoResize]="true">
+         <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+           <a
+             [class.datatable-icon-right]="!expanded"
+             [class.datatable-icon-down]="expanded"
+             title="Expand/Collapse Row"
+             (click)="toggleExpandRow(row)"
+             class="desktop-hidden">
+           </a>
+         </ng-template>
+       </ngx-datatable-column>
+        
+        <ngx-datatable-column name="Name" [flexGrow]="3" [minWidth]="200">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value}}
+              </ng-template>
+        </ngx-datatable-column>
+    
+        <ngx-datatable-column name="Screen" [flexGrow]="1">
+            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <span class="mobile-hidden">{{column.name}}</span>
+              </ng-template>
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <span class="mobile-hidden">{{value}}</span>
+              </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Time Visited" [flexGrow]="1">
+            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <span class="mobile-hidden">{{column.name}}</span>
+              </ng-template>
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <span class="mobile-hidden">{{value}}</span>
+              </ng-template>
+        </ngx-datatable-column>
+       
+        <ngx-datatable-column name="Start Time" [flexGrow]="1">
+            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <span class="mobile-hidden">{{column.name}}</span>
+              </ng-template>
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <span class="mobile-hidden">{{value}}</span>
+              </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="End Time" [flexGrow]="1">
+            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <span class="mobile-hidden">{{column.name}}</span>
+              </ng-template>
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <span class="mobile-hidden">{{value}}</span>
+              </ng-template>
+        </ngx-datatable-column>
+
+    </ngx-datatable>
+
+    
+  </div>  
