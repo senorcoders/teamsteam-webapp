@@ -53,12 +53,19 @@
 	background: gray;
 	color: white;
     cursor: pointer;
-    padding: 10px;
     border-bottom: 1px solid white;
     a{
     	color: white !important;
     	display: block;
+    	padding: 10px;
     }
+}
+.assistence-title{
+	margin-bottom: 0;
+	border-bottom: 1px solid gray;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	cursor: pointer;
 }
 .point{
 	cursor: pointer;
@@ -102,5 +109,46 @@
 	    font-size: 1.3rem;
 	    line-height: 56px;
 	    border-radius: 50%;
+    }
+}
+.players{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	.active{
+		color:#088c75;
+		cursor: pointer;
+	}
+	.active-red{
+		color: #e20666;
+		cursor: pointer;
+	}
+	.active-yellow{
+		color: #ffe430;
+		cursor: pointer;
+	}
+}
+.center{
+	text-align: center;
+}
+
+.pop-up{
+	position: fixed;
+    width: 100%;
+    transform: translate(-50%,-50%);
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    .content{
+		background: white;
+	    box-shadow: 1px 2px 8px 1px black;
+	    padding: 10px 20px;
+    }
+    .action{
+    	text-align: right;
+    	margin-bottom: 10px;
+    	i{
+    		color: #e20666;
+			cursor: pointer;
+    	}
     }
 }
