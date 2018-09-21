@@ -89,6 +89,7 @@ export class ListTeamComponent implements OnInit {
   getMyTeams(){
     this.teamservice.getMyTeams().subscribe(
       data=>{
+        console.log(data)
         this.teams=data as any;
       },
       error=>{

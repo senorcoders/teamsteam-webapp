@@ -30,10 +30,13 @@ export class ListEventComponent implements OnInit {
     public by = "upcoming";
     public userData: any;
     public endpoint = Interceptor.url;
-    showEvents:boolean=false
+    showEvents:boolean=false;
+    tracking:any
+    count:any=[];
+    plus:number=0;
     constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,
         private auth: AuthenticationService, public http: HttpClient,
-        public toastr: ToastrService, public route: Router
+        public toastr: ToastrService, public route: Router, private teamService:TeamService
     ) {
     }
 
@@ -59,6 +62,12 @@ export class ListEventComponent implements OnInit {
         }
         let events = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise() as any[];
         this.events = events;
+        this.events.forEach((data,index)=>{
+            if(data.type=='event' || data.type=='game'){
+                this.plus++
+                this.getTracking(data.id,index)
+            }
+        })
         if(events['length']>0){
            this.showEvents=true 
         }
@@ -124,5 +133,75 @@ export class ListEventComponent implements OnInit {
           ampm = "PM";
       }
       return hours +':'+ minutes+' ' + ampm
+    }
+    getTracking(id, index){
+        this.teamService.getData('trackingevent/event/'+id).subscribe(
+            result=>{
+                let countYes=0,countNo=0,countMaybe=0;
+                if(result['length']>0){
+                    this.tracking=result
+                    this.tracking.forEach((data)=>{
+                        if(data.info=='yes'){
+                            countYes+=1;
+                        }else if(data.info=='no'){
+                            countNo+=1
+                        }
+                        else{
+                            countMaybe+=1
+                        }
+                        this.count[index]={
+                            countYes:countYes,
+                            countNo:countNo,
+                            countMaybe:countMaybe
+                        }
+                    })
+                }
+                else{
+                    this.count[index]={
+                        countYes:0,
+                        countNo:0,
+                        countMaybe:0
+                    }
+                }
+            },e=>{
+                console.log(e)
+            }
+        )
+    }
+    //to add new or update player. who clicked on the are you coming section
+    addTracking(val,event,index){
+        let data={
+            user:this.userData.id,
+            event:event.id,
+            info:val
+        }
+        //check if it a new player or not 
+        this.teamService.getData(`trackingevent?where={"user":"${this.userData.id}","event":"${event.id}"}`).subscribe(
+            result=>{
+                if(result['length']>0){
+                    //if it's new, update it
+                    this.teamService.editData('trackingevent/'+result[0].id,data).subscribe(
+                        result=>{
+                            this.getTracking(event.id,index)
+                        },
+                        e=>{
+                            console.log(e)
+                        }
+                    )
+                }
+                else{
+                    //if it's not, add it
+                    this.teamService.saveData('trackingevent/',data).subscribe(
+                        result=>{
+                            this.getTracking(event.id,index)
+                        },
+                        e=>{
+                            console.log(e)
+                        }
+                    )
+                }
+            },
+            e=>{console.log(e)}
+        )
     }
 }
