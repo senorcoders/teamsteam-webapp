@@ -90,3 +90,24 @@
 .event-row{
     margin:0
 }
+.xat{
+    border-bottom: 1px solid #dee4e8;
+    padding: 5px;
+    .user{
+        color: #088c75;
+        font-size: 0.9rem;
+    }
+    .time{
+        font-size: 0.8rem
+    }
+}
+.loaderLocker{
+    position: relative;
+    left: 0;
+}
+.xats-container{
+    margin-bottom: 40px;
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

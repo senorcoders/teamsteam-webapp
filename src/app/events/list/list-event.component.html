@@ -80,6 +80,18 @@
                 </button>
             </div>
            <div class="modal-body">
+            <div class="row" *ngIf="showLoading">
+                <div class="col-12 loaderLocker">
+                    <img src="./assets/img/loader_sports.gif" alt="">
+                </div>
+            </div>
+                <div class="xats-container">
+                    <div class="row xat" *ngFor="let xat of xats">
+                        <div class="col-2 user">{{xat.user.firstName}} {{xat.user.lastName}}</div>
+                        <div class="col-6">{{xat.content}}</div>
+                        <div class="col-4 time">about {{getHoursAgo(xat.dateTime)}}</div>
+                    </div>
+                </div>
                 <form [formGroup]="commentForm" (submit)="addComment()">
                     <div class="form-group">
                         <textarea formControlName="comment" placeholder="Comment" class="form-control"></textarea>

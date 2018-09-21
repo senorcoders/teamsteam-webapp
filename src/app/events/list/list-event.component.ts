@@ -27,7 +27,7 @@ export class ListEventComponent implements OnInit {
     public teams = [];
     public events = [];
     public team: any;
-    public showLoading = false;
+    showLoading = false;
     public by = "upcoming";
     public userData: any;
     public endpoint = Interceptor.url;
@@ -38,6 +38,7 @@ export class ListEventComponent implements OnInit {
     commentForm:FormGroup;
     eventId:number;
     index:number;
+    xats:any;
     constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,
         private auth: AuthenticationService, public http: HttpClient,
         public toastr: ToastrService, public route: Router, private teamService:TeamService
@@ -91,12 +92,10 @@ export class ListEventComponent implements OnInit {
     }
 
     showError(e) {
-        this.showLoading = false;
         this.toastr.error(e, 'Error', { positionClass: "toast-top-right" });
     }
 
     showSuccess(msj) {
-        this.showLoading = false;
         this.toastr.success('Well Done', msj, { positionClass: "toast-top-right" });
     }
 
@@ -223,9 +222,8 @@ export class ListEventComponent implements OnInit {
         this.teamService.saveData('comments',commentPost).subscribe(
             result=>{
                 this.events[this.index].comments.push(result)
-                this.showSuccess('Your comment was added Successfully')
                 this.commentForm.reset();
-                jQuery('#comment').modal('toggle');
+                this.getComments();
             },
             e=>{
                 this.showError('something wrong happend. Please try again')
@@ -236,5 +234,21 @@ export class ListEventComponent implements OnInit {
     addEventId(id,i){
         this.eventId=id;
         this.index=i;
+        this.showLoading=true
+        this.getComments();
+    }
+    getComments(){
+        this.teamService.getData(`comments?where={"event":"${this.eventId}"}&limit=3000`).subscribe(
+            result=>{
+                this.xats=result
+                this.showLoading=false;
+            },
+            e=>{
+                console.log(e)
+            }
+        )
+    }
+    getHoursAgo(val){
+        return moment(val).fromNow()
     }
 }
