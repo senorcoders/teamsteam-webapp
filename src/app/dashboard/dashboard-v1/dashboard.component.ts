@@ -106,7 +106,7 @@ endDate: ''};
   }
 
   getAnalytical(){
-    this.http.get('/screen').subscribe(result => {
+    this.http.get('/screen?limit=100000').subscribe(result => {
         let listScreen:any = result;
         let tRows = listScreen.length - 1;
         listScreen.forEach((element, index) => {
@@ -200,6 +200,8 @@ endDate: ''};
 
 
 }
+
+
 
 }
 
