@@ -10,6 +10,8 @@ import { DatatableComponent } from '@swimlane/ngx-datatable/release/components/d
 import * as moment from 'moment';
 import { environment } from 'environments/environment';
 import { AuthenticationService } from '../../services/authentication.service';
+import {INgxMyDpOptions, IMyDateModel} from 'ngx-mydatepicker';
+import {IMyDrpOptions, IMyDateRangeModel} from 'mydaterangepicker';
 
 @Component({
   selector: 'ms-dashboard',
@@ -32,7 +34,24 @@ export class DashboardComponent implements OnInit {
   rows = [];
   temp = [];
   showAnalytics:boolean = false;
+  columns = [
+    { prop: 'name' },
+    { name: 'Screen' },
+    { name: 'Time Visited' },
+    { name: 'Start Date' },
+    { name: 'Start Time' },
+    { name: 'End Date' },
+    { name: 'End Time' }
+  ];
 
+  myDateRangePickerOptions: IMyDrpOptions = {
+    // other options...
+    dateFormat: 'mm.dd.yyyy',
+};
+
+// Initialized to specific date (09.10.2018)
+private model: any = {beginDate: '',
+endDate: ''};
  
 
   constructor(private userservice: UserService, private pageTitleService: PageTitleService, public translate: TranslateService, 
@@ -54,7 +73,26 @@ export class DashboardComponent implements OnInit {
     if(user.email === environment.superadmin){
       this.showAnalytics = true;
     }
+    this.setDateRange();
   }
+
+
+  setDateRange(): void {
+    // Set date range (today) using the patchValue function
+    let date = new Date();
+
+    this.model.beginDate = {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1,
+      day: date.getDate()
+  };
+
+  this.model.endDate =   {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate()
+}
+}
 
   getStats(){
     this.userservice.getDashboard().subscribe(
@@ -77,8 +115,11 @@ export class DashboardComponent implements OnInit {
             'screen': element.screen,
             'timeVisited': element.timeVisited,
             // 'team': element.team.name,
-            'startTime': moment(element.startTime).format('MMMM Do YYYY, h:mm:ss a'),
-            'endTime': moment(element.endTime).format('MMMM Do YYYY, h:mm:ss a')
+            'startDate': moment(element.startTime).format('l'),
+            'startTime': moment(element.startTime).format('LTS'),
+            'endDate': moment(element.endTime).format('l'),
+            'endTime': moment(element.endTime).format('LTS')
+
           }
 
           this.rows.push(tRow);
@@ -135,6 +176,30 @@ export class DashboardComponent implements OnInit {
     // Whenever the filter changes, always go back to the first page
     this.table.offset = 0;
   }
+
+  onDateRangeChanged(event: IMyDateRangeModel) {
+    // event properties are: event.beginDate, event.endDate, event.formatted,
+    // event.beginEpoc and event.endEpoc
+    
+    console.log(event.beginDate, event.endDate, event.formatted);
+    var sDate = event.beginDate.month + '/' + event.beginDate.day + '/' + event.beginDate.year;
+    var eDate = event.endDate.month + '/' + event.endDate.day + '/' + event.endDate.year;
+    console.log(sDate, eDate);
+    if(sDate != "0/0/0"){
+      const temp = this.temp.filter(function(d) {
+        return (d.startDate.toLowerCase().indexOf(sDate) !== -1 || !sDate) || (d.endDate.toLowerCase().indexOf(eDate) !== -1 || !eDate);
+      });
+  
+      console.log(temp);
+      this.rows = temp;
+      this.table.offset = 0;
+    }else{
+      this.rows = [];
+      this.ngOnInit();
+    }
+
+
+}
 
 }
 

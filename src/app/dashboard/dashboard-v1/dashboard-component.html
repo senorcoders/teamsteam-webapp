@@ -42,98 +42,38 @@
 </div>
 <!-- Base Card Closed -->
 <br><br>
-<div class="row base-card" *ngIf="showAnalytics">
-    <div class="col-xs-12">
-        <h2 class="fw-normal">Analytical Information</h2>
-    </div>  
-      
-</div>
-<br>
-<div *ngIf="showAnalytics">
-        <input
-        type='text'
-        style='padding:8px;margin:15px auto;width:30%;'
-        placeholder='Type the screen name to filter'
-        (keyup)='updateFilter($event)'
-      />
-    <ngx-datatable 
-    #myTable
-    class='material expandable'
-    [columnMode]="'force'"
-    [headerHeight]="50"
-    [footerHeight]="50"
-    [rowHeight]="50"
-    [rows]='rows'
-    (page)="onPage($event)"      
-        >
-        <ngx-datatable-row-detail [rowHeight]="50" #myDetailRow (toggle)="onDetailToggle($event)">
-            <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-              <div style="padding-left:60px; font-size:14px">
-            
-                <div> {{row.screen}}, {{row.timeVisited}}, {{row.startTime}}, {{row.endTime}}</div>
+
+<div class="row" *ngIf="showAnalytics">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="chk-block">
+          <div class="chk-block-title">
+              <div class="d-flex justify-content-between">
+                  <div class="d-flex align-self-center">
+                      <h3 class="text-capitalize">Analytical Information</h3>
+                  </div>
               </div>
-            </ng-template>
-          </ngx-datatable-row-detail>
-
-           <!-- Column Templates -->
-         <ngx-datatable-column
-         [width]="50"
-         [resizeable]="false"
-         [sortable]="false"
-         [draggable]="false"
-         [canAutoResize]="true">
-         <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-           <a
-             [class.datatable-icon-right]="!expanded"
-             [class.datatable-icon-down]="expanded"
-             title="Expand/Collapse Row"
-             (click)="toggleExpandRow(row)"
-             class="desktop-hidden">
-           </a>
-         </ng-template>
-       </ngx-datatable-column>
-        
-        <ngx-datatable-column name="Name" [flexGrow]="3" [minWidth]="200">
-            <ng-template let-value="value" ngx-datatable-cell-template>
-                {{value}}
-              </ng-template>
-        </ngx-datatable-column>
-    
-        <ngx-datatable-column name="Screen" [flexGrow]="1">
-            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                <span class="mobile-hidden">{{column.name}}</span>
-              </ng-template>
-              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                <span class="mobile-hidden">{{value}}</span>
-              </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Time Visited" [flexGrow]="1">
-            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                <span class="mobile-hidden">{{column.name}}</span>
-              </ng-template>
-              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                <span class="mobile-hidden">{{value}}</span>
-              </ng-template>
-        </ngx-datatable-column>
-       
-        <ngx-datatable-column name="Start Time" [flexGrow]="1">
-            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                <span class="mobile-hidden">{{column.name}}</span>
-              </ng-template>
-              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                <span class="mobile-hidden">{{value}}</span>
-              </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="End Time" [flexGrow]="1">
-            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                <span class="mobile-hidden">{{column.name}}</span>
-              </ng-template>
-              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-                <span class="mobile-hidden">{{value}}</span>
-              </ng-template>
-        </ngx-datatable-column>
-
-    </ngx-datatable>
-
-    
-  </div>  
+          </div>
+          <div class="chk-block-content">
+              <div class="pt-2 pb-2 pl-2 pr-2 mb-2">
+                  <div class="form-group">
+                      <input type="text" class="form-control" placeholder='Type the screen name to filter...' (keyup)='updateFilter($event)' />
+                  </div>
+                  <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-4">
+                            <label>Select start Date and End Date</label>
+                            <form #myForm="ngForm" novalidate>
+                                <my-date-range-picker name="mydaterange" [options]="myDateRangePickerOptions"
+                                                [(ngModel)]="model" required (dateRangeChanged)="onDateRangeChanged($event)"></my-date-range-picker>
+                            </form>
+                        </div>
+                      </div>
+                     
+                  </div>
+                  <ngx-datatable #myTable class='material' [columns]="columns" [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10" [rows]='rows'> </ngx-datatable>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+  
