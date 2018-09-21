@@ -154,7 +154,6 @@ export class DetailEventComponent implements OnInit {
     getEvent() {
         this.team.getData('event/' + this.id).subscribe(
             result=>{
-                console.log(result)
                 this.event = result
                 this.showEvent=true
                 this.images=result['images'];
@@ -239,7 +238,6 @@ export class DetailEventComponent implements OnInit {
     getAssistence(){
         this.team.getData('assistence/'+this.id).subscribe(
             result=>{
-                console.log(result)
                 this.assistences=result
                 this.assistences.forEach((data)=>{
                     let d1=moment(this.date,"DD-MM-YYYY").format("YYYY-MM-DD")
@@ -377,7 +375,6 @@ export class DetailEventComponent implements OnInit {
         this.team.getData('players?where={"team":"' + this.event.team.id + '"}').subscribe(
             result=>{
                 this.players=result
-                console.log(this.players)
             },
             e=>{
                 console.log(e)

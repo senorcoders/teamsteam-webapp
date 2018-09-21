@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { Interceptor } from '../../interceptor/interceptor';
 import { Router } from '@angular/router';
+declare var jQuery:any;
 
 @Component({
     selector: 'app-list-event',
@@ -34,6 +35,9 @@ export class ListEventComponent implements OnInit {
     tracking:any
     count:any=[];
     plus:number=0;
+    commentForm:FormGroup;
+    eventId:number;
+    index:number;
     constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,
         private auth: AuthenticationService, public http: HttpClient,
         public toastr: ToastrService, public route: Router, private teamService:TeamService
@@ -41,6 +45,9 @@ export class ListEventComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.commentForm=this.fb.group({
+            comment:['',Validators.required]
+        })
         this.pageTitleService.setTitle("Events");
         this.userData = this.auth.getLoginData();
 
@@ -51,7 +58,6 @@ export class ListEventComponent implements OnInit {
         if (this.teams[0]) {
             this.team = this.teams[0].team.id;
         }
-
         this.getEvents();
     }
 
@@ -89,9 +95,9 @@ export class ListEventComponent implements OnInit {
         this.toastr.error(e, 'Error', { positionClass: "toast-top-right" });
     }
 
-    showSuccess() {
+    showSuccess(msj) {
         this.showLoading = false;
-        this.toastr.success('Well Done', 'Your event was added Successfully', { positionClass: "toast-top-right" });
+        this.toastr.success('Well Done', msj, { positionClass: "toast-top-right" });
     }
 
     public trackByUsers(index: number, user: any): number { return index; }
@@ -203,5 +209,32 @@ export class ListEventComponent implements OnInit {
             },
             e=>{console.log(e)}
         )
+    }
+    addComment(){
+        let dateTime = moment().toISOString();
+        let commentPost = {
+          user: this.userData.id,
+          username: this.userData.firstName,
+          content: this.commentForm.get('comment').value,
+          event: this.eventId,
+          dateTime:dateTime,
+          status: 'pending'
+        }
+        this.teamService.saveData('comments',commentPost).subscribe(
+            result=>{
+                this.events[this.index].comments.push(result)
+                this.showSuccess('Your comment was added Successfully')
+                this.commentForm.reset();
+                jQuery('#comment').modal('toggle');
+            },
+            e=>{
+                this.showError('something wrong happend. Please try again')
+                console.log(e)
+            }
+        )
+    }
+    addEventId(id,i){
+        this.eventId=id;
+        this.index=i;
     }
 }

@@ -32,6 +32,7 @@ export class ListTeamComponent implements OnInit {
   team_id: number;
   new_image: string;
   showLoading:boolean=false;
+  showData=false
 	constructor(private imageupload: ImageUploadService, private fb: FormBuilder, private teamservice: TeamService,private toastr: ToastrService, private auth:AuthenticationService, private router:Router, private pageTitleService: PageTitleService) {
     // this.teams        = { name: "" };
     this.teamRoster   = {
@@ -75,6 +76,7 @@ export class ListTeamComponent implements OnInit {
   edit(id,team){
     this.selectedTeam = team;
     this.team_id = id;
+    this.showData=true
   }
   getTeams(){    
   	this.teamservice.getTeams().subscribe(
@@ -89,7 +91,6 @@ export class ListTeamComponent implements OnInit {
   getMyTeams(){
     this.teamservice.getMyTeams().subscribe(
       data=>{
-        console.log(data)
         this.teams=data as any;
       },
       error=>{
@@ -127,7 +128,9 @@ export class ListTeamComponent implements OnInit {
     }
     let result = this.teamservice.updateTeam(this.selectedTeam.id, team).subscribe(
       data=>{
-        this.teams[this.team_id]= data;
+        //this.showData=false;
+        //this.teams[this.team_id]= data;
+        this.getMyTeams();
         this.toastr.success('Well Done', 'Team Updated ' , {positionClass:"toast-top-center"});
         if(this.new_image && this.new_image!=''){
           this.showLoading=true
@@ -142,7 +145,7 @@ export class ListTeamComponent implements OnInit {
             }
           )
          }
-          this.selectedTeam = data;
+          //this.selectedTeam = data;
       },
       error=>{
         console.log(error)
