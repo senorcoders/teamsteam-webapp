@@ -26,6 +26,19 @@ export class PaymentComponent implements  AfterViewInit, OnDestroy {
   public showLoading = false;
   user_id:any;
   leagues:any = [];
+   ownerInfo = {
+    owner: {
+      name: '',
+      address: {
+        line1: '',
+        city: '',
+        postal_code: '',
+        country: '',
+      },
+      email: ''
+    },
+  };
+  plan:any = '';
 
 
   constructor(private cd: ChangeDetectorRef, handler: HttpBackend, public toastr: ToastrService, public auth:AuthenticationService, 
@@ -37,6 +50,7 @@ export class PaymentComponent implements  AfterViewInit, OnDestroy {
     let user = this.auth.getLoginData();
     console.log(user);
     this.email = user.email;
+    this.ownerInfo.owner.email = user.email;
     this.user_id = user.id;
     this.getLeagues();
     user.roles.forEach(element => {
@@ -85,20 +99,68 @@ export class PaymentComponent implements  AfterViewInit, OnDestroy {
   }
 
   async onSubmit(form: NgForm) {
-    this.showLoading = true;
-    const { token, error } = await stripe.createToken(this.card);
-
-    if (error) {
-      console.log('Something is wrong:', error);
-      this.showLoading = false;
-      this.toastr.error(error, 'Something is wrong', { positionClass: "toast-top-right" });
-
-    } else {
-      console.log('Success!', token);
-      this.createCharge(token.id);
+    if(this.ownerInfo.owner.name != '' && this.ownerInfo.owner.address.line1 != '' && this.ownerInfo.owner.address.city != '' && this.ownerInfo.owner.address.postal_code != '' && this.ownerInfo.owner.address.country != ''){
+      if(this.amount == 500){
+        this.plan = 'plan_DfLhLvTIvkbpva';
+      }else if(this.amount == 3000){
+        this.plan = 'plan_DfLioVj9iqE7lq';
+      }
+      this.showLoading = true;
+      const { source, error } = await stripe.createSource(this.card, this.ownerInfo);
+  
+      if (error) {
+        console.log('Something is wrong:', error);
+        this.showLoading = false;
+        this.toastr.error(error, 'Something is wrong', { positionClass: "toast-top-right" });
+  
+      } else {
+        console.log('Success!', source);
+        this.createCustomer(source.id);
+      }
+    }else{
+      this.toastr.error('You must complete all input fields', 'All fields are required', { positionClass: "toast-top-right" });
     }
+   
   }
 
+  createCustomer(source){
+    const httpOptions:any = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer sk_test_p2AJi6UrvZG4QGBXp2Zle391'
+      })
+    };
+  
+    let body = `email=${this.email}&source=${source}`;
+    this.http.post('https://api.stripe.com/v1/customers', body, httpOptions).subscribe(result => {
+      console.log("Customer", result);
+      this.subscribeToPlan(result['id']);
+    
+    });
+  }
+
+  subscribeToPlan(customer){
+    const httpOptions:any = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer sk_test_p2AJi6UrvZG4QGBXp2Zle391'
+      })
+    };
+  
+    let body = `customer=${customer}&items[0][plan]=${this.plan}`;
+    this.http.post('https://api.stripe.com/v1/subscriptions', body, httpOptions).subscribe(result => {
+      console.log("Subscription", result);
+      if(result['status'] === 'active'){
+        console.log("All Done");
+        this.toastr.success('Well Done', 'Thank you for your payment!', { positionClass: "toast-top-right" });
+        this.teams= [];
+        this.showLoading = false;
+        this.route.navigate(['/dashboard-v1']);
+
+      }
+    
+    });
+  }
 
   createCharge(token){
     console.log(token);
