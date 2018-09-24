@@ -90,6 +90,12 @@ const SUPERMENUITEMS = [
     name: 'Users',
     icon: 'fa fa-user',
     type: 'link'
+  },
+  {
+    state: 'payment',
+    name: 'Payment',
+    icon: 'fa fa-credit-card',
+    type: 'link'
   }
 
 ];

@@ -1,0 +1,31 @@
+<div class="row" *ngIf="showLoading">
+    <div class="col-12 loaderLocker">
+        <img src="./assets/img/loader_sports.gif" alt="">
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group">
+
+          <label>Please select a Team or League to process your payment</label>
+        <select class="form-control" [(ngModel)]="amount" (change)="onSelectChange($event.target.value)">
+          <option value="0" selected="true">Select a Team or League..</option>
+          <option value="500" *ngFor="let t of teams">{{t?.team?.name}}</option>
+          <option value="3000" *ngFor="let l of leagues">{{l}}</option>
+
+        </select>
+      </div>
+      </div>
+
+</div>
+<form #checkout="ngForm" (ngSubmit)="onSubmit(checkout)" class="checkout" [hidden]="showPayCard">
+  <div class="form-row">
+    <label for="card-info">Card Info</label>
+    
+    <div id="card-info" #cardInfo></div>
+
+    <div id="card-errors" role="alert" *ngIf="error">{{ error }}</div>
+  </div>
+
+  <button type="submit">Pay ${{getDollars(amount)}}</button>
+</form> 
