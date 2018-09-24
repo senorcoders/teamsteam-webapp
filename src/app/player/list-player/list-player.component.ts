@@ -35,6 +35,7 @@ export class ListPlayerComponent implements OnInit {
 	contacts: any;
 	contactEmerg: any = [];
 	def: any = `/assets/img/user-3.jpg`;
+	isSuperAdmin:boolean=false;
 	constructor(private pageTitleService: PageTitleService, private team: TeamService, private auth: AuthenticationService, private fb: FormBuilder, private toast: ToastrService) { }
 	ngOnInit() {
 		this.pageTitleService.setTitle("Player list");
@@ -42,20 +43,25 @@ export class ListPlayerComponent implements OnInit {
 	}
 	getTeam() {
 		let login = this.auth.getLoginData();
-		if(login.email === environment.superadmin){
-			this.team.getRoles().subscribe(result => {
-				let equipos:any = result;
-				equipos.forEach((data) => {
-					if (data.name == "Manager") {
-						let team = {
-							id: data.team.id,
-							name: data.team.name
+		environment.superadmin.forEach((data)=>{
+            if(login.email === data){
+	            this.team.getRoles().subscribe(result => {
+					let equipos:any = result;
+					equipos.forEach((data) => {
+						if (data.name == "Manager") {
+							let team = {
+								id: data.team.id,
+								name: data.team.name
+							}
+							this.teams.push(team);
 						}
-						this.teams.push(team);
-					}
+					})
 				})
-			})
-		}else{
+				this.isSuperAdmin=true
+            }
+        })
+
+		if(this.isSuperAdmin==false){
 			login.roles.forEach((data) => {
 				if (data.name == "Manager") {
 					let team = {

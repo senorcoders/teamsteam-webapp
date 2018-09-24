@@ -31,13 +31,15 @@ export class ListLeagueComponent implements OnInit {
 
     async ngOnInit(){
         let user = this.auth.getLoginData();
-        if(user.email === environment.superadmin){
-            this.team.getLeagues().subscribe(result => {
-                console.log(result);
+        environment.superadmin.forEach((data)=>{
+            if(user.email === data){
+                this.team.getLeagues().subscribe(result => {
                 this.leagues = result;
+                })
                 this.superadminShow = true;
-            })
-        }else{
+            }
+        })
+        if(this.superadminShow==false){
             var routeEnd = `/roles?where={"name":"OwnerLeague","user":"${user.id}"}`;
             await this.http.get(routeEnd).subscribe(leagues =>{
                 console.log("Leagues", leagues);
@@ -49,12 +51,10 @@ export class ListLeagueComponent implements OnInit {
                     it.league.imgSrc = Interceptor.url+ "/images/ramdon/leagues/"+ it.league.id;
                     return it;
                 });
-    
-    
+
                 //this.showNotLeague = this.leagues.length === 0;
             });
         }
-        
     }
 
     public errorHandler(event) {

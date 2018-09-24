@@ -70,9 +70,11 @@ endDate: ''};
     this.getStats();
     this.getAnalytical();
     let user = this.auth.getLoginData();
-    if(user.email === environment.superadmin){
-      this.showAnalytics = true;
-    }
+    environment.superadmin.forEach((data)=>{
+      if(user.email === data){
+            this.showAnalytics = true;
+      }
+    })
     this.setDateRange();
   }
 

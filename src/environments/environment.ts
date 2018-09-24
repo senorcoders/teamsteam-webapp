@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  superadmin: 'kharron@senorcoders.com'
+  superadmin: ['kharron@senorcoders.com','jchis848586@outlook.com']
 };

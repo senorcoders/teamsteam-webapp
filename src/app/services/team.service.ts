@@ -16,13 +16,17 @@ export class TeamService {
   getMyTeams() {
     let userData: any = localStorage.getItem('sessionToken');
     userData = JSON.parse(userData);
-    if(environment.superadmin === userData.email){
-      return this.http.get(`/teams/all/0/100`)
-
-    }else{
-      return this.http.get(`/user/${userData.id}/team`)
-
-    }
+    let superAdmin=false;
+    environment.superadmin.forEach((data)=>{
+      if(data === userData.email){
+        superAdmin=true;
+      }
+    })
+    if(superAdmin){
+        return this.http.get(`/teams/all/0/100`)
+      }else{
+        return this.http.get(`/user/${userData.id}/team`)
+      }
   }
   getMyTeamsForUser(id) {
     return this.http.get(`/roles?where={"user":"${id}","name":"Manager"}`)
