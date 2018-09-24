@@ -24,10 +24,12 @@ export class PaymentComponent implements  AfterViewInit, OnDestroy {
   amount:number = 0;
   showPayCard:boolean = true;
   public showLoading = false;
+  user_id:any;
+  leagues:any = [];
 
 
   constructor(private cd: ChangeDetectorRef, handler: HttpBackend, public toastr: ToastrService, public auth:AuthenticationService, 
-    private pageTitleService: PageTitleService, public route: Router) { 
+    private pageTitleService: PageTitleService, public route: Router, public httpInt: HttpClient) { 
     this.http = new HttpClient(handler);
   }
 
@@ -35,6 +37,8 @@ export class PaymentComponent implements  AfterViewInit, OnDestroy {
     let user = this.auth.getLoginData();
     console.log(user);
     this.email = user.email;
+    this.user_id = user.id;
+    this.getLeagues();
     user.roles.forEach(element => {
       if(element.name =="Manager"){
         this.teams.push(element);
@@ -44,6 +48,20 @@ export class PaymentComponent implements  AfterViewInit, OnDestroy {
 
   }
 
+  getLeagues(){
+    this.httpInt.get(`/roles?where={"name":"OwnerLeague","user":"${this.user_id}"}`).subscribe(
+      result => {
+        var res:any = result;
+        console.log("Leagues", result);
+        res.forEach(element => {
+          if(element.league != ""){
+            let l = element.league.name;
+            this.leagues.push(l);
+          }
+        });
+      }
+    )
+  }
   ngAfterViewInit() {
     this.card = elements.create('card');
     this.card.mount(this.cardInfo.nativeElement);

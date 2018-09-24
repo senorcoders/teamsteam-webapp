@@ -9,8 +9,10 @@
 
           <label>Please select a Team or League to process your payment</label>
         <select class="form-control" [(ngModel)]="amount" (change)="onSelectChange($event.target.value)">
-          <option value="0" selected="true">Select a Team..</option>
+          <option value="0" selected="true">Select a Team or League..</option>
           <option value="500" *ngFor="let t of teams">{{t?.team?.name}}</option>
+          <option value="3000" *ngFor="let l of leagues">{{l}}</option>
+
         </select>
       </div>
       </div>
