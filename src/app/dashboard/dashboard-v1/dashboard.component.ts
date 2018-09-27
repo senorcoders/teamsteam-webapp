@@ -126,11 +126,11 @@ endDate: ''};
 
           this.rows.push(tRow);
 
-          console.log(index);
+          // console.log(index);
 
           if(index == tRows){
             this.temp = [...this.rows];
-            console.log(this.temp);
+            // console.log(this.temp);
 
           }
 
