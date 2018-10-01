@@ -129,6 +129,7 @@ endDate: ''};
           // console.log(index);
 
           if(index == tRows){
+            this.rows.reverse();
             this.temp = [...this.rows];
             // console.log(this.temp);
 
