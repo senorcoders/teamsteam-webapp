@@ -96,6 +96,12 @@ const SUPERMENUITEMS = [
     name: 'Payment',
     icon: 'fa fa-credit-card',
     type: 'link'
+  },
+  {
+    state: 'subscriptions',
+    name: 'Subscriptions',
+    icon: 'fa fa-id-card',
+    type: 'link'
   }
 
 ];

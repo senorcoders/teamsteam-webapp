@@ -44,6 +44,7 @@ import { Interceptor } from './interceptor/interceptor';
 import { AddTeamModal } from './league/add-team-modal/add-team-modal';
 import { AddOwnerModal } from './league/add-owner-modal/add-owner-modal';
 import { PaymentComponent } from './payment/payment.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 
 export function createTranslateLoader(http: Http) {
@@ -88,7 +89,8 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		RegisterComponent,
 		AddTeamModal,
 		AddOwnerModal,
-		PaymentComponent
+		PaymentComponent,
+		SubscriptionsComponent
 	],
 	entryComponents: [
 		AddTeamModal,

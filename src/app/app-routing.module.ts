@@ -10,6 +10,7 @@ import {MyGuardService} from './services/my-guard.service';
 import {PlayerRoutesService} from './services/player-routes.service';
 import {TeamRoutesService} from './services/team-routes.service';
 import { PaymentComponent } from './payment/payment.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 export const AppRoutes: Routes = [{
   path: '',
   redirectTo: 'loginone',
@@ -67,6 +68,11 @@ export const AppRoutes: Routes = [{
   {
     path: 'payment', 
     component: PaymentComponent,
+    canActivate:[MyGuardService]
+  },
+  {
+    path: 'subscriptions', 
+    component: SubscriptionsComponent,
     canActivate:[MyGuardService]
   },],
 },

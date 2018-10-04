@@ -1,0 +1,35 @@
+<div class="chk-block">
+  <!--<div class="chk-block-title">
+      <h3 class="text-capitalize">Add User</h3>
+  </div>-->
+  <div class="chk-block-content">
+      <!-- Button trigger modal -->
+
+
+
+      <div class="row">
+          <div class="col-sm-6 col-lg-6 col-xl-4 mb-4" *ngFor = "let p of plans; let i = index;" [attr.data-index]="i">
+              <div class="card">
+                  <figure class="imghvr-zoom-in text-center"><img (error)="errorHandler($event)" src="{{endpoint}}/images/wherever/teams/{{p.team.id}}" class="img-fluid" alt="example-image" style="max-height: 180px !important;">
+                      
+                  </figure>
+                  <div class="card-body text-center">
+                      <p>{{p.team.name}}</p>
+                      <p class="text-muted">{{p.name}}</p>
+                   
+                  </div>
+                  <div class="card-footer text-center">
+                      <div class="container">
+                          <div class="row">
+                             
+                              <div class="col">
+                                  <a  (click)="cancelPayment(p.planID, p.id)">Cancel subscription <i class="fa fa-trash-o delete" aria-hidden="true"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
