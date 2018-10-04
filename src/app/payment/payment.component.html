@@ -53,7 +53,7 @@
                   <div class="form-group">
 
                       <label>Please select a Team...</label>
-                    <select class="form-control" [(ngModel)]="selectedRole" (change)="onSelectChange($event.target.value)">
+                    <select class="form-control" [(ngModel)]="selectedRole" (change)="checkTeamStatus($event.target.value)">
                       <option [value]="t?.id" *ngFor="let t of teams">{{t?.team?.name}}</option>
             
                     </select>

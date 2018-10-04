@@ -444,6 +444,26 @@ export class PaymentComponent implements  AfterViewInit, OnDestroy {
     return amount / 100;
   }
 
+
+  checkTeamStatus(newValue){
+    this.message = "";
+    this.selectedRole = newValue;
+    this.checkTeamPayment();
+  }
+
+
+  checkTeamPayment(){
+    this.httpInt.get('/subscriptions/plan/team/' + this.selectedRole).subscribe(result => {
+        console.log("Team status", result);
+        if(result['msg'] == true){
+          this.message = "Hey, This team belongs to a paid league, so we already received payment from this team.";
+
+        }else{
+          this.getSubscription();
+        }
+    })
+  }
+
   onSelectChange(newValue) {
     this.message = "";
     this.selectedRole = newValue;
