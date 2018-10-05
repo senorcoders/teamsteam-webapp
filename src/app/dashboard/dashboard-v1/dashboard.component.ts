@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
     { name: 'Time Visited' },
     { name: 'Start Date' },
     { name: 'Start Time' },
-    { name: 'End Date' },
+    { name: 'Platform' },
     { name: 'End Time' }
   ];
 
@@ -112,6 +112,7 @@ endDate: ''};
         let listScreen:any = result;
         let tRows = listScreen.length - 1;
         listScreen.forEach((element, index) => {
+          console.log(element);
           let tRow = {
             'name': element.firstName + ' ' + element.lastName,
             'screen': element.screen,
@@ -119,7 +120,7 @@ endDate: ''};
             // 'team': element.team.name,
             'startDate': moment(element.startTime).format('l'),
             'startTime': moment(element.startTime).format('LTS'),
-            'endDate': moment(element.endTime).format('l'),
+            'platform': element.platform,
             'endTime': moment(element.endTime).format('LTS')
 
           }
