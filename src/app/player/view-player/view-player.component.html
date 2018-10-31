@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="card col-12 col-sm-6 col-lg-5" style="width: 18rem;">
+            <img class="card-img-top" [src]="image" (error)="errorImage($event)" alt="Image Player">
+            <div class="card-body">
+                <h5 class="card-title">{{player.user.firstName+ " "+ player.user.lastName}}</h5>
+                <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p> -->
+            </div>
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Yersey Number: {{player.yerseyNumber}}</li>
+                <li class="list-group-item">Positions: {{player.positions.join(',')}}</li>
+                <li class="list-group-item" *ngIf="player.birthDay">Birth Day: {{toFormatDate(player.birthDay)}}</li>
+            </ul>
+            <a href="#" class="btn btn-primary" *ngIf="validContacts" (click)="toContacts($event)">Manage Contacts</a>
+        </div>
+    </div>
+</div>

@@ -11,9 +11,9 @@
   </div>
 </div>
 <div class="row">
-	<div class="col-md-4" *ngFor="let player of players; let i=index">
+	<div class="col-md-4" *ngFor="let player of players; let i=index" (click)="toViewPlayer(player)">
 		<div class="square">
-			<div class="perfil"><img [src]="getUserImage(player.user.id)" (error)="errorHandler($event)"></div>
+			<div class="perfil"><img [src]="getUserImage(player)" (error)="errorHandler($event)"></div>
 			<div class="info">
 				<span class="username">{{player.user.username}}</span>
 				<span class="email">{{player.user.email}}</span>

@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-sm-5 input-group mb-3" id="search">
+            <input type="search" class="form-control" [(ngModel)]="search" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" style="height: 40px;" (click)="toAddContact()">Add</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-5 list-group-item list-group-item-action" [hidden]="!validSame(contact)" *ngFor="let contact of contacts.connections">
+            <img *ngIf="contact.coverPhotos" class="cover-photos" [src]="contact.coverPhotos[0].url">
+            <span *ngIf="contact.names">{{contact.names[0].displayName}}</span>
+        </div>
+    </div>
+</div>

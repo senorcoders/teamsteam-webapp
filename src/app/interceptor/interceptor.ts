@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable'
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-    public static url = "https://api.lockerroomapp.com"; // "http://192.168.1.8:8187";
+    public static url = "http://192.168.1.8:8187"; // "https://api.lockerroomapp.com";
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -28,5 +28,15 @@ export class Interceptor implements HttpInterceptor {
         }
 
         return next.handle(event);
+    }
+
+    public static transformUrl(url: string) {
+        let data = localStorage.getItem('sessionToken');
+        if (data) {
+            let json = JSON.parse(data);
+            let token = json['token'];
+            return Interceptor.url + url + `?token=${token}`;
+        }
+        return Interceptor.url + url;
     }
 }

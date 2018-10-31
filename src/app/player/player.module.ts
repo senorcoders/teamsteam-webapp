@@ -8,6 +8,9 @@ import {PlayerRoutes } from './player.routing';
 import {AddPlayerComponent} from './add-player/add-player.component';
 import {ListPlayerComponent} from './list-player/list-player.component'
 import { AddRosterComponent } from './add-roster/add-roster.component';
+import { ViewPlayerComponent } from './view-player/view-player.component';
+import { ViewContactsPlayerComponent } from './view-contacts/view-contacts.component';
+import { AddContactComponent } from './add-contact/add-contact.component';
 
 @NgModule({
   imports: [
@@ -20,7 +23,10 @@ import { AddRosterComponent } from './add-roster/add-roster.component';
   declarations: [ 
     AddPlayerComponent,
     ListPlayerComponent,
-    AddRosterComponent
+    AddRosterComponent,
+    ViewPlayerComponent,
+    ViewContactsPlayerComponent,
+    AddContactComponent
   ]
 })
 

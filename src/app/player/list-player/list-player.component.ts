@@ -6,6 +6,7 @@ import { TeamService } from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Interceptor } from '../../interceptor/interceptor';
+import { Router } from '@angular/router';
 @Component({
 	selector: 'app-list-player',
 	templateUrl: './list-player.component.html',
@@ -34,7 +35,13 @@ export class ListPlayerComponent implements OnInit {
 	contacts: any;
 	contactEmerg: any = [];
 	def: any = `/assets/img/user-3.jpg`;
-	constructor(private pageTitleService: PageTitleService, private team: TeamService, private auth: AuthenticationService, private fb: FormBuilder, private toast: ToastrService) { }
+	constructor(private pageTitleService: PageTitleService, private team: TeamService,
+		private auth: AuthenticationService, private fb: FormBuilder,
+		private toast: ToastrService, private route: Router
+	) {
+
+	}
+
 	ngOnInit() {
 		this.pageTitleService.setTitle("Player list");
 		this.getTeam()
@@ -51,26 +58,10 @@ export class ListPlayerComponent implements OnInit {
 			}
 		})
 	}
-	getUserImage(id) {
-		let ramdon = 213213;
-		//get user image
-		// this.auth.getPerfilImage(id,ramdon).subscribe(
-		//     result=>{
-		//     	if(result==null){
-		//     		this.images.push(`https://api.lockerroomapp.com/images/${ramdon}/users&thumbnail/${id}`)
-		//     		console.log(this.images)
-		//     	}
-		//     	else{
-		//     		 this.images.push(`/assets/img/user-3.jpg`)
-		//     	}
-		//     },
-		//     error=>{
-		//         console.log(error);
-		//     }
-		// )
-		return `${Interceptor.url}/images/${ramdon}/users&thumbnail/${id}`
-
+	getUserImage(player) {
+		return Interceptor.url+ `/userprofile/images/${player.user.id}/${player.team.id}`;
 	}
+
 	getPlayerByTeam(val) {
 		this.showLoading = true;
 		if (val != '') {
@@ -85,10 +76,6 @@ export class ListPlayerComponent implements OnInit {
 						this.showPlayer = true
 						this.showNoPlayer = false
 						this.showLoading = false;
-						// this.players.forEach((data,index)=>{
-						// 	console.log(data)
-						// 	this.getUserImage(data.user.id)
-						// })
 					}
 					else {
 						this.showPlayer = false
@@ -104,7 +91,7 @@ export class ListPlayerComponent implements OnInit {
 		}
 	}
 	errorHandler(event) {
-		event.target.src = "/assets/img/user-3.jpg";
+		event.target.src = "/assets/img/user.png";
 	}
 	showPopUp(index) {
 		this.userID = this.players[index].user.id
@@ -218,7 +205,7 @@ export class ListPlayerComponent implements OnInit {
 			return;
 		}
 		reader2.onloadend = function () {
-			preview.setAttribute('src', reader2.result);
+			preview.setAttribute('src', reader2.result as string);
 		}
 		if (file) {
 			reader.onload = this._handleReaderLoaded.bind(this);
@@ -229,5 +216,9 @@ export class ListPlayerComponent implements OnInit {
 	_handleReaderLoaded(readerEvt) {
 		let binaryString = readerEvt.target.result;
 		this.base64image = btoa(binaryString);
+	}
+
+	toViewPlayer(player) {
+		this.route.navigate([`player/view/${player.id}`]);
 	}
 }
