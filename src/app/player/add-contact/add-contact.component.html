@@ -1,16 +1,72 @@
 <form>
     <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <label for="exampleInputEmail1" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" formControlName="firstname" placeholder="First Name">
+        </div>
     </div>
     <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+            <input type="email" class="form-control" formControlName="lastname" placeholder="Last Name">
+        </div>
     </div>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    <h5>
+        Phones Numbers
+    </h5>
+
+    <div class="form-inline">
+        <div class="form-group mb-2">
+            <label for="staticEmail2" class="sr-only">Name</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="inputPassword2" class="sr-only">Number</label>
+            <input type="text" class="form-control">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Type</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <option selected>Type</option>
+                <option value="home">Home</option>
+                <option value="work">Work</option>
+                <option value="mobile">Mobile</option>
+                <option value="homeFax">Home Fax</option>
+                <option value="workFax">Workfax</option>
+                <option value="otherFax">Other Fax</option>
+                <option value="pager">Pager</option>
+                <option value="workMobile">Work Mobile</option>
+                <option value="workPager">Work Pager</option>
+                <option value="main">Main</option>
+                <option value="gooogleVoice">Google Voice</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary mb-2">Add Phone</button>
     </div>
+
+    <h5>Emails</h5>
+    <div class="form-inline">
+        <div class="form-group mb-2">
+            <label for="staticEmail2" class="sr-only">Email</label>
+            <input type="email" class="form-control">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Type</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <option selected>Type</option>
+                <option value="home">Home</option>
+                <option value="work">Work</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <button type="button" class="btn btn-primary mb-2">Add Email</button>
+    </div>
+
+    <div class="form-group">
+        <label for="Address">Address</label>
+        <textarea cols="20" rows="5" class="form-control" formControlName="address"></textarea>
+    </div>
+
     <button type="submit" class="btn btn-primary">Add</button>
 </form>

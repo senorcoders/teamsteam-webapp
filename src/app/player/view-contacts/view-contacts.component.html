@@ -1,4 +1,7 @@
 <div class="container">
+    <div class="row" *ngIf="requiredPermission">
+            The player has not granted permissions to manage the contacts, click <span class="action" (click)="sendPermission()">HERE</span> to ask for the permissions
+    </div>
     <div class="row">
         <div class="col-12 col-sm-5 input-group mb-3" id="search">
             <input type="search" class="form-control" [(ngModel)]="search" placeholder="Search...">

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PageTitleService } from '../../core/page-title/page-title.service';
 import { fadeInAnimation } from "../../core/route-animation/route.animation";
@@ -9,6 +9,9 @@ import { Interceptor } from '../../interceptor/interceptor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+
+
+declare var io: any;
 
 @Component({
     selector: 'app-view-contacts',
@@ -31,10 +34,13 @@ export class ViewContactsPlayerComponent implements OnInit {
 
     public search = "";
 
+    private conexion: any;
+
     constructor(private pageTitleService: PageTitleService,
         private auth: AuthenticationService, private fb: FormBuilder,
         private toast: ToastrService, private route: ActivatedRoute,
-        private http: HttpClient, private router: Router
+        private http: HttpClient, private router: Router,
+        private zone: NgZone
     ) {
 
     }
@@ -44,6 +50,7 @@ export class ViewContactsPlayerComponent implements OnInit {
             this.userId = this.route.snapshot.params["id"];
             this.teamId = this.route.snapshot.params["team"];
             this.user = await this.http.get(`/user/${this.userId}`).toPromise();
+            console.log(this.user);
             this.pageTitleService.setTitle(`Contacts of ${this.user.firstName} ${this.user.lastName}`);
             // this.image = Interceptor.transformUrl(`/userprofile/images/${this.userId}/${this.player.team.id}`);
             if (this.user.email.includes("@gmail.com")) {
@@ -60,8 +67,41 @@ export class ViewContactsPlayerComponent implements OnInit {
                 }
             }
 
+            if ((window as any).io === undefined) {
+                await this.initConnetionSockets();
+            } else {
+                let user = this.auth.getLoginData();
+                io.sails.query = `user=${user.id}&token=${user.token}`;
+                this.conexion = io.sails.connect(Interceptor.url, { reconnection: true });
+                this.conexion.on("connect", async function () {
+                    this.conexion.on("tokens-updated-" + this.userId, function () {
+                        this.requiredPermission = false;
+                        this.zone.run(function () { console.log("updated"); })
+                    }.bind(this));
+                }.bind(this));
+            }
 
-            console.log(this.contacts);
+
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    private async initConnetionSockets() {
+        try {
+            //Primero obtenemos el script de websocket
+            let script = await this.http.get("/script/socket", { responseType: "text" }).toPromise() as string;
+            new Function(script)();
+            let user = this.auth.getLoginData();
+            io.sails.query = `user=${user.id}&token=${user.token}`;
+            this.conexion = io.sails.connect(Interceptor.url, { reconnection: true });
+            this.conexion.on("connect", async function () {
+                this.conexion.on("tokens-updated-" + this.userId, function () {
+                    this.requiredPermission = false;
+                    this.zone.run(function () { console.log("updated"); })
+                }.bind(this));
+            }.bind(this));
         }
         catch (e) {
             console.error(e);
@@ -114,8 +154,19 @@ export class ViewContactsPlayerComponent implements OnInit {
         return false;
     }
 
-    public toAddContact(){
+    public toAddContact() {
         this.router.navigate([`/player/contact/add/${this.user.id}`])
+    }
+
+    public async sendPermission() {
+        try {
+            let user = this.auth.getLoginData();
+            await this.http.post("/google/send/request-contacts", { manager: user.id, player: this.userId }, { responseType: "text" }).toPromise();
+            this.toast.show("Sent request, wait for the user to grant the permission");
+        }
+        catch (e) {
+            console.error(e);
+        }
     }
 
 }
