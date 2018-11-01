@@ -26,7 +26,7 @@ export class ListTaskComponent implements OnInit {
 	noTask:boolean=false;
 	showPopup:boolean=false;
 	currentTask:any;
-	players:any;
+	players:any=[];
 	taskForm:FormGroup
 	seeTask:boolean=false
 	currentDate=new Date();
@@ -58,7 +58,6 @@ export class ListTaskComponent implements OnInit {
   	//is manager or not
   	this.team.getData(`task/from/${this.userData.id}/${id}`).subscribe(
   		result=>{
-        console.log(result)
 			if(result['length']>0){
 				this.tasks=result
 				this.showLoading=false;
@@ -81,7 +80,14 @@ export class ListTaskComponent implements OnInit {
 	this.team.getData(`players?where={"team":"${id}"}`).subscribe(
   		result=>{
   			this.showPlayer=true;
-  			this.players=result;
+        //avoid to add players without user. i was receiving players without user
+        let players:any;
+        players=result
+        players.forEach((data)=>{
+          if(data.user && data.user!=''){
+            this.players.push(data);
+          }
+        })
   		},
   		e=>{
   			console.log(e)

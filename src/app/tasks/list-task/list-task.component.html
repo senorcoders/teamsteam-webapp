@@ -10,7 +10,7 @@
                     </select>
                     <div *ngIf="showLoading">
                         <div class="col-12 loaderLocker">
-                            <img src="/assets/img/loader.gif" alt="">
+                            <img src="../../assets/img/loader_sports.gif" alt="">
                         </div>
                     </div>
                 </div>
@@ -63,6 +63,7 @@
     </div>
 </div>
 <div class="popup" *ngIf="showPopup">
+    {{showPopup}}
     <div class="close" (click)="closePopUp()"></div>
     <div class="content" *ngIf="seeTask; else edit">
         <b>Name: </b> {{currentTask.name}} <br>

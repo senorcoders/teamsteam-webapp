@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  superadmin: ['kharron@senorcoders.com','jchis848586@outlook.com']
 };

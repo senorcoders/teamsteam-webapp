@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Interceptor } from '../../interceptor/interceptor';
 import { Router } from '@angular/router';
+import { environment } from 'environments/environment';
+
 @Component({
 	selector: 'app-list-player',
 	templateUrl: './list-player.component.html',
@@ -35,6 +37,7 @@ export class ListPlayerComponent implements OnInit {
 	contacts: any;
 	contactEmerg: any = [];
 	def: any = `/assets/img/user-3.jpg`;
+	isSuperAdmin: boolean = false;
 	constructor(private pageTitleService: PageTitleService, private team: TeamService,
 		private auth: AuthenticationService, private fb: FormBuilder,
 		private toast: ToastrService, private route: Router
@@ -48,18 +51,39 @@ export class ListPlayerComponent implements OnInit {
 	}
 	getTeam() {
 		let login = this.auth.getLoginData();
-		login.roles.forEach((data) => {
-			if (data.name == "Manager") {
-				let team = {
-					id: data.team.id,
-					name: data.team.name
-				}
-				this.teams.push(team);
+		environment.superadmin.forEach((data) => {
+			if (login.email === data) {
+				this.team.getRoles().subscribe(result => {
+					let equipos: any = result;
+					equipos.forEach((data) => {
+						if (data.name == "Manager") {
+							let team = {
+								id: data.team.id,
+								name: data.team.name
+							}
+							this.teams.push(team);
+						}
+					})
+				})
+				this.isSuperAdmin = true
 			}
 		})
+
+		if (this.isSuperAdmin == false) {
+			login.roles.forEach((data) => {
+				if (data.name == "Manager") {
+					let team = {
+						id: data.team.id,
+						name: data.team.name
+					}
+					this.teams.push(team);
+				}
+			})
+		}
+
 	}
 	getUserImage(player) {
-		return Interceptor.url+ `/userprofile/images/${player.user.id}/${player.team.id}`;
+		return Interceptor.url + `/userprofile/images/${player.user.id}/${player.team.id}`;
 	}
 
 	getPlayerByTeam(val) {

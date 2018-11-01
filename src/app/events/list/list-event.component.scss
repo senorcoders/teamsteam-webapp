@@ -1,0 +1,113 @@
+.day{
+	display: block;
+    color: #5d6d81;
+    padding: 0 5px 10px 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.month{
+	display: block;
+    color: #fe324d;
+    text-transform: UPPERCASE;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 1rem;
+    padding: 10px 5px 0;
+}
+.calendar{
+	border: 1px solid #fe324d;
+    text-align: center;
+    height: 90%;
+}
+.event{
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.hour{
+	text-align: right;
+	font-style: oblique;
+}
+.location{
+	padding-top: 5px;
+}
+.chk-block-content{
+    background: #e8eaf6;
+}
+.event-time{
+    background: #fe324d !important;
+    border-radius: 20px;
+    color: white !important;
+    text-align: center;
+    height: auto !important;
+    padding: 5px;
+    max-width: 200px;
+    margin: 0 0 0 auto;
+    text-align-last:center;
+}
+.event-team{
+    border-radius: 20px;
+    text-align: center;
+    height: auto !important;
+    padding: 5px;
+    color:#5d6d81 !important;
+    max-width: 200px;
+    text-align-last:center;
+}
+.tracking{
+    text-align: center;
+    span{
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        margin-right: 7px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .green{
+    background: #088c75
+    }
+    .yellow{
+        background: #ffe430
+    }
+    .red{
+        background:#e20666
+    }
+    .comment{
+        display: inline-block;
+        margin-left: 20px;
+        cursor:pointer;
+    }
+}
+.divider{
+    margin:0;
+    border-top: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+    padding: 10px 0;
+}
+.event-row{
+    margin:0
+}
+.xat{
+    border-bottom: 1px solid #dee4e8;
+    padding: 5px;
+    .user{
+        color: #088c75;
+        font-size: 0.9rem;
+    }
+    .time{
+        font-size: 0.8rem
+    }
+}
+.loaderLocker{
+    position: relative;
+    left: 0;
+}
+.xats-container{
+    margin-bottom: 40px;
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

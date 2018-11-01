@@ -6,7 +6,7 @@
     <div class="chk-block-content">
         <div class="row" *ngIf="showLoading">
             <div class="col-12 loaderLocker">
-                <img src="/assets/img/loader.gif" alt="">
+                <img src="./assets/img/loader_sports.gif" alt="">
             </div>
         </div>
         <div class="row">
@@ -129,6 +129,10 @@
                         <input type="submit" value="Update" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="form.invalid">
                     </div>
                 </form>
+
+                <div class="form-group">
+                    <button (click)="deleteEvent()" class="btn btn-danger btn-block btn-lg btn-square">Delete</button>
+                </div>
             </div>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { environment } from 'environments/environment';
 @Injectable()
 export class TeamService {
   token: string;
@@ -15,13 +16,30 @@ export class TeamService {
   getMyTeams() {
     let userData: any = localStorage.getItem('sessionToken');
     userData = JSON.parse(userData);
-    return this.http.get(`/user/${userData.id}/team`)
+    let superAdmin=false;
+    environment.superadmin.forEach((data)=>{
+      if(data === userData.email){
+        superAdmin=true;
+      }
+    })
+    if(superAdmin){
+        return this.http.get(`/teams/all/0/100`)
+      }else{
+        return this.http.get(`/user/${userData.id}/team`)
+      }
   }
   getMyTeamsForUser(id) {
     return this.http.get(`/roles?where={"user":"${id}","name":"Manager"}`)
   }
   getTeams() {
-    return this.http.get(`/teams/`)
+    return this.http.get(`/teams/?limit=500`)
+  }
+  getRoles() {
+    return this.http.get(`/roles/`)
+  }
+
+  getLeagues() {
+    return this.http.get(`/leagues/`)
   }
   updateTeam(team_id, team) {
     let body = JSON.stringify(team);
@@ -39,7 +57,7 @@ export class TeamService {
     return this.http.post(`/user/player/`, body)
   }
   createPlayer(user, player) {
-    return this.http.post(`/user/player/`, { user: user, player: player })
+    return this.http.post(`/user/player`, { user: user, player: player })
   }
   uploadImage(image) {
     let body = JSON.stringify(image);
@@ -76,5 +94,14 @@ export class TeamService {
   }
   uploadTemplateRoster(endpoint, data) {
     return this.http.post(`/${endpoint}`, data)
+  }
+  uploadFile(endpoint, field, fileToUpload){
+    let httpOptionsForm:any = {headers: new HttpHeaders() };
+    httpOptionsForm.headers.append('Content-Type', 'multipart/form-data');
+    const formData: FormData = new FormData();
+    for(var i = 0; i < fileToUpload.length; i++) {
+      formData.append(field, fileToUpload[i]);
+  }
+    return this.http.post(`/${endpoint}`, formData, httpOptionsForm);
   }
 }

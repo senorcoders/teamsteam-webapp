@@ -20,9 +20,9 @@
                                         <h5>{{ team.name }}</h5>
                                         <div class="d-flex align-items-center flex-row m-w-160">
                                             <p class="text-muted text-over mb-0">{{ team.description }}</p>
-                                            <a data-toggle="tab" href="#tab-edit" role="tab"><span  (click)="edit(i,team)" class="square-40 right-badge"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
+                                            <a data-toggle="tab" href="#tab-edit" role="tab"><span  (click)="edit(i,team)" class="square-40 right-badge"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></span></a>
                                              <!--<a data-toggle="tab" href="#tab-roster" role="tab"><span (click)="roster(team)" class="square-40 right-badge"><i class="fa fa-users" aria-hidden="true"></i></span></a>-->
-                                             <a data-toggle="tab" href="#"><span (click)="deleteTeam(team.id)" class="square-40 right-badge"><i class="fa fa-trash-o" aria-hidden="true"></i></span></a>
+                                             <a data-toggle="tab" href="#"><span (click)="deleteTeam(team.id)" class="square-40 right-badge delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span></a>
                                         </div>
                                         </div>
                                 </div>
@@ -59,6 +59,9 @@
                                             <form enctype="multipart/form-data" (ngSubmit)="submitUpdateTeam(updateTeam.value)"  #updateTeam="ngForm"  [formGroup]="editTeamForm">
                                                 <div class="container">
                                                     <div class="row">
+                                                        <div class="col-4" *ngIf="showData">Players: {{selectedTeam.players['length']}}</div>
+                                                        <div class="col-4" *ngIf="showData">Managers: {{selectedTeam.managers['length']}}</div>
+                                                        <div class="col-4" *ngIf="showData">Family Members: {{selectedTeam.familys['length']}}</div>
                                                         <div class="col-sm-2 col-md-6 col-lg-6 mx-auto">
                                                             <div class="form-group">
                                                                 <label for="teamPicture">Team Picture</label><br><img #teamImage (error)="errorHandler($event, 300,300)" src="{{endpoint}}images/wherever/teams/{{selectedTeam.id}}"  width="300px;">
@@ -160,3 +163,9 @@
         </div>
     </div>
 </div><!-- Chat Wrapper closed -->
+<div class="pop-up" *ngIf="showLoading">
+    <div class="content">
+        <h2>Uploading Image...</h2>
+        <img src="../../assets/img/loader_sports.gif" alt="">
+    </div>
+</div>

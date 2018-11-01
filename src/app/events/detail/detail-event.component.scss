@@ -1,0 +1,154 @@
+.button-border {
+    color: #707070;
+    padding: 5px;
+    border: 1px solid #707070;
+    text-align: center;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    &:hover{
+    	background: #fe324d;
+    	color:white;
+    	border-color:#fe324d !important;
+    }
+}
+.button-border.active{
+	background: #fe324d;
+	color:white;
+	border-color:#fe324d !important;
+}
+.chk-block-content{
+	background: transparent !important;
+}
+.date{
+	text-align: right;
+}
+.bg-gray{
+	background: rgba(0, 0, 0, 0.1);
+	padding: 15px 0;
+    text-align: center;
+	span{
+		width: 1em;
+	    height: 1em;
+	    border-radius: 50%;
+	    margin-right: 7px;
+	    display: inline-block;
+	}
+	img{
+		margin-left: 10px;
+	    width: 7rem;
+	    height: 2.5rem;
+	    border: none !important;
+	}
+	.green{
+	background: #088c75
+	}
+	.yellow{
+		background: #ffe430
+	}
+	.red{
+		background:#e20666
+	}
+}
+.gray{
+	background: gray;
+	color: white;
+    cursor: pointer;
+    border-bottom: 1px solid white;
+    a{
+    	color: white !important;
+    	display: block;
+    	padding: 10px;
+    }
+}
+.assistence-title{
+	margin-bottom: 0;
+	border-bottom: 1px solid gray;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	cursor: pointer;
+}
+.point{
+	cursor: pointer;
+}
+.location{
+	h1{
+		font-weight: normal;
+	    letter-spacing: 2px;
+	    margin: 10px 0 20px;
+	    text-transform: uppercase;
+	    font-size: 1.5rem;
+	    color: rgba(0, 0, 0, 0.616);
+	}
+}
+#gallery{
+	img{
+		max-width: 100%;
+		width: 100%;
+	}
+	.loaderLocker{
+		position: relative !important;
+    	left: 0 !important;
+	}
+	.images{
+		margin-bottom: 10px;
+	}
+}
+.button-actions{
+	position: fixed;
+    bottom: 10px;
+    right: 20px;
+    button{
+    	display: block;
+	    margin-bottom: 10px;
+	    background-color: #fe324d;
+	    color: white !important;
+	    border: 0;
+	    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.14), 0 4px 5px rgba(0, 0, 0, 0.1);
+	    width: 56px;
+	    height: 56px;
+	    font-size: 1.3rem;
+	    line-height: 56px;
+	    border-radius: 50%;
+    }
+}
+.players{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	.active{
+		color:#088c75;
+		cursor: pointer;
+	}
+	.active-red{
+		color: #e20666;
+		cursor: pointer;
+	}
+	.active-yellow{
+		color: #ffe430;
+		cursor: pointer;
+	}
+}
+.center{
+	text-align: center;
+}
+
+.pop-up{
+	position: fixed;
+    width: 100%;
+    transform: translate(-50%,-50%);
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    .content{
+		background: white;
+	    box-shadow: 1px 2px 8px 1px black;
+	    padding: 10px 20px;
+    }
+    .action{
+    	text-align: right;
+    	margin-bottom: 10px;
+    	i{
+    		color: #e20666;
+			cursor: pointer;
+    	}
+    }
+}

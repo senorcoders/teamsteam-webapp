@@ -4,18 +4,16 @@
         </div>-->
     <div class="chk-block-content">
         <div class="row">
-            <div class="col-sm-6 col-lg-6 col-xl-3 mb-3">
+            <div class="col-6">
                 <div class="form-group">
-                    <label for="teams">Choose Team</label>
-                    <select [(ngModel)]="team" class="form-control form-control-lg input-square" (change)="getEvents()">
+                    <select [(ngModel)]="team" class="form-control form-control-lg input-square event-team" (change)="getEvents()">
                         <option *ngFor="let team of teams" value="{{team.team.id}}">{{team.team.name}}</option>
                     </select>
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-6 col-xl-3 mb-3">
+            <div class="col-6">
                 <div class="form-group">
-                    <label for="teams">By</label>
-                    <select [(ngModel)]="by" class="form-control form-control-lg input-square" (change)="getEvents()">
+                    <select [(ngModel)]="by" class="form-control form-control-lg input-square event-time" (change)="getEvents()">
                         <option  value="upcoming">Upcoming</option>
                         <option  value="past">Past</option>
                     </select>
@@ -23,32 +21,85 @@
             </div>
         </div>
         <!-- Button trigger modal -->
-        <div class="row">
-            <div class="col-sm-6 col-lg-6 col-xl-3 mb-3" *ngFor="let event of events; let i = index;  trackBy: trackByUsers" [attr.data-index]="i">
-                <div class="card">
-                    <figure class="imghvr-zoom-in"><img (error)="errorHandler($event)" src="{{endpoint}}/images/wherever/events/{{event.id}}"
-                            class="img-fluid" alt="example-image">
-
-                    </figure>
-                    <div class="card-body text-center">
-                        <p>{{event.name}}</p>
-                        <p class="text-muted">{{event.description}}</p>
-                    </div>
-                    <div class="card-footer text-center">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <a data-toggle="modal" data-target="#editModal" (click)="editEvent(event)" href="javascript:void(0)"><i
-                                            class="fa fa-pencil-square-o" aria-hidden="true"></i>Edit</a>
+        <div *ngIf="showEvents;else noEvent">
+            <div *ngFor="let event of events; let i = index;  trackBy: trackByUsers" [attr.data-index]="i">
+                    <div class="event">
+                        <div class="row event-row" (click)="detailEvent(event)" style="cursor: pointer;">
+                            <div class="col-4">
+                                <!-- <img (error)="errorHandler($event)" src="{{endpoint}}/images/wherever/events/{{event.id}}-thumbnail" class="img-fluid" alt="example-image"> -->
+                                <div class="calendar" *ngIf="event.repeatsDaily;else noDaily">
+                                    <span class="month">Daily</span>
                                 </div>
-                                <!-- <div class="col">
-                                    <a (click)="deleteUser(i, user.id)" href="javascript:void(0)"><i class="fa fa-trash-o"
-                                            aria-hidden="true"></i>Delete</a>
-                                </div> -->
+                                <ng-template #noDaily>
+                                    <div class="calendar">
+                                        <span class="month">{{getMonthName(event.dateTime)}}</span>
+                                        <span class="day">{{getDay(event.dateTime)}}</span>
+                                    </div>
+                                </ng-template>
+                            </div>
+                            <div class="col-8">
+                                <p>{{event.name}}</p>
+                                <p class="text-muted">{{event.description}}</p>
+                            </div>
+                        </div>
+                        <div class="row divider" (click)="detailEvent(event)" style="cursor: pointer;">
+                            <div class="col-6">
+                                <div class="location">{{event.locationDetail}}</div>
+                            </div>
+                            <div class="col-6 hour">
+                              <span>{{getHours(event.dateTime)}}</span>  
+                            </div>
+                        </div>
+                        <div class="event-row tracking row" *ngIf="event.type=='game' || event.type=='event'">
+                            <div class="col" *ngIf="count.length==plus">
+                                <span class="green" (click)="addTracking('yes',event,i)"></span> {{count[i].countYes}}
+                                <span class="yellow" (click)="addTracking('maybe',event,i)"></span> {{count[i].countMaybe}}
+                                <span class="red" (click)="addTracking('no',event,i)"></span> {{count[i].countNo}}
+                                <div class="comment" (click)="addEventId(event.id,i)">
+                                    <a data-toggle="modal" data-target="#comment" href="javascript:void(0)">
+                                    {{event.comments.length}} <img src="./assets/img/comment-icon.png" alt="">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
+            </div>
+        </div>
+        <ng-template #noEvent>
+            <div class="row"><div class="col" style="color: #008e76;text-align: center;font-size: 1.3rem;letter-spacing: 2px;">Well, this is boring. Add events</div></div>
+        </ng-template>
+    </div>
+</div>
+<div class="modal fade" id="comment" role="dialog" aria-labelledby="teamModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Comment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+           <div class="modal-body">
+            <div class="row" *ngIf="showLoading">
+                <div class="col-12 loaderLocker">
+                    <img src="./assets/img/loader_sports.gif" alt="">
                 </div>
+            </div>
+                <div class="xats-container">
+                    <div class="row xat" *ngFor="let xat of xats">
+                        <div class="col-2 user">{{xat.user.firstName}} {{xat.user.lastName}}</div>
+                        <div class="col-6">{{xat.content}}</div>
+                        <div class="col-4 time">about {{getHoursAgo(xat.dateTime)}}</div>
+                    </div>
+                </div>
+                <form [formGroup]="commentForm" (submit)="addComment()">
+                    <div class="form-group">
+                        <textarea formControlName="comment" placeholder="Comment" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary btn-lg btn-square" type="submit" >Send Comment</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

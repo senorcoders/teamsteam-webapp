@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Interceptor } from '../../interceptor/interceptor';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-add-event',
@@ -58,7 +59,7 @@ export class EditEventComponent implements OnInit {
     constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,
         private team: TeamService, private auth: AuthenticationService,
         public http: HttpClient, public toastr: ToastrService, private activeRoute: ActivatedRoute,
-        private router:Router
+        private router:Router, private location: Location
     ) {
         this.id = this.activeRoute.snapshot.params["id"];
         this.form = this.fb.group({
@@ -85,7 +86,7 @@ export class EditEventComponent implements OnInit {
         let event = await this.http.get("/event/" + this.id).toPromise() as any;
         this.team = event.team.id;
         console.log(this.team);
-        this.imgSrc = Interceptor.url+ `/images/wherever/events/${event.id}`;
+        this.imgSrc = Interceptor.url+ `/images/wherever/events/${event.id}-thumbnail`;
         this.form.patchValue({
             name: event.name,
             type: event.type,
@@ -308,5 +309,26 @@ export class EditEventComponent implements OnInit {
         this.showLoading = false;
         this.toastr.success('Well Done', 'Your event was added Successfully', { positionClass: "toast-top-right" });
     }
+
+    public async deleteEvent(){
+        let valid = true;
+
+        try {
+            await this.http.delete("/event/" + this.id).toPromise();
+            await this.http.delete("/images/events/" + this.id).toPromise();
+          }
+          catch (e) {
+            console.error(e);
+            valid = false;
+            this.toastr.error(e, 'Error', { positionClass: "toast-top-right" });
+
+          }
+
+          if (valid === false)
+          return;
+    
+          this.toastr.success('Well Done', 'Your event was deleted Successfully', { positionClass: "toast-top-right" });
+          this.location.back();
+        }
 
 }

@@ -89,7 +89,6 @@ export class UserListComponent implements OnInit {
       email: updateUser.email
     }
     //this.toastr.success('Well Done', 'User Updated ' + JSON.stringify(updateUser), {positionClass:"toast-top-center"});
-    alert(JSON.stringify(updateUser));
     let result = this.userservice.updateUser(this.currentUser.id, user).subscribe(
       data=>{
         //document.getElementById("teamList").innerHTML = ''

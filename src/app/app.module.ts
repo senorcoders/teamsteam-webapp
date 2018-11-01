@@ -43,6 +43,8 @@ import { TeamRoutesService } from './services/team-routes.service';
 import { Interceptor } from './interceptor/interceptor';
 import { AddTeamModal } from './league/add-team-modal/add-team-modal';
 import { AddOwnerModal } from './league/add-owner-modal/add-owner-modal';
+import { PaymentComponent } from './payment/payment.component';
+import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 
 
 export function createTranslateLoader(http: Http) {
@@ -86,7 +88,9 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		LoginoneComponent,
 		RegisterComponent,
 		AddTeamModal,
-		AddOwnerModal
+		AddOwnerModal,
+		PaymentComponent,
+		SubscriptionsComponent
 	],
 	entryComponents: [
 		AddTeamModal,

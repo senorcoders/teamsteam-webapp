@@ -6,7 +6,7 @@
          <div class="sidebar-logo-wrap">
             <div class="sidebar-logo d-flex">
                <div class="logo-sign">
-                  <img src="assets/img/logo-icon.png" alt="">
+                  <img src="assets/img/favicon-128x128.png" alt="">
                </div>
                <div class="logo-text mr-2 ml-2 align-self-center">
                   <img src="assets/img/logo-label.png" width="121" height="16">
@@ -38,7 +38,7 @@
             <div class="sidenav-scrollbar-container">
                <perfect-scrollbar>
                   <nav menuToggleDirective class="navigation">
-                     <ul class="chankya-nav"  *ngIf="userData.email.includes('@senorcoders')">
+                     <ul class="chankya-nav"  *ngIf="userData.email.includes('@senorcoders') || userData.email.includes('jchis848586@outlook.com')">
                         <li class="nav-item" menuToggleLink *ngFor="let menuitem of menuItems.getSuperUser()" >
                            <a target="_blank" href="{{menuitem.state}}" *ngIf="menuitem.type === 'ext-link'" tourAnchor="tour-ui">
                                <i class="{{ menuitem.icon }}"></i>
