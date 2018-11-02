@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <img [src]="contact.coverPhotos[0].url" style="width: 40px; height: 40px;" *ngIf="contact.coverPhotos">
+    <h4 class="modal-title" id="modal-basic-title" *ngIf="contact.names">{{contact.names[0].displayName}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container" *ngIf="contact.phoneNumbers">
+        <h5>Phones Numbers</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let phone of contact.phoneNumbers">{{phone.value}},
+                {{getTypePhone(phone.type)}}</li>
+        </ul>
+    </div>
+
+    <div class="container" *ngIf="contact.emailAddresses">
+        <h5>Emails</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let email of contact.emailAddresses">{{email.value}},
+                {{getTypeEmail(email.type)}}</li>
+        </ul>
+    </div>
+
+    <div class="container" *ngIf="contact.addresses">
+        <h5>Address</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let address of contact.addresses">{{address.extendedAddress}}</li>
+        </ul>
+    </div>
+
+    <div class="container" *ngIf="contact.genders">
+        <h5>Genders</h5>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let gender of contact.genders">{{gender.value}}</li>
+        </ul>
+    </div>
+</div>
+<div class="modal-footer" *ngIf="availableActions">
+    <button type="button" class="btn btn-outline-dark" (click)="edit()">Edit</button>
+    <button type="button" class="btn btn-primary" *ngIf="!showExecuteDelete" (click)="delete()">Delete</button>
+    <button type="button" class="btn btn-primary" *ngIf="showExecuteDelete" (click)="deleteExecute()">
+       <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+    </button>
+</div>

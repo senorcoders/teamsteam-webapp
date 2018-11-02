@@ -1,33 +1,31 @@
-<form>
+<form [formGroup]="form" (submit)="addContact()">
     <div class="form-group">
         <label for="exampleInputEmail1" class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
             <input type="email" class="form-control" formControlName="firstname" placeholder="First Name">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom: 1.5rem;">
         <label for="exampleInputEmail1" class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
             <input type="email" class="form-control" formControlName="lastname" placeholder="Last Name">
         </div>
     </div>
+
     <h5>
         Phones Numbers
     </h5>
 
     <div class="form-inline">
-        <div class="form-group mb-2">
-            <label for="staticEmail2" class="sr-only">Name</label>
-            <input type="text" class="form-control">
-        </div>
         <div class="form-group mx-sm-3 mb-2">
             <label for="inputPassword2" class="sr-only">Number</label>
-            <input type="text" class="form-control">
+            <input type="text" class="form-control" id="numberPhone" [ngClass]="{'error': invalidNumberPhone}"
+                placeholder="+88745684975">
         </div>
         <div class="form-group mx-sm-3 mb-2">
             <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Type</label>
-            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                <option selected>Type</option>
+            <select class="custom-select mr-sm-2" id="typePhone" [ngClass]="{'error': invalidTypePhone}">
+                <option selected value="type">Type</option>
                 <option value="home">Home</option>
                 <option value="work">Work</option>
                 <option value="mobile">Mobile</option>
@@ -42,31 +40,49 @@
                 <option value="other">Other</option>
             </select>
         </div>
-        <button type="button" class="btn btn-primary mb-2">Add Phone</button>
+        <button type="button" class="btn btn-primary mb-2" (click)="addPhone()">Add Phone</button>
+    </div>
+    <div class="container" style="margin-left: 25px;">
+        <div class="row item" *ngFor="let phone of phoneNumbers; let i = index;">
+            <div class="col-5 col-sm-4">{{phone.value}}</div>
+            <div class="col-5 col-sm-4">{{getTypePhone(phone.type)}}</div>
+            <i class="fa fa-times col-1 re-action" aria-hidden="true" (click)="removePhone(i)"></i>
+        </div>
     </div>
 
-    <h5>Emails</h5>
+    <h5>
+        Emails
+    </h5>
+
     <div class="form-inline">
-        <div class="form-group mb-2">
-            <label for="staticEmail2" class="sr-only">Email</label>
-            <input type="email" class="form-control">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="valueEmail" class="sr-only">Email</label>
+            <input type="email" class="form-control" id="valueEmail" placeholder="player@lockerroom.com" [ngClass]="{'error': invalidValueEmail}">
         </div>
         <div class="form-group mx-sm-3 mb-2">
-            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Type</label>
-            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                <option selected>Type</option>
+            <label class="mr-sm-2 sr-only" for="typeEmail">Type</label>
+            <select class="custom-select mr-sm-2" id="typeEmail" [ngClass]="{'error': invalidTypeEmail}">
+                <option selected value="type">Type</option>
                 <option value="home">Home</option>
                 <option value="work">Work</option>
                 <option value="other">Other</option>
             </select>
         </div>
-        <button type="button" class="btn btn-primary mb-2">Add Email</button>
+        <button type="button" class="btn btn-primary mb-2" (click)="addEmail()">Add Email</button>
     </div>
 
-    <div class="form-group">
+    <div class="container" style="margin-left: 25px;">
+        <div class="row item" *ngFor="let email of emails; let i = index;">
+            <div class="col-5 col-sm-4">{{email.value}}</div>
+            <div class="col-5 col-sm-4">{{getTypeEmail(email.type)}}</div>
+            <i class="fa fa-times col-1 re-action" aria-hidden="true" (click)="removeEmail(i)"></i>
+        </div>
+    </div>
+
+    <div class="form-group" style="padding-left: 15px;">
         <label for="Address">Address</label>
         <textarea cols="20" rows="5" class="form-control" formControlName="address"></textarea>
     </div>
 
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" style="margin-left:15px;" class="btn btn-primary">SAVE</button>
 </form>

@@ -8,7 +8,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Interceptor } from '../../interceptor/interceptor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import * as moment from 'moment';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ViewContact } from '../view-contact/view-contact.modal';
 
 
 declare var io: any;
@@ -29,7 +30,7 @@ export class ViewContactsPlayerComponent implements OnInit {
     private teamId;
     public user: any = { user: { firstName: "", lastName: "" }, positions: [] };
     public image = "";
-    public contacts = [];
+    public contacts: { connections: any[], totalItems: Number, totalPeople: number } = {connections: [], totalItems: 0, totalPeople: 0 };
     public requiredPermission = false;
 
     public search = "";
@@ -40,7 +41,7 @@ export class ViewContactsPlayerComponent implements OnInit {
         private auth: AuthenticationService, private fb: FormBuilder,
         private toast: ToastrService, private route: ActivatedRoute,
         private http: HttpClient, private router: Router,
-        private zone: NgZone
+        private zone: NgZone, public modal: NgbModal
     ) {
 
     }
@@ -49,10 +50,31 @@ export class ViewContactsPlayerComponent implements OnInit {
         try {
             this.userId = this.route.snapshot.params["id"];
             this.teamId = this.route.snapshot.params["team"];
+            await this.getContacts();
+            this.pageTitleService.setTitle(`Contacts of ${this.user.firstName} ${this.user.lastName}`);
+            if ((window as any).io === undefined) {
+                await this.initConnetionSockets();
+            } else {
+                let user = this.auth.getLoginData();
+                io.sails.query = `user=${user.id}&token=${user.token}`;
+                this.conexion = io.sails.connect(Interceptor.url, { reconnection: true });
+                this.conexion.on("connect", async function () {
+                    this.conexion.on("tokens-updated-" + this.userId, this.getContacts.bind(this));
+                }.bind(this));
+            }
+
+
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    private async getContacts() {
+        try {
+            this.requiredPermission = false;
             this.user = await this.http.get(`/user/${this.userId}`).toPromise();
             console.log(this.user);
-            this.pageTitleService.setTitle(`Contacts of ${this.user.firstName} ${this.user.lastName}`);
-            // this.image = Interceptor.transformUrl(`/userprofile/images/${this.userId}/${this.player.team.id}`);
             if (this.user.email.includes("@gmail.com")) {
                 if (this.user.hasOwnProperty("tokensGoogle")) {
                     this.contacts = await this.http.get(`/google/contacts/${this.userId}`).toPromise() as any;
@@ -66,22 +88,8 @@ export class ViewContactsPlayerComponent implements OnInit {
                     this.requiredPermission = true;
                 }
             }
-
-            if ((window as any).io === undefined) {
-                await this.initConnetionSockets();
-            } else {
-                let user = this.auth.getLoginData();
-                io.sails.query = `user=${user.id}&token=${user.token}`;
-                this.conexion = io.sails.connect(Interceptor.url, { reconnection: true });
-                this.conexion.on("connect", async function () {
-                    this.conexion.on("tokens-updated-" + this.userId, function () {
-                        this.requiredPermission = false;
-                        this.zone.run(function () { console.log("updated"); })
-                    }.bind(this));
-                }.bind(this));
-            }
-
-
+            this.zone.run(function () { console.log("updated"); })
+            console.log(this.contacts);
         }
         catch (e) {
             console.error(e);
@@ -97,10 +105,7 @@ export class ViewContactsPlayerComponent implements OnInit {
             io.sails.query = `user=${user.id}&token=${user.token}`;
             this.conexion = io.sails.connect(Interceptor.url, { reconnection: true });
             this.conexion.on("connect", async function () {
-                this.conexion.on("tokens-updated-" + this.userId, function () {
-                    this.requiredPermission = false;
-                    this.zone.run(function () { console.log("updated"); })
-                }.bind(this));
+                this.conexion.on("tokens-updated-" + this.userId, this.getContacts.bind(this));
             }.bind(this));
         }
         catch (e) {
@@ -167,6 +172,14 @@ export class ViewContactsPlayerComponent implements OnInit {
         catch (e) {
             console.error(e);
         }
+    }
+
+    public viewContact(i: number) {
+        console.log(i, this.contacts.connections[i]);
+        const modalRef = this.modal.open(ViewContact);
+        modalRef.componentInstance.contact = this.contacts.connections[i];
+        modalRef.componentInstance.userId = this.userId;
+        modalRef.componentInstance.getContactsExterior = this.getContacts.bind(this);
     }
 
 }
