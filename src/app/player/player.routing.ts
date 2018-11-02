@@ -6,6 +6,7 @@ import { AddRosterComponent } from './add-roster/add-roster.component';
 import { ViewPlayerComponent } from './view-player/view-player.component';
 import { ViewContactsPlayerComponent } from './view-contacts/view-contacts.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
+import { UpdateContactComponent } from './update-contact/update-contact.component';
 
 export const PlayerRoutes: Routes = [{
   path: '',
@@ -34,6 +35,10 @@ export const PlayerRoutes: Routes = [{
   {
     path: "contact/add/:id",
     component: AddContactComponent
+  },
+  {
+    path: "contact/update/:id/:resource",
+    component: UpdateContactComponent
   }
   ]
 }];

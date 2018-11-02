@@ -11,6 +11,7 @@ import { AddRosterComponent } from './add-roster/add-roster.component';
 import { ViewPlayerComponent } from './view-player/view-player.component';
 import { ViewContactsPlayerComponent } from './view-contacts/view-contacts.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
+import { UpdateContactComponent } from './update-contact/update-contact.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { AddContactComponent } from './add-contact/add-contact.component';
     AddRosterComponent,
     ViewPlayerComponent,
     ViewContactsPlayerComponent,
-    AddContactComponent
+    AddContactComponent,
+    UpdateContactComponent
   ]
 })
 
