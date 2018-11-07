@@ -25,7 +25,6 @@ export class ViewPlayerComponent implements OnInit {
     private playerID;
     public player: any = { user: { firstName: "", lastName: "" }, positions: [] };
     public image = "";
-    public validContacts = false;
 
     constructor(private pageTitleService: PageTitleService, private team: TeamService,
         private auth: AuthenticationService, private fb: FormBuilder,
@@ -39,9 +38,7 @@ export class ViewPlayerComponent implements OnInit {
         try {
             this.playerID = this.route.snapshot.params["id"];
             this.player = await this.http.get(`/players/${this.playerID}`).toPromise();
-            if (this.player.user.email.includes("@gmail.com") || this.player.user.email.includes("@yahoo")) {
-                this.validContacts = true;
-            }
+
             this.pageTitleService.setTitle("View Player");
             this.image = Interceptor.transformUrl(`/userprofile/images/${this.player.user.id}/${this.player.team.id}`);
         }
@@ -58,10 +55,4 @@ export class ViewPlayerComponent implements OnInit {
         return moment(birthDay).format("MM/DD/YYYY");
     }
 
-
-    public toContacts(e) {
-        this.router.navigate([`/player/view/contacts/${this.player.user.id}/${this.player.team.id}`])
-        e.stopPropagation();
-        return false;
-    }
 }

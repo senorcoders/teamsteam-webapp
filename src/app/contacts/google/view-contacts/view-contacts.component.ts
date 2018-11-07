@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PageTitleService } from '../../core/page-title/page-title.service';
-import { fadeInAnimation } from "../../core/route-animation/route.animation";
-import { TeamService } from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Interceptor } from '../../interceptor/interceptor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewContact } from '../view-contact/view-contact.modal';
+import { Interceptor } from 'app/interceptor/interceptor';
+import { fadeInAnimation } from 'app/core/route-animation/route.animation';
+import { AuthenticationService } from 'app/services/authentication.service';
+import { PageTitleService } from 'app/core/page-title/page-title.service';
 
 
 declare var io: any;
@@ -24,16 +23,17 @@ declare var io: any;
     },
     animations: [fadeInAnimation]
 })
-export class ViewContactsPlayerComponent implements OnInit {
+export class ViewContactsComponent implements OnInit {
 
     private userId;
-    private teamId;
     public user: any = { user: { firstName: "", lastName: "" }, positions: [] };
     public image = "";
-    public contacts: { connections: any[], totalItems: Number, totalPeople: number } = {connections: [], totalItems: 0, totalPeople: 0 };
+    public contacts: { connections: any[], totalItems: Number, totalPeople: number } = { connections: [], totalItems: 0, totalPeople: 0 };
     public requiredPermission = false;
 
     public search = "";
+    public players = [];
+    public teams = [];
 
     private conexion: any;
 
@@ -48,9 +48,11 @@ export class ViewContactsPlayerComponent implements OnInit {
 
     async ngOnInit() {
         try {
-            this.userId = this.route.snapshot.params["id"];
-            this.teamId = this.route.snapshot.params["team"];
+            //cargamos los datos del usuario
+            let user = this.auth.getLoginData();
+            this.userId = user.id;
             await this.getContacts();
+            await this.getPlayers();
             this.pageTitleService.setTitle(`Contacts of ${this.user.firstName} ${this.user.lastName}`);
             if ((window as any).io === undefined) {
                 await this.initConnetionSockets();
@@ -62,8 +64,6 @@ export class ViewContactsPlayerComponent implements OnInit {
                     this.conexion.on("tokens-updated-" + this.userId, this.getContacts.bind(this));
                 }.bind(this));
             }
-
-
         }
         catch (e) {
             console.error(e);
@@ -90,6 +90,24 @@ export class ViewContactsPlayerComponent implements OnInit {
             }
             this.zone.run(function () { console.log("updated"); })
             console.log(this.contacts);
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    private async getPlayers() {
+        try {
+            for (let role of this.user.roles) {
+                if (role.name === "Manager" && Object.prototype.toString.call(role.team) === "[object Object]") {
+                    this.teams.push(role.team);
+                }
+            }
+            for (let id of this.teams) {
+                let players = await this.http.get(`/players?where={"team":"${id}"}`).toPromise() as any[];
+                players = players.filter(it => { return Object.prototype.toString.call(it.user) === "[object Object]" })
+                this.players = players.concat(this.players);
+            }
         }
         catch (e) {
             console.error(e);
@@ -160,14 +178,13 @@ export class ViewContactsPlayerComponent implements OnInit {
     }
 
     public toAddContact() {
-        this.router.navigate([`/player/contact/add/${this.user.id}`])
+        this.router.navigate([`/contacts/add`])
     }
 
     public async sendPermission() {
         try {
-            let user = this.auth.getLoginData();
-            await this.http.post("/google/send/request-contacts", { manager: user.id, player: this.userId }, { responseType: "text" }).toPromise();
-            this.toast.show("Sent request, wait for the user to grant the permission");
+            let link: any = await this.http.get(`/google/url-auth`).toPromise();
+            window.location.href = link.url;
         }
         catch (e) {
             console.error(e);
@@ -175,11 +192,21 @@ export class ViewContactsPlayerComponent implements OnInit {
     }
 
     public viewContact(i: number) {
-        console.log(i, this.contacts.connections[i]);
         const modalRef = this.modal.open(ViewContact);
         modalRef.componentInstance.contact = this.contacts.connections[i];
         modalRef.componentInstance.userId = this.userId;
         modalRef.componentInstance.getContactsExterior = this.getContacts.bind(this);
+        modalRef.componentInstance.getContacts = this.getContacts.bind(this);
+        console.log(this.isPlayer(this.contacts.connections[i]));
+        modalRef.componentInstance.isPlayer = this.isPlayer(this.contacts.connections[i])
     }
 
+    public isPlayer(contact) {
+        if (contact.hasOwnProperty("emailAddresses") === false)
+            return true;
+        return this.players.findIndex(function (it) {
+            console.log(it.user.email, contact.emails[0].value)
+            return it.user.email === contact.emails[0].value;
+        }.bind(this)) !== -1;
+    }
 }

@@ -45,7 +45,7 @@ import { AddTeamModal } from './league/add-team-modal/add-team-modal';
 import { AddOwnerModal } from './league/add-owner-modal/add-owner-modal';
 import { PaymentComponent } from './payment/payment.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
-import { ViewContact } from './player/view-contact/view-contact.modal';
+import { ViewContact } from './contacts/google/view-contact/view-contact.modal';
 
 
 export function createTranslateLoader(http: Http) {

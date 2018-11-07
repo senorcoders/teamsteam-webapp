@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { UserListComponent } from './user-list/userlist.component';
 import { UserTableComponent } from './user-table/usertable.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -10,7 +9,7 @@ export const UsersRoutes: Routes = [{
   path: '',
   redirectTo: 'user-list',
   pathMatch: 'full',
-},{
+}, {
   path: '',
   children: [{
     path: 'userlist',
@@ -24,8 +23,9 @@ export const UsersRoutes: Routes = [{
   }, {
     path: 'usercontact',
     component: UserContactComponent
-  },{
+  }, {
     path: 'edituser',
     component: EditUserComponent
-  }]
+  }
+  ]
 }];

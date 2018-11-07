@@ -1,27 +1,25 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { PageTitleService } from '../../core/page-title/page-title.service';
-import { fadeInAnimation } from "../../core/route-animation/route.animation";
-import { TeamService } from '../../services/team.service';
 import { ToastrService } from 'ngx-toastr';
-import { AuthenticationService } from '../../services/authentication.service';
-import { Interceptor } from '../../interceptor/interceptor';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
+import { fadeInAnimation } from 'app/core/route-animation/route.animation';
+import { PageTitleService } from 'app/core/page-title/page-title.service';
+import { AuthenticationService } from 'app/services/authentication.service';
 
 @Component({
-    selector: 'app-add-contact',
-    templateUrl: './add-contact.component.html',
-    styleUrls: ['./add-contact-component.scss'],
+    selector: 'app-update-contact',
+    templateUrl: './update-contact.component.html',
+    styleUrls: ['./update-contact-component.scss'],
     encapsulation: ViewEncapsulation.None,
     host: {
         "[@fadeInAnimation]": 'true'
     },
     animations: [fadeInAnimation]
 })
-export class AddContactComponent implements OnInit {
+export class UpdateContactComponent implements OnInit {
 
     private userId;
     public user: any = { user: { firstName: "", lastName: "" }, positions: [] };
@@ -37,6 +35,9 @@ export class AddContactComponent implements OnInit {
 
     public form: FormGroup;
 
+    private contact: any;
+    private resourceName: string = "";
+
     constructor(private pageTitleService: PageTitleService,
         private auth: AuthenticationService, private fb: FormBuilder,
         private toast: ToastrService, private route: ActivatedRoute,
@@ -51,13 +52,17 @@ export class AddContactComponent implements OnInit {
             this.form = this.fb.group({
                 firstname: ['', Validators.required],
                 lastname: ["", Validators.required],
-                address: ["", Validators.required]
+                address: ["", Validators.required],
+                birthday: [null, Validators.required]
             });
 
-            this.userId = this.route.snapshot.params["id"];
+            //cargamos los datos del usuario
+            let user = this.auth.getLoginData();
+            this.userId = user.id;
+            this.resourceName = this.route.snapshot.params["resourceName"];
             this.user = await this.http.get(`/user/${this.userId}`).toPromise();
-            console.log(this.user);
-            this.pageTitleService.setTitle(`Add Contact of ${this.user.firstName} ${this.user.lastName}`);
+            await this.parsecontac();
+            this.pageTitleService.setTitle(`Update Contact of ${this.user.firstName} ${this.user.lastName}`);
 
             if (this.user.email.includes("@yahoo"))
                 this.isGoogle = false;
@@ -65,6 +70,58 @@ export class AddContactComponent implements OnInit {
         }
         catch (e) {
             console.error(e);
+        }
+    }
+
+    public async parsecontac() {
+        try {
+            this.contact = await this.http.get(`/google/contact/get/${this.userId}/people/${this.resourceName}`).toPromise();
+            console.log(this.contact);
+            //Si el contacto tiene nombres
+            if (this.contact.hasOwnProperty("names")) {
+                let names = this.contact.names[0].displayName.split(" ");
+                for (let i = 0; i < names.length; i++) {
+                    if (i === 0) {
+                        this.form.patchValue({ firstname: names[0] })
+                    } else if (i === 1 && names.length === 4) {
+                        let firstname = this.form.value.firstname;
+                        this.form.patchValue({ firstname: firstname + " " + names[1] })
+                    } else {
+                        let lastname = this.form.value.lastname;
+                        this.form.patchValue({ lastname: lastname + " " + names[1] })
+                    }
+                }
+            }
+
+            //si el contacto tiene birthday
+            if (this.contact.hasOwnProperty("birthdays")) {
+                let date = this.contact.birthdays[0].date;
+                let da = moment(date.year + "/" + date.month + "/" + date.day, "YYYY/MM/DD")
+                this.form.patchValue({ birthday: da.format("YYYY-MM-DD") })
+            }
+
+            //Si el contacto tiene address
+            if (this.contact.hasOwnProperty("addresses")) {
+                let address = this.contact.addresses[0].extendedAddress;
+                this.form.patchValue({ address })
+            }
+
+            //Para los telefonos
+            if (this.contact.hasOwnProperty("phoneNumbers")) {
+                for (let phone of this.contact.phoneNumbers) {
+                    this.phoneNumbers.push(phone);
+                }
+            }
+
+            if (this.contact.hasOwnProperty("emailAddresses")) {
+                for (let email of this.contact.emailAddresses) {
+                    this.emails.push(email);
+                }
+            }
+
+        }
+        catch (e) {
+            this.toast.error("Unexpected Error")
         }
     }
 
@@ -201,7 +258,7 @@ export class AddContactComponent implements OnInit {
         }
     }
 
-    public async addContact() {
+    public async updateContact() {
         try {
 
             if (this.phoneNumbers.length === 0 && this.emails.length === 0) {
@@ -210,9 +267,14 @@ export class AddContactComponent implements OnInit {
             }
 
             let values = this.form.value;
-
-            let person = {
+            if (values.firstname === "") {
+                return this.toast.error("The First Name field is Empty");
+            } else if (values.lastname === "") {
+                return this.toast.error("The Last Name field is Empty");
+            }
+            let person:any = {
                 "userID": this.userId,
+                "resourceName": this.resourceName,
                 "person": {
                     "names": [
                         {
@@ -234,10 +296,29 @@ export class AddContactComponent implements OnInit {
                         }
                     ],
                     "emailAddresses": this.emails,
-                    "phoneNumbers": this.phoneNumbers
+                    "phoneNumbers": this.phoneNumbers,
+                    "etag": this.contact.etag,
                 }
             };
-            await this.http.post("/google/contact/create", person).toPromise();
+            let birthday:moment.Moment;
+            if (values.birthday !== null && values.birthday !== "") {
+                birthday = moment(values.birthday, "YYYY/MM/DD");
+                person.person.birthdays = [
+                    {
+                        "metadata": {
+                            "primary": true,
+                            "verified": true
+                        },
+                        "date": {
+                            "year": birthday.format("YYYY"),
+                            "month": birthday.format("MM"),
+                            "day": birthday.format("DD")
+                        },
+                        "text": birthday.toISOString()
+                    }
+                ];
+            }
+            await this.http.put("/google/contact/update", person).toPromise();
             this.location.back();
         }
         catch (e) {

@@ -45,6 +45,16 @@ const MENUITEMS = [
     ]
   },
   {
+    state: 'contacts',
+    name: 'Contacts',
+    type: 'sub',
+    icon: 'fa fa-users',
+    children: [
+      { state: 'list', name: 'View Contacts' },
+      { state: 'add', name: 'Create Contact' },
+    ]
+  },
+  {
     state: 'player',
     name: 'Players',
     type: 'sub',

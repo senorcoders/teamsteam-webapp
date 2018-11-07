@@ -41,6 +41,11 @@ export const AppRoutes: Routes = [{
   //   canActivate:[MyGuardService]
   // },
   {
+    path: "contacts",
+    loadChildren: './contacts/contacts.module#ContactsModule',
+    canActivate:[MyGuardService]
+  },
+  {
     path: 'tasks',
     loadChildren: './tasks/task.module#TaskModule',
     canActivate:[MyGuardService]
