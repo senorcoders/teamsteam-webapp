@@ -29,11 +29,16 @@ export class ViewContactsComponent implements OnInit {
     public user: any = { user: { firstName: "", lastName: "" }, positions: [] };
     public image = "";
     public contacts: { connections: any[], totalItems: Number, totalPeople: number } = { connections: [], totalItems: 0, totalPeople: 0 };
-    public requiredPermission = false;
+    public requiredPermissionGoogle = false;
+    public requiredPermissionYahoo = false;
+    public validActions = false;
 
     public search = "";
     public players = [];
     public teams = [];
+
+    public emailGoogle = "";
+    public emailYahoo = "";
 
     private conexion: any;
 
@@ -49,8 +54,8 @@ export class ViewContactsComponent implements OnInit {
     async ngOnInit() {
         try {
             //cargamos los datos del usuario
-            let user = this.auth.getLoginData();
-            this.userId = user.id;
+            this.user = this.auth.getLoginData();
+            this.userId = this.user.id;
             await this.getContacts();
             await this.getPlayers();
             this.pageTitleService.setTitle(`Contacts of ${this.user.firstName} ${this.user.lastName}`);
@@ -72,20 +77,27 @@ export class ViewContactsComponent implements OnInit {
 
     private async getContacts() {
         try {
-            this.requiredPermission = false;
-            this.user = await this.http.get(`/user/${this.userId}`).toPromise();
-            console.log(this.user);
-            if (this.user.email.includes("@gmail.com")) {
-                if (this.user.hasOwnProperty("tokensGoogle")) {
+            this.requiredPermissionGoogle = false;
+            this.requiredPermissionYahoo = false;
+            this.user = await this.http.get(`/user-all/${this.userId}`).toPromise();
+            if (this.user.email.includes("@gmail.com") || this.user.emailGoogle !== null && this.user.emailGoogle !== undefined) {
+                //Nesesitamos obtener el correo
+                if (this.user.email.includes("@gmail.com"))
+                    this.emailGoogle = this.user.email;
+                else
+                    this.emailGoogle = this.user.emailGoogle;
+
+                if (this.user.tokensGoogle !== null && this.user.tokensGoogle !== undefined) {
                     this.contacts = await this.http.get(`/google/contacts/${this.userId}`).toPromise() as any;
+                    this.validActions = true;
                 } else {
-                    this.requiredPermission = true;
+                    this.requiredPermissionGoogle = true;
                 }
-            } else if (this.user.email.includes("@yahoo")) {
-                if (this.user.hasOwnProperty("tokensYahoo")) {
+            } else if (this.user.email.includes("@yahoo") || this.user.emailYahoo !== null && this.user.emailYahoo !== undefined) {
+                if (this.user.tokensYahoo !== null && this.user.tokensYahoo !== undefined) {
                     this.contacts = await this.http.get(`/yahoo/contacts/${this.userId}`).toPromise() as any;
                 } else {
-                    this.requiredPermission = true;
+                    this.requiredPermissionYahoo = true;
                 }
             }
             this.zone.run(function () { console.log("updated"); })
@@ -100,7 +112,7 @@ export class ViewContactsComponent implements OnInit {
         try {
             for (let role of this.user.roles) {
                 if (role.name === "Manager" && Object.prototype.toString.call(role.team) === "[object Object]") {
-                    this.teams.push(role.team);
+                    this.teams.push(role.team.id);
                 }
             }
             for (let id of this.teams) {
@@ -112,6 +124,32 @@ export class ViewContactsComponent implements OnInit {
         catch (e) {
             console.error(e);
         }
+    }
+
+    public validUpdateGoogle() {
+        if (this.validEmail(this.emailGoogle) === false) {
+            return false;
+        }
+
+        if (this.user.email.includes("@gmail.com"))
+            return this.emailGoogle !== this.user.email;
+        else
+            return this.emailGoogle !== this.user.emailGoogle;
+    }
+
+    public async updateEmailGoogle() {
+        try {
+            await this.http.put("/google/email", { emailGoogle: this.emailGoogle, userId: this.userId }).toPromise();
+            this.getContacts();
+        }
+        catch (e) {
+            console.error(e);
+            this.toast.error("Error in update Email Google");
+        }
+    }
+
+    public validEmail(email: string): boolean {
+        return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email);
     }
 
     private async initConnetionSockets() {
@@ -181,7 +219,17 @@ export class ViewContactsComponent implements OnInit {
         this.router.navigate([`/contacts/add`])
     }
 
-    public async sendPermission() {
+    public async grantPermissionGoogle() {
+        try {
+            let link: any = await this.http.get(`/google/url-auth`).toPromise();
+            window.location.href = link.url;
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    public async grantPermissionYahoo() {
         try {
             let link: any = await this.http.get(`/google/url-auth`).toPromise();
             window.location.href = link.url;
@@ -196,17 +244,16 @@ export class ViewContactsComponent implements OnInit {
         modalRef.componentInstance.contact = this.contacts.connections[i];
         modalRef.componentInstance.userId = this.userId;
         modalRef.componentInstance.getContactsExterior = this.getContacts.bind(this);
-        modalRef.componentInstance.getContacts = this.getContacts.bind(this);
-        console.log(this.isPlayer(this.contacts.connections[i]));
+        modalRef.componentInstance.getPlayers = this.getPlayers.bind(this);
         modalRef.componentInstance.isPlayer = this.isPlayer(this.contacts.connections[i])
     }
 
     public isPlayer(contact) {
         if (contact.hasOwnProperty("emailAddresses") === false)
             return true;
+
         return this.players.findIndex(function (it) {
-            console.log(it.user.email, contact.emails[0].value)
-            return it.user.email === contact.emails[0].value;
+            return it.user.email === contact.emailAddresses[0].value;
         }.bind(this)) !== -1;
     }
 }

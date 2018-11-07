@@ -17,6 +17,7 @@ export class ViewContact {
     public showExecuteDelete = false;
     public userId: string;
     public getContactsExterior: Function;
+    public getPlayers: Function;
     public availableActions = true;
     public teams = [];
     public user: any;
@@ -76,6 +77,7 @@ export class ViewContact {
         }
         try {
             await this.http.post("/google/create-player", { team: this.teamId, contact: this.contact }).toPromise();
+            await this.getPlayers();
             this.isPlayer = true;
             this.createPlayerAction = false;
         }

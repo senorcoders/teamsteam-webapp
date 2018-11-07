@@ -1,17 +1,49 @@
 <div class="container">
-    <div class="row" *ngIf="requiredPermission">
-            The player has not granted permissions to manage the contacts, click <span class="action" (click)="sendPermission()">HERE</span> to ask for the permissions
+    <div class="row">
+        <div class="col-12 col-sm-10 col-lg-8">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Email Google</span>
+                </div>
+                <input type="email" class="form-control" [(ngModel)]="emailGoogle" aria-describedby="basic-addon3">
+                <button class="btn btn-primary" *ngIf="validUpdateGoogle()" (click)="updateEmailGoogle()">Update</button>
+            </div>
+            <h4 style="font-weight: 100; margin-bottom: 1.5rem;" *ngIf="requiredPermissionGoogle&&validUpdateGoogle()===false">You need to grant permissions to access your
+                contacts, <span style="color: #fe324d;
+                        font-weight: 500;
+                        cursor: pointer;"
+                    (click)="grantPermissionGoogle()">GRANT
+                    PERMISSIONS</span></h4>
+        </div>
     </div>
     <div class="row">
+        <div class="col-12 col-sm-10 col-lg-8">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Email Yahoo</span>
+                </div>
+                <input style="font-weight: 100;" type="email" class="form-control" [(ngModel)]="emailYahoo"
+                    aria-describedby="basic-addon3">
+            </div>
+            <h4 style="font-weight: 100; margin-bottom: 1.5rem;" *ngIf="requiredPermissionYahoo">You need to grant permissions to access your
+                contacts, <span style="color: #fe324d;
+                            font-weight: 500;
+                            cursor: pointer;"
+                    (click)="grantPermissionYahoo()">GRANT
+                    PERMISSIONS</span></h4>
+        </div>
+    </div>
+    <div class="row" *ngIf="validActions">
         <div class="col-12 col-sm-5 input-group mb-3" id="search">
             <input type="search" class="form-control" [(ngModel)]="search" placeholder="Search...">
-            <div class="input-group-append" *ngIf="!requiredPermission">
+            <div class="input-group-append">
                 <button class="btn btn-outline-dark" type="button" style="height: 40px;" (click)="toAddContact()">Add</button>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-sm-5 list-group-item list-group-item-action" style="cursor: pointer;" [hidden]="!validSame(contact)" (click)="viewContact(i)" *ngFor="let contact of contacts.connections; let i=index;">
+        <div class="col-12 col-sm-5 list-group-item list-group-item-action" style="cursor: pointer;" [hidden]="!validSame(contact)"
+            (click)="viewContact(i)" *ngFor="let contact of contacts.connections; let i=index;">
             <img *ngIf="contact.coverPhotos" class="cover-photos" [src]="contact.coverPhotos[0].url">
             <span *ngIf="contact.names">{{contact.names[0].displayName}}</span>
         </div>

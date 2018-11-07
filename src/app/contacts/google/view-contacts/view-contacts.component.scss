@@ -1,4 +1,13 @@
-.action{
+.input-group-prepend {
+    background-color: #dee4e8;
+    span {
+        line-height: 2.25;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+.action {
     text-decoration: underline;
     font-weight: bold;
     cursor: pointer;
@@ -6,17 +15,17 @@
     padding-right: 10px;
 }
 
-#search{
+#search {
     padding: 10px;
     padding-left: 0;
     margin-bottom: 15px;
-    input{
-        width:100%;
+    input {
+        width: 100%;
         display: block;
     }
 }
 
-.cover-photos{
+.cover-photos {
     width: 40px;
     height: 40px;
 }
