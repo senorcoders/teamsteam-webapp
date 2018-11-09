@@ -9,6 +9,8 @@ import { Interceptor } from 'app/interceptor/interceptor';
 import { fadeInAnimation } from 'app/core/route-animation/route.animation';
 import { AuthenticationService } from 'app/services/authentication.service';
 import { PageTitleService } from 'app/core/page-title/page-title.service';
+import { ViewContactYahoo } from 'app/contacts/yahoo/view-contact/view-contact.modal';
+import { toAddContactModal } from 'app/contacts/toaddcontact/to-add-contact-modal';
 
 
 declare var io: any;
@@ -28,7 +30,8 @@ export class ViewContactsComponent implements OnInit {
     private userId;
     public user: any = { user: { firstName: "", lastName: "" }, positions: [] };
     public image = "";
-    public contacts: { connections: any[], totalItems: Number, totalPeople: number } = { connections: [], totalItems: 0, totalPeople: 0 };
+    public contactsYahoo: { contacts: { contact: any[], count: number, start: number, total: number, uri: string } } = { contacts: { contact: [], count: 0, start: 0, total: 0, uri: "" } };
+    public contactsGoogle: { connections: any[], totalItems: Number, totalPeople: number } = { connections: [], totalItems: 0, totalPeople: 0 };
     public requiredPermissionGoogle = false;
     public requiredPermissionYahoo = false;
     public validActions = false;
@@ -80,28 +83,37 @@ export class ViewContactsComponent implements OnInit {
             this.requiredPermissionGoogle = false;
             this.requiredPermissionYahoo = false;
             this.user = await this.http.get(`/user-all/${this.userId}`).toPromise();
-            if (this.user.email.includes("@gmail.com") || this.user.emailGoogle !== null && this.user.emailGoogle !== undefined) {
+            if (this.user.email.includes("@gmail") || this.user.emailGoogle !== null && this.user.emailGoogle !== undefined) {
                 //Nesesitamos obtener el correo
-                if (this.user.email.includes("@gmail.com"))
+                if (this.user.email.includes("@gmail"))
                     this.emailGoogle = this.user.email;
                 else
                     this.emailGoogle = this.user.emailGoogle;
 
                 if (this.user.tokensGoogle !== null && this.user.tokensGoogle !== undefined) {
-                    this.contacts = await this.http.get(`/google/contacts/${this.userId}`).toPromise() as any;
+                    this.contactsGoogle = await this.http.get(`/google/contacts/${this.userId}`).toPromise() as any;
                     this.validActions = true;
                 } else {
                     this.requiredPermissionGoogle = true;
                 }
-            } else if (this.user.email.includes("@yahoo") || this.user.emailYahoo !== null && this.user.emailYahoo !== undefined) {
+            }
+
+            if (this.user.email.includes("@yahoo") || this.user.emailYahoo !== null && this.user.emailYahoo !== undefined) {
+                //Nesesitamos obtener el correo
+                if (this.user.email.includes("@yahoo"))
+                    this.emailYahoo = this.user.email;
+                else
+                    this.emailYahoo = this.user.emailYahoo;
+
                 if (this.user.tokensYahoo !== null && this.user.tokensYahoo !== undefined) {
-                    this.contacts = await this.http.get(`/yahoo/contacts/${this.userId}`).toPromise() as any;
+                    this.contactsYahoo = await this.http.get(`/yahoo/contacts/${this.userId}`).toPromise() as any;
+                    this.validActions = true;
+                    console.log(this.contactsYahoo);
                 } else {
                     this.requiredPermissionYahoo = true;
                 }
             }
             this.zone.run(function () { console.log("updated"); })
-            console.log(this.contacts);
         }
         catch (e) {
             console.error(e);
@@ -131,10 +143,21 @@ export class ViewContactsComponent implements OnInit {
             return false;
         }
 
-        if (this.user.email.includes("@gmail.com"))
+        if (this.user.email.includes("@gmail"))
             return this.emailGoogle !== this.user.email;
         else
             return this.emailGoogle !== this.user.emailGoogle;
+    }
+
+    public validUpdateYahoo() {
+        if (this.validEmail(this.emailYahoo) === false) {
+            return false;
+        }
+
+        if (this.user.email.includes("@yahoo"))
+            return this.emailYahoo !== this.user.email;
+        else
+            return this.emailYahoo !== this.user.emailYahoo;
     }
 
     public async updateEmailGoogle() {
@@ -145,6 +168,17 @@ export class ViewContactsComponent implements OnInit {
         catch (e) {
             console.error(e);
             this.toast.error("Error in update Email Google");
+        }
+    }
+
+    public async updateEmailYahoo() {
+        try {
+            await this.http.put("/yahoo/email", { emailYahoo: this.emailYahoo, userId: this.userId }).toPromise();
+            this.getContacts();
+        }
+        catch (e) {
+            console.error(e);
+            this.toast.error("Error in update Email Yahoo");
         }
     }
 
@@ -173,7 +207,7 @@ export class ViewContactsComponent implements OnInit {
         this.image = "/assets/img/user.png";
     }
 
-    public validSame(ct) {
+    public validSameGoogle(ct) {
         //Primero validamos concidencia con los nombres.
         let valid = false;
         if (ct.hasOwnProperty("names")) {
@@ -216,7 +250,37 @@ export class ViewContactsComponent implements OnInit {
     }
 
     public toAddContact() {
-        this.router.navigate([`/contacts/add`])
+        if (this.validActions === false)
+            return;
+
+            let validGoogle = false, validYahoo = false;
+        if (this.emailGoogle !== "" &&
+            this.requiredPermissionGoogle === false &&
+            this.validUpdateGoogle() === false) {
+                validGoogle = true;
+        }
+
+        if (this.emailYahoo !== "" &&
+            this.requiredPermissionYahoo === false &&
+            this.validUpdateYahoo() === false) {
+                validYahoo = true;
+        }
+
+        if(validGoogle === true && validYahoo === false)
+            this.router.navigate([`/contacts/add/google`])
+        if(validYahoo === true && validGoogle === false)
+            this.router.navigate([`/contacts/add/yahoo`])
+        if(validGoogle===true&&validYahoo===true){
+            let modal = this.modal.open(toAddContactModal);
+            modal.componentInstance.toContactGoogle = function(){
+                this.router.navigate([`/contacts/add/google`]);
+                modal.close();
+            }.bind(this);
+            modal.componentInstance.toContactYahoo = function(){
+                this.router.navigate([`/contacts/add/yahoo`]);
+                modal.close();
+            }.bind(this);
+        }
     }
 
     public async grantPermissionGoogle() {
@@ -231,7 +295,7 @@ export class ViewContactsComponent implements OnInit {
 
     public async grantPermissionYahoo() {
         try {
-            let link: any = await this.http.get(`/google/url-auth`).toPromise();
+            let link: any = await this.http.get(`/yahoo/url-auth`).toPromise();
             window.location.href = link.url;
         }
         catch (e) {
@@ -239,13 +303,22 @@ export class ViewContactsComponent implements OnInit {
         }
     }
 
-    public viewContact(i: number) {
+    public viewContactGoogle(i: number) {
         const modalRef = this.modal.open(ViewContact);
-        modalRef.componentInstance.contact = this.contacts.connections[i];
+        modalRef.componentInstance.contact = this.contactsGoogle.connections[i];
         modalRef.componentInstance.userId = this.userId;
         modalRef.componentInstance.getContactsExterior = this.getContacts.bind(this);
         modalRef.componentInstance.getPlayers = this.getPlayers.bind(this);
-        modalRef.componentInstance.isPlayer = this.isPlayer(this.contacts.connections[i])
+        modalRef.componentInstance.isPlayer = this.isPlayer(this.contactsGoogle.connections[i])
+    }
+
+    public viewContactYahoo(i: number) {
+        const modalRef = this.modal.open(ViewContactYahoo);
+        modalRef.componentInstance.contact = this.contactsYahoo.contacts.contact[i];
+        modalRef.componentInstance.userId = this.userId;
+        modalRef.componentInstance.getContactsExterior = this.getContacts.bind(this);
+        modalRef.componentInstance.getPlayers = this.getPlayers.bind(this);
+        modalRef.componentInstance.isPlayer = this.isPlayerYahoo(this.contactsYahoo.contacts.contact[i])
     }
 
     public isPlayer(contact) {
@@ -254,6 +327,23 @@ export class ViewContactsComponent implements OnInit {
 
         return this.players.findIndex(function (it) {
             return it.user.email === contact.emailAddresses[0].value;
+        }.bind(this)) !== -1;
+    }
+
+    public isPlayerYahoo(contact) {
+        let valid = false, email = "";
+        for (let field of contact.fields) {
+            if (field.type === "email") {
+                valid = true;
+                email = field.value;
+                break;
+            }
+        }
+        if (valid === false)
+            return false;
+
+        return this.players.findIndex(function (it) {
+            return it.user.email === email;
         }.bind(this)) !== -1;
     }
 }

@@ -46,6 +46,8 @@ import { AddOwnerModal } from './league/add-owner-modal/add-owner-modal';
 import { PaymentComponent } from './payment/payment.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { ViewContact } from './contacts/google/view-contact/view-contact.modal';
+import { ViewContactYahoo } from './contacts/yahoo/view-contact/view-contact.modal';
+import { toAddContactModal } from './contacts/toaddcontact/to-add-contact-modal';
 
 
 export function createTranslateLoader(http: Http) {
@@ -91,13 +93,17 @@ const perfectScrollbarConfig: PerfectScrollbarConfigInterface = {
 		AddTeamModal,
 		AddOwnerModal,
 		ViewContact,
+		ViewContactYahoo,
+		toAddContactModal,
 		PaymentComponent,
 		SubscriptionsComponent
 	],
 	entryComponents: [
 		AddTeamModal,
 		AddOwnerModal,
-		ViewContact
+		ViewContact,
+		ViewContactYahoo,
+		toAddContactModal
 	],
 	bootstrap: [ChankyaAppComponent],
 	providers: [

@@ -5,9 +5,11 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 
 import { ToastrModule } from 'ngx-toastr';
 import { ContactsRouter } from './contacts.routing';
-import { AddContactComponent } from './google/add-contact/add-contact.component';
+import { AddContactGoogleComponent } from './google/add-contact/add-contact.component';
 import { ViewContactsComponent } from './google/view-contacts/view-contacts.component';
 import { UpdateContactComponent } from './google/update-contact/update-contact.component';
+import { AddContactYahooComponent } from './yahoo/add-contact/add-contact.component';
+import { UpdateContactYahooComponent } from './yahoo/update-contact/update-contact.component';
 
 
 @NgModule({
@@ -19,9 +21,11 @@ import { UpdateContactComponent } from './google/update-contact/update-contact.c
     ToastrModule.forRoot(),
   ],
   declarations: [
-    AddContactComponent,
+    AddContactGoogleComponent,
+    AddContactYahooComponent,
     ViewContactsComponent,
-    UpdateContactComponent
+    UpdateContactComponent,
+    UpdateContactYahooComponent
   ]
 })
 

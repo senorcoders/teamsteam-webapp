@@ -51,7 +51,7 @@ const MENUITEMS = [
     icon: 'fa fa-users',
     children: [
       { state: 'list', name: 'View Contacts' },
-      { state: 'add', name: 'Create Contact' },
+      // { state: 'add', name: 'Create Contact' },
     ]
   },
   {

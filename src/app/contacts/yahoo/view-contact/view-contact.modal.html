@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" [hidden]="field.type!=='name'" *ngFor="let field of contact.fields">{{field.value.givenName+
+        " "+ field.value.familyName}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.close()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="container" *ngFor="let field of contact.fields">
+        <ng-container *ngIf="field.type==='email'">
+            <h5>Email</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{field.value}}</li>
+            </ul>
+        </ng-container>
+        <ng-container *ngIf="field.type==='phone'">
+            <h5>Phone</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{field.value}}</li>
+            </ul>
+        </ng-container>
+        <ng-container *ngIf="field.type==='address'">
+            <h5>Address</h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{field.value.street}}</li>
+            </ul>
+        </ng-container>
+    </div>
+
+</div>
+<!-- <div class="modal-footer" *ngIf="createPlayerAction">
+    <div class="form-group mx-sm-3 mb-2">
+        <label class="mr-sm-2" for="typeEmail">Select Team</label>
+        <select class="custom-select mr-sm-2" [(ngModel)]="teamId">
+            <option selected [value]="team.id" *ngFor="let team of teams">{{team.name}}</option>
+        </select>
+        <button type="button" style="margin-top: 1rem;" class="btn btn-outline-warning" (click)="createPlayer()" *ngIf="createPlayerAction">Create
+            Player</button>
+    </div>
+</div> -->
+<div class="modal-footer" *ngIf="availableActions">
+    <!-- <button type="button" class="btn btn-outline-warning" [hidden]="isPlayer" (click)="createPlayer()" *ngIf="!createPlayerAction">Create
+        Player</button> -->
+    <button type="button" class="btn btn-outline-dark" (click)="edit()">Edit</button>
+    <button type="button" class="btn btn-primary" *ngIf="!showExecuteDelete" (click)="delete()">Delete</button>
+    <button type="button" class="btn btn-primary" *ngIf="showExecuteDelete" (click)="deleteExecute()">
+        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+    </button>
+</div>

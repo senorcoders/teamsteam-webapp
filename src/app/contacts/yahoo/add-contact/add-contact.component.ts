@@ -10,7 +10,7 @@ import { PageTitleService } from 'app/core/page-title/page-title.service';
 import { AuthenticationService } from 'app/services/authentication.service';
 
 @Component({
-    selector: 'app-add-contact-google',
+    selector: 'app-add-contact-yahoo',
     templateUrl: './add-contact.component.html',
     styleUrls: ['./add-contact-component.scss'],
     encapsulation: ViewEncapsulation.None,
@@ -19,7 +19,7 @@ import { AuthenticationService } from 'app/services/authentication.service';
     },
     animations: [fadeInAnimation]
 })
-export class AddContactGoogleComponent implements OnInit {
+export class AddContactYahooComponent implements OnInit {
 
     private userId;
     public user: any = { user: { firstName: "", lastName: "" }, positions: [] };
@@ -71,7 +71,6 @@ export class AddContactGoogleComponent implements OnInit {
 
     public addPhone() {
         let numberPhone = (window as any).numberPhone.value;
-        let typePhone = (window as any).typePhone.value;
         if (numberPhone === "") {
             this.invalidNumberPhone = true;
             setTimeout(function () {
@@ -79,56 +78,15 @@ export class AddContactGoogleComponent implements OnInit {
             }.bind(this), 1500);
             return;
         }
-        if (typePhone === "" || typePhone === "type") {
-            this.invalidTypePhone = true;
-            setTimeout(function () {
-                this.invalidTypePhone = false;
-            }.bind(this), 1500);
-            return;
-        }
 
+        this.phoneNumbers.push({
+            value: numberPhone,
+            type: "phone"
+        });
 
-        if (this.phoneNumbers.length === 0) {
-            this.phoneNumbers.push({
-                value: numberPhone,
-                type: typePhone,
-                "metadata": {
-                    "primary": true,
-                    "verified": true
-                }
-            })
-        } else {
-            this.phoneNumbers.push({
-                value: numberPhone,
-                type: typePhone,
-                "metadata": {
-                    "primary": false,
-                    "verified": true
-                }
-            })
-        }
         (window as any).numberPhone.value = "";
-        (window as any).typePhone.value = "type";
 
         // console.log(this.phoneNumbers);
-    }
-
-    public getTypePhone(value: string) {
-        let def = {
-            home: "Home",
-            work: "Work",
-            mobile: "Mobile",
-            homeFax: "Home Fax",
-            workFax: "Work Fax",
-            otherFax: "Other fax",
-            pager: "Pager",
-            workMobile: "Work Mobile",
-            workPager: "Work Pager",
-            main: "Main",
-            googleVoice: "Google Voice",
-            other: "Other"
-        };
-        return def[value];
     }
 
     public removePhone(i: number) {
@@ -141,7 +99,6 @@ export class AddContactGoogleComponent implements OnInit {
 
     public addEmail() {
         let value = (window as any).valueEmail.value;
-        let type = (window as any).typeEmail.value;
         if (value === "") {
             this.invalidValueEmail = true;
             setTimeout(function () {
@@ -149,48 +106,15 @@ export class AddContactGoogleComponent implements OnInit {
             }.bind(this), 1500);
             return;
         }
-        if (type === "" || type === "type") {
-            this.invalidTypeEmail = true;
-            setTimeout(function () {
-                this.invalidTypeEmail = false;
-            }.bind(this), 1500);
-            return;
-        }
 
+        this.emails.push({
+            value,
+            type: "email",
+        });
 
-        if (this.emails.length === 0) {
-            this.emails.push({
-                value,
-                type,
-                "metadata": {
-                    "primary": true,
-                    "verified": true
-                }
-            })
-        } else {
-            this.emails.push({
-                value,
-                type,
-                "metadata": {
-                    "primary": false,
-                    "verified": true
-                }
-            })
-        }
         (window as any).valueEmail.value = "";
-        (window as any).typeEmail.value = "type";
 
         // console.log(this.emails);
-    }
-
-    public getTypeEmail(value: string) {
-        let def = {
-            home: "Home",
-            work: "Work",
-            other: "Other"
-        };
-
-        return def[value];
     }
 
     public removeEmail(i: number) {
@@ -217,50 +141,47 @@ export class AddContactGoogleComponent implements OnInit {
                 return this.toast.error("The Last Name field is Empty");
             }
             let person: any = {
-                "userID": this.userId,
-                "person": {
-                    "names": [
-                        {
-                            "givenName": values.firstname + " " + values.lastname,
-                            "metadata": {
-                                "primary": true,
-                                "verified": true
+                "userId": this.userId,
+                "contact": {
+                    "contact": {
+                        "fields": [
+                            {
+                                "type": "name", "value": {
+                                    "givenName": values.firstname,
+                                    "middleName": "",
+                                    "familyName": values.lastname,
+                                    "prefix": "",
+                                    "suffix": "",
+                                    "givenNameSound": "",
+                                    "familyNameSound": ""
+                                }
                             }
-                        }
-                    ],
-                    "addresses": [
-                        {
-                            "metadata": {
-                                "primary": true,
-                                "verified": true
-                            },
-                            "type": "home",
-                            "extendedAddress": values.address,
-                        }
-                    ],
-                    "emailAddresses": this.emails,
-                    "phoneNumbers": this.phoneNumbers
+                        ]
+                    }
                 }
-            };
-            let birthday:moment.Moment;
+            }
+            let birthday: moment.Moment;
             if (values.birthday !== null && values.birthday !== "") {
                 birthday = moment(values.birthday, "YYYY/MM/DD");
-                person.person.birthdays = [
-                    {
-                        "metadata": {
-                            "primary": true,
-                            "verified": true
-                        },
-                        "date": {
-                            "year": birthday.format("YYYY"),
-                            "month": birthday.format("MM"),
-                            "day": birthday.format("DD")
-                        },
-                        "text": birthday.toISOString()
+                let birth = {
+                    "type": "birthday", "value": {
+                        "day": birthday.format("DD"),
+                        "month": birthday.format("MM"),
+                        "year": birthday.format("YYYY")
                     }
-                ];
+                }
+                person.contact.contact.fields.push(birth);
             }
-            await this.http.post("/google/contact/create", person).toPromise();
+            if (values.address !== "") {
+                person.contact.contact.fields.push({
+                    "type": "address", "value": {
+                        "street": values.address,
+                    }
+                });
+            }
+            person.contact.contact.fields = this.phoneNumbers.concat(this.emails).concat(person.contact.contact.fields);
+
+            await this.http.post("/yahoo/contacts", person).toPromise();
             this.location.back();
         }
         catch (e) {
