@@ -29,7 +29,7 @@
     </div>
 
 </div>
-<!-- <div class="modal-footer" *ngIf="createPlayerAction">
+<div class="modal-footer" *ngIf="createPlayerAction">
     <div class="form-group mx-sm-3 mb-2">
         <label class="mr-sm-2" for="typeEmail">Select Team</label>
         <select class="custom-select mr-sm-2" [(ngModel)]="teamId">
@@ -38,10 +38,10 @@
         <button type="button" style="margin-top: 1rem;" class="btn btn-outline-warning" (click)="createPlayer()" *ngIf="createPlayerAction">Create
             Player</button>
     </div>
-</div> -->
+</div>
 <div class="modal-footer" *ngIf="availableActions">
-    <!-- <button type="button" class="btn btn-outline-warning" [hidden]="isPlayer" (click)="createPlayer()" *ngIf="!createPlayerAction">Create
-        Player</button> -->
+    <button type="button" class="btn btn-outline-warning" [hidden]="isPlayer" (click)="createPlayer()" *ngIf="!createPlayerAction">Create
+        Player</button>
     <button type="button" class="btn btn-outline-dark" (click)="edit()">Edit</button>
     <button type="button" class="btn btn-primary" *ngIf="!showExecuteDelete" (click)="delete()">Delete</button>
     <button type="button" class="btn btn-primary" *ngIf="showExecuteDelete" (click)="deleteExecute()">

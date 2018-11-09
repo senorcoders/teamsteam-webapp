@@ -76,7 +76,7 @@ export class ViewContactYahoo {
             return this.toast.error("Select a team...");
         }
         try {
-            await this.http.post("/google/create-player", { team: this.teamId, contact: this.contact }).toPromise();
+            await this.http.post("/yahoo/create-player", { team: this.teamId, contact: this.contact }).toPromise();
             await this.getPlayers();
             this.isPlayer = true;
             this.createPlayerAction = false;

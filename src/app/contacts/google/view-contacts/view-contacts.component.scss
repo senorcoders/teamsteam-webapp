@@ -25,7 +25,46 @@
     }
 }
 
+.list-group-item{
+    span.glyphicon-ban-circle{
+        display: none !important;
+    }
+}
+
+.is-player{
+    background-color: #DEE4E8 !important;
+    span.glyphicon-unchecked, span.glyphicon-check{
+        display: none !important;
+    }
+    span.glyphicon-ban-circle{
+        display: inline !important;
+    }
+}
+
+
+
 .cover-photos {
     width: 40px;
     height: 40px;
+}
+
+.loading-import{
+    height: 3px;
+    margin-left: -1.25rem;
+    width: calc(100% + 2.49rem);
+    margin-right: 2.25rem;
+    .loading-porcentage{
+        height: 100%;
+        background-color: #fe324d;
+        transition: all ease-in-out 1.5s; 
+    }
+}
+
+
+.state-icon {
+    left: -5px;
+}
+.list-group-item-primary {
+    color: rgb(255, 255, 255);
+    background-color: rgb(66, 139, 202);
 }

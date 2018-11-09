@@ -3,6 +3,18 @@
         <div class="col-12 col-sm-10 col-lg-8">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">Select a Team</span>
+                </div>
+                <select class="form-control" [(ngModel)]="team">
+                    <option [value]="team.id" [hidden]="!team.name" *ngFor="let team of teams">{{team.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-10 col-lg-8">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon3">Email Google</span>
                 </div>
                 <input type="email" class="form-control" [(ngModel)]="emailGoogle" aria-describedby="basic-addon3">
@@ -38,22 +50,55 @@
     <div class="row" *ngIf="validActions">
         <div class="col-12 col-sm-5 input-group mb-3" id="search">
             <input type="search" class="form-control" [(ngModel)]="search" placeholder="Search...">
-            <div class="input-group-append">
-                <button class="btn btn-outline-dark" type="button" style="height: 40px;" (click)="toAddContact()">Add</button>
+            <!-- <div class="input-group-append" style="margin-left: 15px;">
+                <button class="btn btn-outline-dark" type="button" style="height: 40px; background-color: #fe324d; border-color: #fe324d; color:white;"
+                    (click)="toAddContact()">Create Contact</button>
+            </div> -->
+            <div class="input-group-append" style="margin-left: 15px;" *ngIf="selectsContactsGoogle.length>0||selectsContactsYahoo.length>0">
+                <button class="btn btn-outline-dark" type="button" style="height: 40px; background-color: #fe324d; border-color: #fe324d; color:white;"
+                    (click)="importAsPlayer()">Import as Player</button>
+            </div>
+            <!-- <div class="col-12 col-sm-5 input-group mb-3" *ngIf="selectsContactsGoogle.length>0||selectsContactsYahoo.length>0">
+                <button class="btn btn-outline-dark" type="button" style="height: 40px; background-color: #fe324d; border-color: #fe324d; color:white;"
+                    (click)="importAsPlayer()">Import as Player</button>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="row" *ngIf="selectsContactsGoogle.length>0||selectsContactsYahoo.length>0">
+        <div class="col-12 col-sm-5 input-group mb-3">
+            <select class="form-control" [(ngModel)]="team">
+                <option [value]="team.id" *ngFor="let team of teams">{{team.name}}</option>
+            </select>
+            <button class="btn btn-outline-dark" type="button" style="height: 40px; background-color: #fe324d; border-color: #fe324d; color:white;"
+                (click)="importAsPlayer()">Import as Player</button>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-12 col-sm-5 list-group-item list-group-item-action" [ngClass]="{'is-player': isPlayer(contact) }"
+            style="cursor: pointer;" [hidden]="!validSameGoogle(contact)" *ngFor="let contact of contactsGoogle.connections; let i=index;">
+            <span class="state-icon glyphicon glyphicon-unchecked" (click)="selectContactAny(true, contact)" [hidden]="isSelectAny(true, contact)"></span>
+            <span class="state-icon glyphicon glyphicon-check" (click)="unselectContactAny(true, contact)" [hidden]="!isSelectAny(true, contact)"></span>
+            <span class="state-icon glyphicon glyphicon-ban-circle"></span>
+            <img *ngIf="contact.coverPhotos" (click)="viewContactGoogle(i)" class="cover-photos" [src]="contact.coverPhotos[0].url">
+            <span (click)="viewContactGoogle(i)" *ngIf="contact.names">{{contact.names[0].displayName}}</span>
+            <span (click)="viewContactGoogle(i)" [hidden]="contact.names" *ngIf="contact.emailAddresses">{{contact.emailAddresses[0].value}}</span>
+            <div class="loading-import" [hidden]="!isImporting(true, contact)">
+                <div class="loading-porcentage">
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-sm-5 list-group-item list-group-item-action" style="cursor: pointer;" [hidden]="!validSameGoogle(contact)"
-            (click)="viewContactGoogle(i)" *ngFor="let contact of contactsGoogle.connections; let i=index;">
-            <img *ngIf="contact.coverPhotos" class="cover-photos" [src]="contact.coverPhotos[0].url">
-            <span *ngIf="contact.names">{{contact.names[0].displayName}}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-sm-5 list-group-item list-group-item-action" style="cursor: pointer;" 
-            (click)="viewContactYahoo(i)" *ngFor="let contact of contactsYahoo.contacts.contact; let i=index;">
-            <span [hidden]="field.type!=='name'" *ngFor="let field of contact.fields">{{field.value.givenName+ " "+ field.value.familyName}}</span>
+        <div class="col-12 col-sm-5 list-group-item list-group-item-action" [ngClass]="{'is-player': isPlayerYahoo(contact) }"
+            style="cursor: pointer;" *ngFor="let contact of contactsYahoo.contacts.contact; let i=index;">
+            <span class="state-icon glyphicon glyphicon-unchecked" (click)="selectContactAny(false, contact)" [hidden]="isSelectAny(false, contact)"></span>
+            <span class="state-icon glyphicon glyphicon-check" (click)="unselectContactAny(false, contact)" [hidden]="!isSelectAny(false, contact)"></span>
+            <span class="state-icon glyphicon glyphicon-ban-circle"></span>
+            <span (click)="viewContactYahoo(i)">{{getNameContactYahoo(contact)}}</span>
+            <div class="loading-import" [hidden]="!isImporting(false, contact)">
+                <div class="loading-porcentage">
+                </div>
+            </div>
         </div>
     </div>
 </div>
