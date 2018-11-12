@@ -6,7 +6,7 @@
         "name": "Development",
         "team-member1": "assets/img/user-9.jpg",
         "team-member2": "assets/img/user-2.jpg",
-        "team-member3": "assets/img/user-3.jpg",
+        "team-member3": "assets/img/user.png",
         "team-member4": "assets/img/user-4.jpg",
         "team-member5": "assets/img/user-13.jpg",
         "team-member6": "assets/img/user-12.jpg"
@@ -20,7 +20,7 @@
         "team-member2": "assets/img/user-6.jpg",
         "team-member3": "assets/img/user-7.jpg",
         "team-member4": "assets/img/user-8.jpg",
-        "team-member5": "assets/img/user-3.jpg",
+        "team-member5": "assets/img/user.png",
         "team-member6": "assets/img/user-7.jpg"
     },
     {
@@ -33,7 +33,7 @@
         "team-member3": "assets/img/user-11.jpg",
         "team-member4": "assets/img/user-12.jpg",
         "team-member5": "assets/img/user-8.jpg",
-        "team-member6": "assets/img/user-3.jpg"
+        "team-member6": "assets/img/user.png"
     },
     {
         "project": "Transport Website",
@@ -43,7 +43,7 @@
         "team-member1": "assets/img/user-13.jpg",
         "team-member2": "assets/img/user-1.jpg",
         "team-member3": "assets/img/user-2.jpg",
-        "team-member4": "assets/img/user-3.jpg",
+        "team-member4": "assets/img/user.png",
         "team-member5": "assets/img/user-11.jpg",
         "team-member6": "assets/img/user-12.jpg"
     },
@@ -57,6 +57,6 @@
         "team-member3": "assets/img/user-2.jpg",
         "team-member4": "assets/img/user-8.jpg",
         "team-member5": "assets/img/user-1.jpg",
-        "team-member6": "assets/img/user-3.jpg"
+        "team-member6": "assets/img/user.png"
     }
 ]

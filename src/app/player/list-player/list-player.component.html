@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="gender">Teams</label>
-    <select class="form-control form-control-lg input-square" id="gender" (change)="getPlayerByTeam($event.target.value)">
+    <select class="form-control form-control-lg input-square" id="gender" [(ngModel)]="teamSelect" (change)="getPlayerByTeam($event.target.value)">
     	<option value="">Choose a team</option>
       	<option value="{{team.id}}" *ngFor="let team of teams">{{team.name}}</option>
     </select>
@@ -11,10 +11,10 @@
   </div>
 </div>
 <div class="row">
-	<div class="col-md-4" *ngFor="let player of players; let i=index" (click)="toViewPlayer(player)">
+	<div class="col-md-4" *ngFor="let player of players; let i=index" >
 		<div class="square">
-			<div class="perfil"><img [src]="getUserImage(player)" (error)="errorHandler($event)"></div>
-			<div class="info">
+			<div class="perfil"><img [src]="getUserImage(player)" (click)="toViewPlayer(player)" (error)="errorHandler($event)"></div>
+			<div class="info" (click)="toViewPlayer(player)">
 				<span class="username">{{player.user.username}}</span>
 				<span class="email">{{player.user.email}}</span>
 			</div>
@@ -30,11 +30,11 @@
 	<div class="close" (click)="closePopUp()"></div>
 	<div class="content">
 		<form [formGroup]="editPlayer" (ngSubmit)="savePlayer()">
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="username">UserName</label>
                     <input type="text" class="form-control form-control-lg input-square" id="username" placeholder="UserName" formControlName="username" [ngClass]="{'is-invalid':editPlayer.get('username').invalid && editPlayer.get('username').touched}">
                     <div *ngIf="editPlayer.get('username').hasError('required') && editPlayer.get('username').touched" class="invalid-feedback">UserName is required</div>
-                </div>
+                </div> -->
                 <div class="form-group">
                   <label for="firstname">First Name</label>
                     <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="First Name" formControlName="firstname" [ngClass]="{'is-invalid':editPlayer.get('firstname').invalid && editPlayer.get('firstname').touched}">

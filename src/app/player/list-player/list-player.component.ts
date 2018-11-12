@@ -8,6 +8,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Interceptor } from '../../interceptor/interceptor';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
 	selector: 'app-list-player',
@@ -36,11 +37,14 @@ export class ListPlayerComponent implements OnInit {
 	preview: string;
 	contacts: any;
 	contactEmerg: any = [];
-	def: any = `/assets/img/user-3.jpg`;
+	def: any = `/assets/img/user.png`;
 	isSuperAdmin: boolean = false;
+
+	public teamSelect = "";
+
 	constructor(private pageTitleService: PageTitleService, private team: TeamService,
 		private auth: AuthenticationService, private fb: FormBuilder,
-		private toast: ToastrService, private route: Router
+		private toast: ToastrService, private route: Router, private http: HttpClient
 	) {
 
 	}
@@ -123,7 +127,7 @@ export class ListPlayerComponent implements OnInit {
 		this.contacts = this.players[index].family;
 		this.showPopup = true
 		this.editPlayer = this.fb.group({
-			username: [this.players[index].user.username, Validators.required],
+			// username: [this.players[index].user.username, Validators.required],
 			firstname: [this.players[index].user.firstName, Validators.required],
 			lastname: [this.players[index].user.lastName, Validators.required],
 			birthDay: [this.players[index].birthDay],
@@ -162,10 +166,10 @@ export class ListPlayerComponent implements OnInit {
 			e => { console.log(e) }
 		)
 	}
-	savePlayer() {
+	async savePlayer() {
 		//edit user
 		let user = {
-			username: this.editPlayer.get('username').value,
+			// username: this.editPlayer.get('username').value,
 			firstName: this.editPlayer.get('firstname').value,
 			lastName: this.editPlayer.get('lastname').value
 		}
@@ -198,15 +202,16 @@ export class ListPlayerComponent implements OnInit {
 		)
 		//edit image
 		if (this.base64image != "") {
-			let image = { 'id': this.userID, 'image': this.base64image }
-			this.team.uploadImage(image).subscribe(
-				data => {
-					this.toast.success('Player Image Updated', 'Well Done', { positionClass: "toast-top-right" });
-				},
-				error => {
-					this.toast.error('Something wrong happened trying to upload the player image, Please try again', 'Error', { positionClass: "toast-top-right" });
-				}
-			)
+			let image = { 'id': this.userID, 'image': this.base64image, team: this.teamSelect };
+			await this.http.post("/userprofile/images", image).toPromise();
+			// this.team.uploadImage(image).subscribe(
+			// 	data => {
+			// 		this.toast.success('Player Image Updated', 'Well Done', { positionClass: "toast-top-right" });
+			// 	},
+			// 	error => {
+			// 		this.toast.error('Something wrong happened trying to upload the player image, Please try again', 'Error', { positionClass: "toast-top-right" });
+			// 	}
+			// )
 		}
 		//set image array empty
 		this.images = [];

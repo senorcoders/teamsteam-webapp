@@ -31,7 +31,7 @@ export class UserContactComponent implements OnInit {
   },{
     name : 'Stanley Simmons',
     post : 'Jr. IOS Dev.',
-    image : 'assets/img/user-3.jpg'
+    image : 'assets/img/user.png'
   },{
     name : 'Annie Jackson',
     post : 'Jr. Android Dev.',
@@ -57,7 +57,7 @@ export class UserContactComponent implements OnInit {
   },{
     name : 'Stanley Simmons',
     post : 'Event Manager',
-    image : 'assets/img/user-3.jpg'
+    image : 'assets/img/user.png'
   },{
     name : 'Annie Jackson',
     post : 'UI/UX',

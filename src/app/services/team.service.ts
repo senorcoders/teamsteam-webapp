@@ -69,8 +69,7 @@ export class TeamService {
   //     return this.http.get(`/teams/${type}/${id}`)
   //   }
   editUser(data) {
-    let body = JSON.stringify(data);
-    return this.http.put(`/user/${this.id}`, body)
+    return this.http.put(`/user/${this.id}`, data)
   }
   register(data) {
     let body = JSON.stringify(data);

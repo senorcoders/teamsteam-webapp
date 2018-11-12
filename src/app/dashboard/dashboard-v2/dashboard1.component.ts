@@ -160,7 +160,7 @@ export class DashboardOneComponent implements OnInit  {
     image : 'assets/img/user-2.jpg',
     name : 'Lamar'
   },{
-    image : 'assets/img/user-3.jpg',
+    image : 'assets/img/user.png',
     name : 'Lucinda'
   },{
     image : 'assets/img/user-4.jpg',

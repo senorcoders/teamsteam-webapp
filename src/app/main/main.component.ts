@@ -129,12 +129,12 @@ export class MainComponent implements OnInit, OnDestroy {
                     console.log('aqui')
                 }
                 else {
-                    this.PerfilImageService.setPerfilImage("assets/img/user-3.jpg");
+                    this.PerfilImageService.setPerfilImage("assets/img/user.png");
                 }
             },
             error => {
                 console.log(error);
-                this.PerfilImageService.setPerfilImage("assets/img/user-3.jpg");
+                this.PerfilImageService.setPerfilImage("assets/img/user.png");
             }
         )
     }

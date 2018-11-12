@@ -37,7 +37,7 @@ export class UserTableComponent implements OnInit {
       city: 'California',
       country: 'USA',
       post:'Senior Developer, Company Inc.',
-      image:'assets/img/user-3.jpg'
+      image:'assets/img/user.png'
     },{
       name: 'John',
       city: 'Punjab',
@@ -61,7 +61,7 @@ export class UserTableComponent implements OnInit {
       city: 'California',
       country: 'USA',
       post:'Senior Developer, Company Inc.',
-      image:'assets/img/user-3.jpg'
+      image:'assets/img/user.png'
     },{
       name: 'Adam',
       city: 'Punjab',
