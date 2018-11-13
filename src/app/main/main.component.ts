@@ -120,23 +120,7 @@ export class MainComponent implements OnInit, OnDestroy {
             this.perfilImage = val
         })
         this.userData = this.auth.getLoginData();
-        let ramdon = new Date().getTime();
-        //get user image
-        this.auth.getPerfilImage(this.userData.id, ramdon).subscribe(
-            result => {
-                if (result == null) {
-                    this.PerfilImageService.setPerfilImage(`http://138.68.19.227:8187/images/${ramdon}/users/${this.userData.id}-thumbnail`)
-                    console.log('aqui')
-                }
-                else {
-                    this.PerfilImageService.setPerfilImage("assets/img/user.png");
-                }
-            },
-            error => {
-                console.log(error);
-                this.PerfilImageService.setPerfilImage("assets/img/user.png");
-            }
-        )
+        this.PerfilImageService.setPerfilImage(this.auth.getPerfilImage())
     }
     logOut() {
         this.auth.logOut();
@@ -214,6 +198,9 @@ export class MainComponent implements OnInit, OnDestroy {
         });
     }
 
+    public errorImage(e){
+        e.target.src = this.auth.urlImageUserDefault;
+    }
 
     ngOnDestroy() {
         this._router.unsubscribe();

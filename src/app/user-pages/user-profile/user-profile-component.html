@@ -14,7 +14,7 @@
                             <div class="bottom-block">
                                 <div class="profile-thumb text-center mb-3">
                                     <a href="javascript:void(0)">
-                                        <img src="{{perfilImage}}" alt="profile thumb" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
+                                        <img src="{{perfilImage}}" (error)="loadImage($event)" alt="profile thumb" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
                                     </a>
                                 </div>
                                 <div class="thumb-content text-center mb-3">

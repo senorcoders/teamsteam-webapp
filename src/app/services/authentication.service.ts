@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { Interceptor } from 'app/interceptor/interceptor';
 
 @Injectable()
 export class AuthenticationService {
+
+  public urlImageUserDefault = "/assets/img/user.png";
+
   constructor(private http: HttpClient) { }
   login(login) {
     let body = JSON.stringify(login);
@@ -26,8 +29,24 @@ export class AuthenticationService {
   logOut() {
     localStorage.removeItem('sessionToken');
   }
-  getPerfilImage(id, ramdon) {
-    return this.http.get(`/images/${ramdon}/users/${id}`)
+  getPerfilImage() {
+    let userData = this.getLoginData(),
+    perfilImage = "";
+    for(let rol of userData.roles){
+      if(rol.hasOwnProperty("team")){
+        if( Object.prototype.toString.call(rol.team) === "[object Object]" ){
+          perfilImage = Interceptor.transformUrl("/userprofile/images/" + userData.id + "/" + rol.team.id);
+          break;
+        }else{
+          perfilImage = Interceptor.transformUrl("/userprofile/images/" + userData.id + "/" + rol.team);
+          break;
+        }
+      }
+    }
+    if(perfilImage !== "")
+      return perfilImage;
+    else
+      return this.urlImageUserDefault;
   }
   isLogged() {
     let data = this.getLoginData();

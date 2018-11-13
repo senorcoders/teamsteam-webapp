@@ -4,6 +4,7 @@ import { fadeInAnimation } from "../../core/route-animation/route.animation";
 //my imports
 import { AuthenticationService } from '../../services/authentication.service';
 import { PerfilImageService } from '../../core/perfil-image/perfil-image.service';
+import { Interceptor } from 'app/interceptor/interceptor';
 @Component({
   selector: 'ms-user-profile',
   templateUrl: './user-profile-component.html',
@@ -22,7 +23,9 @@ export class UserProfileComponent implements OnInit {
   constructor(
     private perfilImageService: PerfilImageService, private pageTitleService: PageTitleService,
     private auth: AuthenticationService
-  ) { }
+  ) { 
+    this.userData = this.auth.getLoginData();
+  }
 
   ngOnInit() {
     this.pageTitleService.setTitle("User Profile");
@@ -30,14 +33,11 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.userData = this.auth.getLoginData();
-    /*get the perfil image from from service*/
-    this.perfilImageService.perfilImage.subscribe(
-      result => {
-        this.perfilImage = result
-      },
-      error => { console.log(error) }
-    )
+    this.perfilImage = this.auth.getPerfilImage();
+  }
+
+  public loadImage(e){
+    e.target.src = this.auth.urlImageUserDefault;
   }
 
 }
