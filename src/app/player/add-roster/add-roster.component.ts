@@ -26,6 +26,7 @@ export class AddRosterComponent implements OnInit {
   public team = '';
   public file: File;
   public showLoading = false;
+  isSaving = false;
 
   constructor(
     private pageTitleService: PageTitleService,
@@ -39,14 +40,7 @@ export class AddRosterComponent implements OnInit {
     this.createForm();
   }
 
-  createForm() {
-    this.template = new FormGroup({
-      roster: new FormControl(),
-      team: new FormControl()
-    });
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.pageTitleService.setTitle('Upload Roster');
     this.getTeams();
     if (!this.auth.isLogged()) {
@@ -54,10 +48,15 @@ export class AddRosterComponent implements OnInit {
     }
   }
 
-  public async uploadTemplate() {
+  public async uploadTemplate(): Promise<void> {
+    if (this.template.invalid) {
+      return;
+    }
+
     const data = localStorage.getItem('sessionToken');
 
     if (data && this.enableUpload === true && this.team !== '') {
+      this.isSaving = true;
       this.showLoading = true;
       const fd = new FormData();
       fd.append('roster', this.file);
@@ -68,13 +67,20 @@ export class AddRosterComponent implements OnInit {
       httpOptionsForm.headers.append('Content-Type', 'multipart/form-data');
       httpOptionsForm.headers.append('token', token);
 
-      this.http.post('/roster/' + this.team + '?token=' + token, fd, httpOptionsForm).subscribe(res => {
-        if (res.hasOwnProperty('msg') && (res as any).msg === 'success') {
-          this.showSuccess();
-        } else {
-          this.showError('Error in process');
+      this.http.post('/roster/' + this.team + '?token=' + token, fd, httpOptionsForm).subscribe({
+        next: (res): void => {
+          this.isSaving = false;
+          if (res.hasOwnProperty('msg') && (res as any).msg === 'success') {
+            this.showSuccess();
+          } else {
+            this.showError('Error in process');
+          }
+        },
+        error: (err): void => {
+          this.showError(err);
+          this.isSaving = false;
         }
-      }, this.showError);
+      });
     }
   }
 
@@ -103,10 +109,17 @@ export class AddRosterComponent implements OnInit {
     window.open('https://api.lockerroomapp.com/roster/template-xlsx-email');
   }
 
+  private createForm(): void {
+    this.template = new FormGroup({
+      roster: new FormControl(),
+      team: new FormControl()
+    });
+  }
+
   private getTeams(): void {
     const user = this.auth.getLoginData();
-    this.teamService.getMyTeamsForUser(user.id).subscribe(
-      data => {
+    this.teamService.getMyTeamsForUser(user.id).subscribe({
+      next: (data): void => {
         const teams = data as any;
         teams.forEach(team => {
           if (team.team) {
@@ -114,10 +127,10 @@ export class AddRosterComponent implements OnInit {
           }
         });
       },
-      error => {
-        console.log(error)
+      error: (err): void => {
+        console.log(err);
       }
-    )
+    });
   }
 
   private showError(e): void {

@@ -1,47 +1,55 @@
-.username{
-    display: block;
-    color: #00caac;
-    font-weight: bold;
+.username {
+  display: block;
+  color: #00caac;
+  font-weight: bold;
 }
-.info{
-	margin-top: 20px;
+
+.info {
+  margin-top: 20px;
 }
-.square{
-	box-shadow: 2px 5px 20px -4px #000;
-    text-align: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
+
+.square {
+  box-shadow: 2px 5px 20px -4px #000;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
-.perfil img{
-	border-radius:50%;
-	max-width: 100%;
-	max-height: 100px;
+
+.perfil img {
+  border-radius: 50%;
+  height: 100px;
+  max-height: 100px;
+  max-width: 100%;
+  width: 100px;
 }
-.popup{
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 1000;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  overflow-y: scroll;
+
+  .content {
+    transform: translate(-50%, 1%);
+    max-width: 500px;
+    top: 0;
+    left: 50%;
+    width: 100%;
+    box-shadow: 2px 5px 20px -4px #000;
+    position: absolute;
+    background: white;
+    padding: 20px;
+    z-index: 10
+  }
+
+  .close {
     position: fixed;
     width: 100%;
     height: 100%;
-    top: 0;
-    z-index: 1000;
-    left: 0;
-    background: rgba(0,0,0,0.7);
-    overflow-y:scroll;
-    .content{
-    	transform: translate(-50%,1%);
-		max-width: 500px;
-		top: 0;
-		left: 50%;
-		width: 100%;
-		box-shadow: 2px 5px 20px -4px #000;
-		position: absolute;
-	    background: white;
-    	padding: 20px;
-    	z-index: 10
-    }
-    .close{
-	    position: fixed;
-	    width: 100%;
-	    height: 100%;
-	    z-index: 8;
-	}
+    z-index: 8;
+  }
 }
