@@ -309,7 +309,7 @@ export class ViewContactsComponent implements OnInit {
       this.router.navigate([`/contacts/add/google`]).then();
     }
     if (validYahoo === true && validGoogle === false) {
-      this.router.navigate([`/contacts/add/yahoo`]).ten();
+      this.router.navigate([`/contacts/add/yahoo`]).then();
     }
     if (validGoogle === true && validYahoo === true) {
       const modal = this.modal.open(toAddContactModal);
