@@ -1,110 +1,137 @@
 <div class="pricing-wrapper">
-    <div class="row">
-        <div class="col-sm-12 co-md-8 col-lg-6 mx-auto">
-            <div class="chk-heading text-center mb-5">
-                <h2 class="text-capitalize mb-4 font-2x fw-bold">Choose Team</h2>
-                <div class="form-group">
-                    <select class="form-control form-control-lg input-square" id="forms" (change)="getTaskByTeam($event.target.value)">
-                        <option value="">Choose a team</option>
-                        <option value="{{team.team.id}}" *ngFor="let team of teams">{{team.team.name}}</option>
-                    </select>
-                    <div *ngIf="showLoading">
-                        <div class="col-12 loaderLocker">
-                            <img src="../../assets/img/loader_sports.gif" alt="">
-                        </div>
-                    </div>
-                </div>
+  <div class="row">
+    <div class="col-sm-12 co-md-8 col-lg-6 mx-auto">
+      <div class="chk-heading text-center mb-5">
+        <h2 class="text-capitalize mb-4 font-2x fw-bold">Choose Team</h2>
+        <div class="form-group">
+          <select class="form-control form-control-lg input-square" id="forms"
+                  (change)="getTaskByTeam($event.target.value)">
+            <option value="">Choose a team</option>
+            <option value="{{team.team.id}}" *ngFor="let team of teams">{{ team.team.name }}</option>
+          </select>
+          <div *ngIf="showLoading">
+            <div class="col-12 loaderLocker">
+              <img src="../../assets/img/loader_sports.gif" alt="">
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="row" *ngIf="showTask">
-        <div widget class="col-sm-12 col-md-12 col-lg-12 col-full-lg-down">
-            <div class="chk-block">
-                <div class="chk-block-title">
-                    <div class="d-flex justify-content-between">
-                       <div class="d-flex align-self-center">
-                          <h3 class="text-capitalize">Tasks</h3>
-                       </div>
-                   </div>
-                </div>
-                <div class="d-flex justify-content-between mb-2 ripple" *ngFor="let task of tasks; let i =index" [ngClass]="{'taskComplete':task.completad}">
-                   <div class="d-flex">
-                      <div [ngClass]="task.completad ? 'complete' : 'noComplete'">
-                        <span class="month">{{getMonthName(task.dateTime)}}</span>
-                        <span class="day">{{getDay(task.dateTime)}}</span>
-                      </div>
-                      <div class="pr-3 pl-3">
-                         <span><strong>{{task.name}}</strong></span>
-                         <p><b>To:</b> {{task.forInfo.firstName}} {{task.forInfo.lastName}}</p>
-                         <p class="text-over-p">{{smallDesc(task.text)}}</p>
-                      </div>
-                   </div>
-                   <div class="w-60-sm align-self-center text-center">
+  </div>
+  <div class="row" *ngIf="showTask">
+    <div widget class="col-sm-12 col-md-12 col-lg-12 col-full-lg-down">
+      <div class="chk-block">
+        <div class="chk-block-title">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex align-self-center">
+              <h3 class="text-capitalize">Tasks</h3>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between mb-2 ripple" *ngFor="let task of tasks; let i =index"
+             [ngClass]="{'taskComplete':task.completad}">
+          <div class="d-flex">
+            <div [ngClass]="task.completad ? 'complete' : 'noComplete'">
+              <span class="month">{{ getMonthName(task.dateTime) }}</span>
+              <span class="day">{{ getDay(task.dateTime) }}</span>
+            </div>
+            <div class="pr-3 pl-3">
+              <span><strong>{{ task.name }}</strong></span>
+              <p><b>To:</b> {{ task.forInfo.firstName }} {{ task.forInfo.lastName }}</p>
+              <p class="text-over-p">{{ smallDesc(task.text) }}</p>
+            </div>
+          </div>
+          <div class="w-60-sm align-self-center text-center">
                     <span *ngIf="task.completad; else pending" class="text-primary">
                         <i class="fa fa-dot-circle-o"></i> Completed <span class="blue-bar">|</span>
                     </span>
-                    <ng-template #pending>
+            <ng-template #pending>
                         <span class="text-danger">
                          <i class="fa fa-dot-circle-o"></i> Pending <span class="blue-bar">|</span>
                         </span>
-                    </ng-template>
-                        <i class="fa fa-eye see" (click)="showPopUp(i)"></i> <span class="blue-bar">|</span>
-                        <i class="fa fa-pencil edit" (click)="editTask(i)"></i> <span class="blue-bar">|</span>
-                        <i class="fa fa-remove delete" (click)="deleteTask(task.id, task.team)"></i>
-                   </div>
-                </div>
-            </div>
+            </ng-template>
+            <i class="fa fa-eye see" (click)="showPopUp(i)"></i> <span class="blue-bar">|</span>
+            <i class="fa fa-pencil edit" (click)="editTask(i)"></i> <span class="blue-bar">|</span>
+            <i class="fa fa-remove delete" (click)="deleteTask(task.id, task.team)"></i>
+          </div>
         </div>
+      </div>
     </div>
-    <div class="row" *ngIf="noTask">
-        <div class="col-12">
-            <p class="text-primary font-2x">You dont have task</p>
-        </div>
+  </div>
+  <div class="row" *ngIf="noTask">
+    <div class="col-12">
+      <p class="text-primary font-2x">You dont have task</p>
     </div>
+  </div>
 </div>
 <div class="popup" *ngIf="showPopup">
-    {{showPopup}}
-    <div class="close" (click)="closePopUp()"></div>
-    <div class="content" *ngIf="seeTask; else edit">
-        <b>Name: </b> {{currentTask.name}} <br>
-        <b>Description: </b> {{currentTask.text}} <br>
-        <b>Date: </b>{{getFullDate(currentTask.dateTime)}} <br>
-        <b>To:</b> {{currentTask.forInfo.firstName}} {{currentTask.forInfo.lastName}} <br>
-        <b>Status: </b> <span *ngIf="currentTask.completad; else noComplete">Complete</span><ng-template #noComplete>Incomplete</ng-template> <br>
-        <div style="text-align: center;margin-top: 20px" *ngIf="!currentTask.completad"><button class="btn btn-primary btn-circle square-40  mr-2 mb-3" type="button" (click)="markComplete(currentTask.id, currentTask.team)"><i class="fa fa-check" aria-hidden="true"></i></button></div>
+  {{ showPopup }}
+  <div class="close" (click)="closePopUp()"></div>
+  <div class="content" *ngIf="seeTask; else edit">
+    <b>Name: </b> {{ currentTask.name }} <br>
+    <b>Description: </b> {{ currentTask.text }} <br>
+    <b>Date: </b>{{ getFullDate(currentTask.dateTime) }} <br>
+    <b>To:</b> {{ currentTask.forInfo.firstName }} {{ currentTask.forInfo.lastName }} <br>
+    <b>Status: </b> <span *ngIf="currentTask.completad; else noComplete">Complete</span>
+    <ng-template #noComplete>Incomplete</ng-template>
+    <br>
+    <div style="text-align: center;margin-top: 20px" *ngIf="!currentTask.completad">
+      <button class="btn btn-primary btn-circle square-40  mr-2 mb-3" type="button"
+              (click)="markComplete(currentTask.id, currentTask.team)"><i class="fa fa-check" aria-hidden="true"></i>
+      </button>
     </div>
-    <ng-template #edit>
-        <div class="content">
-            <form [formGroup]="taskForm" (submit)="saveTask()">
-                <div class="form-group">
-                  <label for="username">Name</label>
-                    <input type="text" class="form-control form-control-lg input-square" id="username" placeholder="UserName" formControlName="name" [ngClass]="{'is-invalid':taskForm.get('name').invalid && taskForm.get('name').touched}">
-                    <div *ngIf="taskForm.get('name').hasError('required') && taskForm.get('name').touched" class="invalid-feedback">name is required</div>
-                </div>
-                <div class="form-group">
-                  <label for="firstname">Description</label>
-                    <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="Description" formControlName="text" [ngClass]="{'is-invalid':taskForm.get('text').invalid && taskForm.get('text').touched}">
-                    <div *ngIf="taskForm.get('text').hasError('required') && taskForm.get('text').touched" class="invalid-feedback">Description is required</div>
-                </div>
-                <div class="form-group">
-                    <label for="teams">Teams</label>
-                    <select class="form-control form-control-lg input-square" id="team" formControlName="team"  [ngClass]="{'is-invalid':taskForm.get('team').invalid && taskForm.get('team').touched}" (change)="getPlayerByTeam($event.target.value)">
-                      <option *ngFor="let team of teams" value="{{team.team.id}}">{{team.team.name}}</option>
-                    </select>
-                    <div *ngIf="taskForm.get('team').hasError('required') && taskForm.get('team').touched" class="invalid-feedback">Team is required</div>
-                </div>
-                <div class="form-group" *ngIf="showPlayer">
-                    <label for="for">Player</label>
-                    <select class="form-control form-control-lg input-square" id="for" formControlName="for"  [ngClass]="{'is-invalid':taskForm.get('for').invalid && taskForm.get('for').touched}">
-                      <option *ngFor="let player of players" value="{{player.user.id}}">{{player.user.firstName}} {{player.user.lastName}}</option>
-                    </select>
-                    <div *ngIf="taskForm.get('for').hasError('required') && taskForm.get('for').touched" class="invalid-feedback">Player is required</div>
-                </div>
-                <div class="form-group">
-                    <label>Date</label>
-                    <div class="input-group">
-                        <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="dateTime" formControlName="dateTime" [options]="myDatePickerOptions" #dp="ngx-mydatepicker" (click)="dp.toggleCalendar()"/>
-                        <span class="input-group-btn">
+  </div>
+  <ng-template #edit>
+    <div class="content">
+      <form [formGroup]="taskForm" (submit)="saveTask()">
+        <div class="form-group">
+          <label for="username">Name</label>
+          <input type="text" class="form-control form-control-lg input-square" id="username" placeholder="UserName"
+                 formControlName="name"
+                 [ngClass]="{'is-invalid':taskForm.get('name').invalid && taskForm.get('name').touched}">
+          <div *ngIf="taskForm.get('name').hasError('required') && taskForm.get('name').touched"
+               class="invalid-feedback">name is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="firstname">Description</label>
+          <input type="text" class="form-control form-control-lg input-square" id="firstname" placeholder="Description"
+                 formControlName="text"
+                 [ngClass]="{'is-invalid':taskForm.get('text').invalid && taskForm.get('text').touched}">
+          <div *ngIf="taskForm.get('text').hasError('required') && taskForm.get('text').touched"
+               class="invalid-feedback">Description is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="teams">Teams</label>
+          <select class="form-control form-control-lg input-square" id="team" formControlName="team"
+                  [ngClass]="{'is-invalid':taskForm.get('team').invalid && taskForm.get('team').touched}"
+                  (change)="getPlayerByTeam($event.target.value)">
+            <option *ngFor="let team of teams" value="{{team.team.id}}">{{ team.team.name }}</option>
+          </select>
+          <div *ngIf="taskForm.get('team').hasError('required') && taskForm.get('team').touched"
+               class="invalid-feedback">Team is required
+          </div>
+        </div>
+        <div class="form-group" *ngIf="showPlayer">
+          <label for="for">Player</label>
+          <select class="form-control form-control-lg input-square" id="for" formControlName="for"
+                  [ngClass]="{'is-invalid':taskForm.get('for').invalid && taskForm.get('for').touched}">
+            <option *ngFor="let player of players"
+                    value="{{player.user.id}}">{{ player.user.firstName }} {{ player.user.lastName }}
+            </option>
+          </select>
+          <div *ngIf="taskForm.get('for').hasError('required') && taskForm.get('for').touched" class="invalid-feedback">
+            Player is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Date</label>
+          <div class="input-group">
+            <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="dateTime"
+                   formControlName="dateTime" [options]="myDatePickerOptions" #dp="ngx-mydatepicker"
+                   (click)="dp.toggleCalendar()"/>
+            <span class="input-group-btn">
                             <button type="button" class="btn btn-default" (click)="dp.clearDate()">
                                 <i class="glyphicon glyphicon-remove"></i>
                             </button>
@@ -112,24 +139,29 @@
                                 <i class="glyphicon glyphicon-calendar"></i>
                             </button>
                         </span>
-                    </div>
-                </div>
-                <div class="form-group">
-                     <label for="time">Time</label>
-                    <input class="form-control" type="time" id="time"  [ngClass]="{'is-invalid':taskForm.get('time').invalid && taskForm.get('time').touched}" formControlName="time">
-                    <div *ngIf="taskForm.get('time').hasError('required') && taskForm.get('time').touched" class="invalid-feedback">Time is required</div>
-                </div>
-                <div class="form-group">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" formControlName=completad>
-                      <span class="custom-control-indicator"></span>
-                      <span class="custom-control-description">Completed</span>
-                    </label>   
-                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary btn-block btn-lg btn-square" [disabled]="taskForm.invalid">
-                    </div>
-                </form>
+          </div>
         </div>
-    </ng-template>
+        <div class="form-group">
+          <label for="time">Time</label>
+          <input class="form-control" type="time" id="time"
+                 [ngClass]="{'is-invalid':taskForm.get('time').invalid && taskForm.get('time').touched}"
+                 formControlName="time">
+          <div *ngIf="taskForm.get('time').hasError('required') && taskForm.get('time').touched"
+               class="invalid-feedback">Time is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" formControlName=completad>
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Completed</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <input type="submit" value="Save" class="btn btn-primary btn-block btn-lg btn-square"
+                 [disabled]="taskForm.invalid">
+        </div>
+      </form>
+    </div>
+  </ng-template>
 </div>

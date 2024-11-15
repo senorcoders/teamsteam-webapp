@@ -3,12 +3,19 @@
     <h3 class="text-capitalize">Upload Roster</h3>
   </div>
   <div>
-    <!-- <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateCSV()">Download Template CSV</button> -->
-    <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateXLSX()">Download Template EXCEL</button>
-    <!-- <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateCSVEmail()">Download Template Only For Emails CSV</button> -->
-    <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateXLSXEmail()">Download Template Only For Emails EXCEL</button>
+    <button
+      class="btn btn-primary btn-lg btn-square"
+      (click)="downloadTemplateXLSX()"
+    >
+      Download EXCEL Template
+    </button>
+    <button
+      class="btn btn-primary btn-lg btn-square"
+      (click)="downloadTemplateXLSXEmail()"
+    >
+      Download Template Only For Emails EXCEL
+    </button>
   </div>
-  <!-- user and player form -->
   <div class="chk-block-content">
     <div class="row" *ngIf="showLoading">
       <div class="col-12 loaderLocker">
@@ -20,12 +27,24 @@
         <form [formGroup]="template" (ngSubmit)="uploadTemplate()">
           <div class="form-group">
             <label for="teams">Teams</label>
-            <select class="form-control form-control-lg input-square" [(ngModel)]="team" formControlName="team">
-              <option *ngFor="let team of teams" value="{{team.team.id}}">{{team.team.name}}</option>
+            <select
+              id="teams"
+              class="form-control form-control-lg input-square"
+              [(ngModel)]="team"
+              formControlName="team"
+            >
+              <option *ngFor="let team of teams" value="{{team.team.id}}">
+                {{ team.team.name }}
+              </option>
             </select>
           </div>
           <div class="form-group">
-            <input type="file" formControlName="roster" accept=".csv,.xlsx" multiple="false" (change)="getFile($event.target.files)">
+            <input
+              type="file"
+              formControlName="roster"
+              accept=".csv,.xlsx"
+              (change)="getFile($event.target.files)"
+            >
           </div>
           <div class="form-group">
             <input type="submit" value="Upload" class="btn btn-primary btn-block btn-lg btn-square">
@@ -34,5 +53,4 @@
       </div>
     </div>
   </div>
-
 </div>

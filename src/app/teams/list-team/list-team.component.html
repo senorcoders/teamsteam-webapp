@@ -1,171 +1,218 @@
 <div class="chat-wrapper fade-in-up">
-    <div class="row no-gutters bg-grey">
-        <div class="col-xs-12 col-sm-5 col-md-5 col-xl-4">
-            <div class="inner-tab">
-                <ul class="list-group list-unstyled">
-                    <li class="list-group-item"> 
-                        <h3 class="text-capitalize">Teams</h3>
-                    </li>                
-                   
-                </ul>
-                <div class="chk-inbox-sidebar">
-                    <ul class="nav nav-tabs team-list" id="teamList" role="tablist">
-                        <li class="nav-item" *ngFor="let team of teams; let i = index;  trackBy: trackByTeams" [attr.data-index]="i">
-                            <a class="nav-link ripple" >
-                                <div class="d-flex justify-content-start">
-                                    <div class="d-flex align-items-start flex-column mr-3 pos-relative">
-                                        <img (error)="errorHandler($event, 80,80)" src="{{endpoint}}/images/wherever/teams/{{team.id}}" class="rounded-circle" width="55" height="55" alt="user thumb" />                                        
-                                    </div>
-                                    <div class="d-flex align-items-start align-content-end flex-column m-w-160">
-                                        <h5>{{ team.name }}</h5>
-                                        <div class="d-flex align-items-center flex-row m-w-160">
-                                            <p class="text-muted text-over mb-0">{{ team.description }}</p>
-                                            <a data-toggle="tab" href="#tab-edit" role="tab"><span  (click)="edit(i,team)" class="square-40 right-badge"><i class="fa fa-pencil-square-o edit" aria-hidden="true"></i></span></a>
-                                             <!--<a data-toggle="tab" href="#tab-roster" role="tab"><span (click)="roster(team)" class="square-40 right-badge"><i class="fa fa-users" aria-hidden="true"></i></span></a>-->
-                                             <a data-toggle="tab" href="#"><span (click)="deleteTeam(team.id)" class="square-40 right-badge delete"><i class="fa fa-trash-o" aria-hidden="true"></i></span></a>
-                                        </div>
-                                        </div>
-                                </div>
-                            </a>
-                          
-                        </li>
-                        
-                    </ul>
-                </div><!-- Chk inbox sidebar Closed -->
-            </div><!-- Inner Tab Closed -->
-        </div>
-        <div  class="col-xs-12 col-sm-7 col-md-7 col-xl-8">
-            <div class="chk-block mb-0">
-                <div class="chk-block-title bg-light">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-content-start">
-                            <h3 class="mb-0 text-capitalize">{{selectedTeam.name}}</h3>
-                        </div>
-                    </div>
-                </div><!-- Chk Block Title Closed -->
-                <div class="chk-block-content">
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="tab-2" role="tabpanel">
-                            
-                        </div><!-- default tab -->
-                        <div class="tab-pane fade " id="tab-edit" role="tabpanel">
-                           <div class="row">
-                                <div class="col-sm-12 col-md-10 col-lg-12 mx-auto">
-                                    <div class="chk-block">
-                                        <div class="chk-block-title">
-                                            <h3 class="text-capitalize">Edit Team {{selectedTeam.name}}</h3>
-                                        </div>
-                                        <div class="chk-block-content">
-                                            <form enctype="multipart/form-data" (ngSubmit)="submitUpdateTeam(updateTeam.value)"  #updateTeam="ngForm"  [formGroup]="editTeamForm">
-                                                <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-4" *ngIf="showData">Players: {{selectedTeam.players['length']}}</div>
-                                                        <div class="col-4" *ngIf="showData">Managers: {{selectedTeam.managers['length']}}</div>
-                                                        <div class="col-4" *ngIf="showData">Family Members: {{selectedTeam.familys['length']}}</div>
-                                                        <div class="col-sm-2 col-md-6 col-lg-6 mx-auto">
-                                                            <div class="form-group">
-                                                                <label for="teamPicture">Team Picture</label><br><img #teamImage (error)="errorHandler($event, 300,300)" src="{{endpoint}}images/wherever/teams/{{selectedTeam.id}}"  width="300px;">
-                                                                    <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
-                                                                    
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-12 col-md-6 col-lg-6 mx-auto">
-                                                            <div class="form-group">
-                                                                <label for="formSelect1">Name</label>
-                                                                <input id="name" name="name" formControlName="name" class="form-control" placeholder="Name" [ngModel]="selectedTeam.name" [value]="selectedTeam.name" >
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="formSelect1">Description</label>
-                                                                <textarea class="form-control" placeholder="Description" formControlName="description" [ngModel]="selectedTeam.description"> {{selectedTeam.description}} </textarea>
-                                                            </div>                                                
-                                                            <div class="form-group">
-                                                                <label for="city">City</label>
-                                                                <input class="form-control"  formControlName="city" placeholder="City" [ngModel]="selectedTeam.city" >
-                                                            </div> 
-                                                            <div class="form-group">
-                                                                <label for="formSelect1">Sport</label>
-                                                                <select [ngModel]="selectedTeam.sport" class="form-control" id="sport"  formControlName="sport" >
-                                                                    <option  *ngFor="let sport of sports" [selected]="sport.id === selectedTeam.sport" [ngValue]="sport.id">{{sport.value}}</option>                                                        
-                                                                </select>
-                                                            </div>
-                                                        </div>        
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                                
-                                                <div class="pad-wrap">
-                                                    <div class="text-right">
-                                                        <button class="btn btn-primary btn-lg btn-square" type="submit" >Update Team</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+  <div class="row no-gutters bg-grey">
+    <div class="col-xs-12 col-sm-5 col-md-5 col-xl-4">
+      <div class="inner-tab">
+        <ul class="list-group list-unstyled">
+          <li class="list-group-item">
+            <h3 class="text-capitalize">Teams</h3>
+          </li>
 
-
-                        </div>
-                        <!--------------------------------------------------------------->
-                        <!--------------------------------------------------------------->
-                        <div class="tab-pane fade" id="tab-roster" role="tabpanel">
-                            <div class="row">
-                                <div *ngFor="let player of teamRoster.players" class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
-                                    <div class="profile-left-panel">
-                                        <div class="account-setting mb-3">
-                                            <div class="top-block">
-                                                <div class="admin-setting">
-                                                    <i class="fa fa-ellipsis-h fa-lg fa-inverse"></i>
-                                                </div>
-                                            </div>
-                                            <div class="bottom-block">
-                                                <div class="profile-thumb text-center mb-3">
-                                                    <a href="javascript:void(0)">
-                                                        <img src="{{endpoint}}images/wherever/users/{{player.user.id}}" alt="profile thumb" class="img-fluid rounded-circle d-inline-block" width="160" height="160">
-                                                    </a>
-                                                </div>
-                                                <div class="thumb-content text-center mb-3">
-                                                    <h2 class="text-capitalize">{{player.user.firstName}} {{player.user.lastName}}</h2>
-                                                    <a class="small" href="user-profile.php"></a>
-                                                </div>                                                
-                                                <div class="user-account-list">
-                                                    <ul class="list-unstyled mb-0">
-                                                         <li>
-                                                            <a href="javascript:void(0)"><i class="fa fa-user mr-2"></i> {{player.yerseyNumber}}</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:void(0)"><i class="fa fa-user mr-2"></i> {{player.user.username}}</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:void(0)"><i class="fa fa-user mr-2"></i> {{player.gender}}</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:void(0)"><i class="fa fa-life-bouy mr-2"></i>{{player.birthDay}}</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="javascript:void(0)"><i class="fa fa-life-bouy mr-2"></i>
-                                                                Edit
-                                                            </a>
-                                                        </li>                                                        
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        </ul>
+        <div class="chk-inbox-sidebar">
+          <ul class="nav nav-tabs team-list" id="teamList" role="tablist">
+            <li class="nav-item" *ngFor="let team of teams; let i = index;  trackBy: trackByTeams"
+                [attr.data-index]="i">
+              <a class="nav-link ripple">
+                <div class="d-flex justify-content-start">
+                  <div class="d-flex align-items-start flex-column mr-3 pos-relative">
+                    <img (error)="errorHandler($event, 80,80)" src="{{endpoint}}/images/wherever/teams/{{team.id}}"
+                         class="rounded-circle" width="55" height="55" alt="user thumb"/>
+                  </div>
+                  <div class="d-flex align-items-start align-content-end flex-column m-w-160">
+                    <h5>{{ team.name }}</h5>
+                    <div class="d-flex align-items-center flex-row m-w-160">
+                      <p class="text-muted text-over mb-0">{{ team.description }}</p>
+                      <a data-toggle="tab" href="#tab-edit" role="tab"><span (click)="edit(i,team)"
+                                                                             class="square-40 right-badge"><i
+                        class="fa fa-pencil-square-o edit" aria-hidden="true"></i></span></a>
+                      <!--<a data-toggle="tab" href="#tab-roster" role="tab"><span (click)="roster(team)" class="square-40 right-badge"><i class="fa fa-users" aria-hidden="true"></i></span></a>-->
+                      <a data-toggle="tab" href="#"><span (click)="deleteTeam(team.id)"
+                                                          class="square-40 right-badge delete"><i class="fa fa-trash-o"
+                                                                                                  aria-hidden="true"></i></span></a>
                     </div>
-                </div><!-- Chk Block Content Closed -->
-                
-            </div><!-- Chk Block Content -->
-        </div>
+                  </div>
+                </div>
+              </a>
+
+            </li>
+
+          </ul>
+        </div><!-- Chk inbox sidebar Closed -->
+      </div><!-- Inner Tab Closed -->
     </div>
+    <div class="col-xs-12 col-sm-7 col-md-7 col-xl-8">
+      <div class="chk-block mb-0">
+        <div class="chk-block-title bg-light">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex align-content-start">
+              <h3 class="mb-0 text-capitalize">{{ selectedTeam.name }}</h3>
+            </div>
+          </div>
+        </div><!-- Chk Block Title Closed -->
+        <div class="chk-block-content">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-2" role="tabpanel">
+
+            </div><!-- default tab -->
+            <div class="tab-pane fade " id="tab-edit" role="tabpanel">
+              <div class="row">
+                <div class="col-sm-12 col-md-10 col-lg-12 mx-auto">
+                  <div class="chk-block">
+                    <div class="chk-block-title">
+                      <h3 class="text-capitalize">Edit Team {{ selectedTeam.name }}</h3>
+                    </div>
+                    <div class="chk-block-content">
+                      <form enctype="multipart/form-data" (ngSubmit)="submitUpdateTeam(updateTeam.value)"
+                            #updateTeam="ngForm" [formGroup]="editTeamForm">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-4" *ngIf="showData">Players: {{ selectedTeam.players['length'] }}</div>
+                            <div class="col-4" *ngIf="showData">Managers: {{ selectedTeam.managers['length'] }}</div>
+                            <div class="col-4" *ngIf="showData">Family Members: {{ selectedTeam.familys['length'] }}
+                            </div>
+                            <div class="col-sm-2 col-md-6 col-lg-6 mx-auto">
+                              <div class="form-group">
+                                <label for="avatar">Team Picture</label>
+                                <br>
+                                <img
+                                  #teamImage
+                                  (error)="errorHandler($event, 300,300)"
+                                  src="{{endpoint}}/images/wherever/teams/{{selectedTeam.id}}"
+                                  width="300px;"
+                                  alt="Team Logo"
+                                >
+                                <input type="file" id="avatar" (change)="onFileChange($event)" #fileInput>
+                              </div>
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6 mx-auto">
+                              <div class="form-group">
+                                <label for="name">Name</label>
+                                <input
+                                  id="name"
+                                  name="name"
+                                  formControlName="name"
+                                  class="form-control"
+                                  placeholder="Name"
+                                  [ngModel]="selectedTeam.name"
+                                  [value]="selectedTeam.name"
+                                >
+                              </div>
+                              <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea
+                                  id="description"
+                                  class="form-control"
+                                  placeholder="Description"
+                                  formControlName="description"
+                                  [ngModel]="selectedTeam.description"
+                                >{{selectedTeam.description}}</textarea>
+                              </div>
+                              <div class="form-group">
+                                <label for="city">City</label>
+                                <input
+                                  id="city"
+                                  class="form-control"
+                                  formControlName="city"
+                                  placeholder="City"
+                                  [ngModel]="selectedTeam.city"
+                                >
+                              </div>
+                              <div class="form-group">
+                                <label for="sport">Sport</label>
+                                <select
+                                  [ngModel]="selectedTeam.sport"
+                                  class="form-control"
+                                  id="sport"
+                                  formControlName="sport"
+                                >
+                                  <option
+                                    *ngFor="let sport of sports"
+                                    [selected]="sport.id === selectedTeam.sport"
+                                    [ngValue]="sport.id"
+                                  >
+                                    {{ sport.value }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                        <div class="pad-wrap">
+                          <div class="text-right">
+                            <button class="btn btn-primary btn-lg btn-square" type="submit">Update Team</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <!--------------------------------------------------------------->
+            <!--------------------------------------------------------------->
+            <div class="tab-pane fade" id="tab-roster" role="tabpanel">
+              <div class="row">
+                <div *ngFor="let player of teamRoster.players" class="col-sm-12 col-md-12 col-lg-4 col-xl-4">
+                  <div class="profile-left-panel">
+                    <div class="account-setting mb-3">
+                      <div class="top-block">
+                        <div class="admin-setting">
+                          <i class="fa fa-ellipsis-h fa-lg fa-inverse"></i>
+                        </div>
+                      </div>
+                      <div class="bottom-block">
+                        <div class="profile-thumb text-center mb-3">
+                          <a href="javascript:void(0)">
+                            <img src="{{endpoint}}images/wherever/users/{{player.user.id}}" alt="profile thumb"
+                                 class="img-fluid rounded-circle d-inline-block" width="160" height="160">
+                          </a>
+                        </div>
+                        <div class="thumb-content text-center mb-3">
+                          <h2 class="text-capitalize">{{ player.user.firstName }} {{ player.user.lastName }}</h2>
+                          <a class="small" href="user-profile.php"></a>
+                        </div>
+                        <div class="user-account-list">
+                          <ul class="list-unstyled mb-0">
+                            <li>
+                              <a href="javascript:void(0)"><i class="fa fa-user mr-2"></i> {{ player.yerseyNumber }}</a>
+                            </li>
+                            <li>
+                              <a href="javascript:void(0)"><i
+                                class="fa fa-user mr-2"></i> {{ player.user.username }}</a>
+                            </li>
+                            <li>
+                              <a href="javascript:void(0)"><i class="fa fa-user mr-2"></i> {{ player.gender }}</a>
+                            </li>
+                            <li>
+                              <a href="javascript:void(0)"><i class="fa fa-life-bouy mr-2"></i>{{ player.birthDay }}</a>
+                            </li>
+                            <li>
+                              <a href="javascript:void(0)"><i class="fa fa-life-bouy mr-2"></i>
+                                Edit
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- Chk Block Content Closed -->
+
+      </div><!-- Chk Block Content -->
+    </div>
+  </div>
 </div><!-- Chat Wrapper closed -->
 <div class="pop-up" *ngIf="showLoading">
-    <div class="content">
-        <h2>Uploading Image...</h2>
-        <img src="../../assets/img/loader_sports.gif" alt="">
-    </div>
+  <div class="content">
+    <h2>Uploading Image...</h2>
+    <img src="../../assets/img/loader_sports.gif" alt="">
+  </div>
 </div>
