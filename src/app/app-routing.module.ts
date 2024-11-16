@@ -10,113 +10,120 @@ import {PlayerRoutesService} from './services/player-routes.service';
 import {PaymentComponent} from './payment/payment.component';
 import {SubscriptionsComponent} from './subscriptions/subscriptions.component';
 
-export const AppRoutes: Routes = [{
-  path: '',
-  redirectTo: 'loginone',
-  pathMatch: 'full',
-},
+export const AppRoutes: Routes = [
   {
-    path: 'loginone', component: LoginoneComponent
+    path: '',
+    redirectTo: 'loginone',
+    pathMatch: 'full',
   },
   {
-    path: 'register', component: RegisterComponent
+    path: 'loginone',
+    component: LoginoneComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: '',
     component: MainComponent,
-    children: [{
-      path: '',
-      loadChildren: './dashboard/dashboard.module#DashboardModule',
-      canActivate: [MyGuardService]
-    },
+    children: [
+      {
+        path: '',
+        loadChildren: './dashboard/dashboard.module#DashboardModule',
+        canActivate: [MyGuardService],
+      },
       {
         path: 'teams',
         loadChildren: './teams/teams.module#TeamModule',
-        canActivate: [MyGuardService]
+        canActivate: [MyGuardService],
       },
-      // {
-      //   path: 'form-builder',
-      //   loadChildren: './form-builder/form-builder.module#FormBuilderModule',
-      //   canActivate:[MyGuardService]
-      // },
       {
         path: 'contacts',
         loadChildren: './contacts/contacts.module#ContactsModule',
-        canActivate: [MyGuardService]
-      },
-      {
-        path: 'tasks',
-        loadChildren: './tasks/task.module#TaskModule',
-        canActivate: [MyGuardService]
+        canActivate: [MyGuardService],
       },
       {
         path: 'player',
         loadChildren: './player/player.module#PlayerModule',
-        canActivate: [MyGuardService, PlayerRoutesService]
+        canActivate: [MyGuardService, PlayerRoutesService],
+      },
+      {
+        path: 'tasks',
+        loadChildren: './tasks/task.module#TaskModule',
+        canActivate: [MyGuardService],
       },
       {
         path: 'league',
         loadChildren: './league/league.module#LeagueModule',
-        canActivate: [MyGuardService]
+        canActivate: [MyGuardService],
       },
       {
         path: 'events',
         loadChildren: './events/events.module#EventsModule',
-        canActivate: [MyGuardService]
+        canActivate: [MyGuardService],
       },
       {
         path: '',
         loadChildren: './user-pages/users.module#UsersDemoModule',
-        canActivate: [MyGuardService]
+        canActivate: [MyGuardService],
       },
       {
         path: 'payment',
         component: PaymentComponent,
-        canActivate: [MyGuardService]
+        canActivate: [MyGuardService],
       },
       {
         path: 'subscriptions',
         component: SubscriptionsComponent,
-        canActivate: [MyGuardService]
-      }, ],
+        canActivate: [MyGuardService],
+      },
+    ],
   },
   {
     path: 'horizontal',
     component: HorizontalLayoutComponent,
-    children: [{
-      path: '',
-      loadChildren: './dashboard/dashboard.module#DashboardModule',
-      canActivate: [MyGuardService]
-    },
+    children: [
+      {
+        path: '',
+        loadChildren: './dashboard/dashboard.module#DashboardModule',
+        canActivate: [MyGuardService],
+      },
       {
         path: 'dashboard',
         loadChildren: './dashboard/dashboard.module#DashboardModule',
-        canActivate: [MyGuardService]
-      }, {
+        canActivate: [MyGuardService],
+      },
+      {
         path: 'components',
         loadChildren: './components/components.module#ComponentDemoModule',
-        canActivate: [MyGuardService]
-      }, {
+        canActivate: [MyGuardService],
+      },
+      {
         path: 'icons',
         loadChildren: './icons/icons.module#IconsModule',
-        canActivate: [MyGuardService]
-      }, {
+        canActivate: [MyGuardService],
+      },
+      {
         path: 'ngx-toaster',
         loadChildren: './ngx-toaster/toaster.module#ToasterDemoModule',
-        canActivate: [MyGuardService]
-      }, {
+        canActivate: [MyGuardService],
+      },
+      {
         path: '',
         loadChildren: './user-pages/users.module#UsersDemoModule',
-        canActivate: [MyGuardService]
-      }
+        canActivate: [MyGuardService],
+      },
     ],
   },
   {
     path: '',
     component: AuthComponent,
-    children: [{
-      path: 'session',
-      loadChildren: './session/session.module#SessionDemoModule'
-    }]
-  }];
-
+    children: [
+      {
+        path: 'session',
+        loadChildren: './session/session.module#SessionDemoModule',
+      },
+    ],
+  },
+];

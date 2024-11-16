@@ -1,4 +1,4 @@
-#paste-file{
+#paste-file {
   height: 200px;
   width: 300px;
   border: 1px solid rgb(99, 166, 253);
@@ -7,6 +7,11 @@
   align-items: center;
   justify-content: center;
 }
-#paste-file:hover{
+
+#paste-file:hover {
   background-color: red;
+}
+
+.action-btn {
+  padding: 20px;
 }

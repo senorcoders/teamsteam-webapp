@@ -50,7 +50,7 @@ export class ListPlayerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageTitleService.setTitle('Player list');
+    this.pageTitleService.setTitle('Player List');
     this.getTeam()
   }
 

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormGroup, FormControl} from '@angular/forms';
+import {FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import {TeamService} from '../../services/team.service';
 import {ToastrService} from 'ngx-toastr';
 import {AuthenticationService} from '../../services/authentication.service';
@@ -72,6 +72,7 @@ export class AddRosterComponent implements OnInit {
           this.isSaving = false;
           if (res.hasOwnProperty('msg') && (res as any).msg === 'success') {
             this.showSuccess();
+            this.template.reset();
           } else {
             this.showError('Error in process');
           }
@@ -112,7 +113,7 @@ export class AddRosterComponent implements OnInit {
   private createForm(): void {
     this.template = new FormGroup({
       roster: new FormControl(),
-      team: new FormControl()
+      team: new FormControl('', [Validators.required])
     });
   }
 

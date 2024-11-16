@@ -26,9 +26,13 @@ export class UploadLeagueComponent implements OnInit {
   public file: File;
   public showLoading = false;
 
-  constructor(private pageTitleService: PageTitleService, private fb: FormBuilder,
-    private teamservice: TeamService, private toastr: ToastrService,
-    private auth: AuthenticationService, private router: Router,
+  constructor(
+    private pageTitleService: PageTitleService,
+    private fb: FormBuilder,
+    private teamservice: TeamService,
+    private toastr: ToastrService,
+    private auth: AuthenticationService,
+    private router: Router,
     public http: HttpClient
   ) {
     this.createForm();
@@ -41,16 +45,15 @@ export class UploadLeagueComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageTitleService.setTitle("Upload Roster");
+    this.pageTitleService.setTitle('Upload League');
     this.getTeams();
     if (!this.auth.isLogged()) {
-      this.router.navigate(["/"])
+      this.router.navigate(['/']).then();
     }
   }
 
   private getTeams() {
     let user = this.auth.getLoginData();
-    console.log(user);
     this.teamservice.getMyTeamsForUser(user.id).subscribe(
       data => {
         console.log(data);
@@ -76,9 +79,9 @@ export class UploadLeagueComponent implements OnInit {
       httpOptionsForm.headers.append('Content-Type', 'multipart/form-data');
 
       try {
-        let res = await this.http.post("/league/upload/" + user.email, fd, httpOptionsForm).toPromise();
+        let res = await this.http.post('/league/upload/' + user.email, fd, httpOptionsForm).toPromise();
         console.log(res);
-        if (res.hasOwnProperty("msg") && (res as any).msg === "success") {
+        if (res.hasOwnProperty('msg') && (res as any).msg === 'success') {
           this.showSuccess();
         } else {
           this.showError("Error in process");
@@ -86,7 +89,7 @@ export class UploadLeagueComponent implements OnInit {
       }
       catch (e) {
         console.error(e);
-        this.showError(e);  
+        this.showError(e);
       }
 
     }

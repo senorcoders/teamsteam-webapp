@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import {AuthenticationService} from '../../services/authentication.service';
 import {environment} from 'environments/environment';
 import {TeamService} from '../../services/team.service';
+import {PageTitleService} from '../../core/page-title/page-title.service';
 
 @Component({
   selector: 'app-list-league',
@@ -24,11 +25,13 @@ export class ListLeagueComponent implements OnInit {
   constructor(
     public http: HttpClient,
     public auth: AuthenticationService,
-    private team: TeamService
+    private team: TeamService,
+    private pageTitleService: PageTitleService
   ) {
   }
 
   async ngOnInit(): Promise<void> {
+    this.pageTitleService.setTitle('League List');
     const user = this.auth.getLoginData();
     environment.superadmin.forEach((data) => {
       if (user.email === data) {

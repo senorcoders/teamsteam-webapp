@@ -1,17 +1,10 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
-   selector: 'ms-auth',
-   templateUrl:'./auth-component.html',
+  selector: 'ms-auth',
+  templateUrl: './auth-component.html',
 })
-export class AuthComponent implements OnInit {
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-	
+export class AuthComponent {
 }
 
 

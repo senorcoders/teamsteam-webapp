@@ -1,32 +1,38 @@
 <div class="chk-block">
-    <div class="chk-block-title">
-      <h3 class="text-capitalize">Upload League</h3>
-    </div>
-    <div>
-      <!-- <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateCSV()">Download Template CSV</button> -->
-      <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateXLSX()">Download Template EXCEL</button>
-      <!-- <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateCSVEmail()">Download Template Only For Emails CSV</button> -->
-      <!-- <button class="btn btn-primary btn-lg btn-square" (click)="downloadTemplateXLSXEmail()">Download Template Only For Emails EXCEL</button> -->
-    </div>
-    <!-- user and player form -->
-    <div class="chk-block-content">
-      <div class="row" *ngIf="showLoading">
-        <div class="col-12 loaderLocker">
-          <img src="./assets/img/loader_sports.gif" alt="">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xl-12 mb-12">
-          <form [formGroup]="template" (ngSubmit)="uploadTemplate()">
-            <div class="form-group">
-              <input type="file" formControlName="league" accept=".csv,.xlsx" multiple="false" (change)="getFile($event.target.files)">
-            </div>
-            <div class="form-group">
-              <input type="submit" value="Upload" class="btn btn-primary btn-block btn-lg btn-square">
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  
+  <div class="chk-block-title">
+    <h3 class="text-capitalize">Upload League</h3>
   </div>
+  <div class="action-btn">
+    <button
+      class="btn btn-primary btn-lg btn-square"
+      (click)="downloadTemplateXLSX()"
+    >
+      Download Template EXCEL
+    </button>
+  </div>
+  <div class="chk-block-content">
+    <div class="row" *ngIf="showLoading">
+      <div class="col-12 loaderLocker">
+        <img src="./assets/img/loader_sports.gif" alt="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12 mb-12">
+        <form [formGroup]="template" (ngSubmit)="uploadTemplate()">
+          <div class="form-group">
+            <input type="file" formControlName="league" accept=".csv,.xlsx" multiple="false"
+                   (change)="getFile($event.target.files)">
+          </div>
+          <div class="form-group">
+            <input
+              type="submit"
+              value="Upload"
+              class="btn btn-primary btn-block btn-lg btn-square"
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
