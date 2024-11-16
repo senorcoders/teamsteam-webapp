@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve --host 165.227.125.190",
     "dev": "ng serve --port 4600",
-    "build": "ng build",
+    "build": "ng build --prod --aot --env=prod",
     "start-big": "bash ./scripts/ng.sh serve --host 165.227.125.190",
     "build-prod": "bash ./scripts/ng.sh build --prod --aot --env=prod",
     "test": "ng test",
